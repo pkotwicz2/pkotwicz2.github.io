@@ -1,5 +1,11 @@
 <html>
   <body>
-   <iframe src="random2.html"></iframe>
+    <script>
+      function OpenPopup() {
+          const newWindow = window.open("about:blank");
+          newWindow.body.innerHTML = "Test";
+      }
+    </script>
+   <button onclick="OpenPopup()">Open Popup</button>
   </body>
 </html>
