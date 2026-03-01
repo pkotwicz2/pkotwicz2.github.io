@@ -38,7 +38,8 @@
         metaKey: event.metaKey
       });
       console.log('Dispatching synthetic "b" event');
-    const proxy = new Proxy(newEvent, handler);
+      const proxy = new Proxy(newEvent, handler);
+      proxy.setPrototypeOf(KeyboardEvent)
       event.target.dispatchEvent(proxy);
     }
 
