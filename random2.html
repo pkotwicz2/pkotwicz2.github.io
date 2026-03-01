@@ -1,5 +1,58 @@
 <html>
-    <body>
-      <a href="data:text/plain,Hello%2C%20World!">Click</a>
-    </body>
+  <script>
+  const handler = {
+    get(target, prop, receiver) {
+      console.log(prop);
+      return target[prop];
+    },
+};
+      
+    function maybeRewriteEvent(event, eventType) {
+      if (event.target instanceof HTMLInputElement) {
+        return;
+      }
+
+      if (event.code == "Enter" || event.code == "Space" || event.code == "Tab") {
+        return;
+      }
+
+      if (event.code == "KeyB") {
+        return;
+      }
+
+      event.preventDefault();
+      event.stopPropagation();
+
+      const newEvent = new KeyboardEvent(eventType, {
+        key: 'b',
+        code: 'KeyB', // Physical key code
+        bubbles: event.bubbles,
+        cancelable: event.cancelable,
+        composed: event.composed,
+        // Mirror modifier keys state
+        shiftKey: event.shiftKey,
+        ctrlKey: event.ctrlKey,
+        altKey: event.altKey,
+        metaKey: event.metaKey
+      });
+      console.log('Dispatching synthetic "b" event');
+    const proxy = new Proxy(newEvent, handler);
+      event.target.dispatchEvent(newEvent);
+    }
+
+    function registerListener(eventType) {
+      document.addEventListener(eventType, function(event) {
+        maybeRewriteEvent(event, eventType);
+      }, true);
+    }
+    
+    registerListener("keydown");
+    registerListener("keyup");
+    registerListener("keypress");
+  </script>
+  <body>
+    <input cols="10"><br/>
+    <button>Button #1</button><br/>
+    <button>Button #2</button><br/>
+  </body>
 </html>
