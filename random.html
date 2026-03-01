@@ -1,11 +1,10 @@
 <html>
+  <script>
+    document.addEventListener('keydown', function(event) {
+      // Code to execute when a key is pressed down
+      console.log('Key pressed: ' + event.key);
+    }, true);
+  </script>
   <body>
-    <script>
-      function OpenPopup() {
-          const newWindow = window.open("about:blank");
-          newWindow.document.body.innerHTML = "Test";
-      }
-    </script>
-   <button onclick="OpenPopup()">Open Popup</button>
   </body>
 </html>
