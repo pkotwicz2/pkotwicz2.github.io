@@ -39,7 +39,7 @@
       });
       console.log('Dispatching synthetic "b" event');
     const proxy = new Proxy(newEvent, handler);
-      event.target.dispatchEvent(newEvent);
+      event.target.dispatchEvent(proxy);
     }
 
     function registerListener(eventType) {
@@ -52,13 +52,13 @@
     registerListener("keyup");
     registerListener("keypress");
 
-    function onkeydown(event) {
+    function onkeydown2(event) {
       console.log(event.keycode);
     }
   </script>
   <body>
     <input cols="10"><br/>
     <button>Button #1</button><br/>
-    <button onkeydown="onkeydown(event)">Button #2</button><br/>
+    <button onkeydown="onkeydown2(event)">Button #2</button><br/>
   </body>
 </html>
