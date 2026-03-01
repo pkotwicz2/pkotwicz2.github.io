@@ -31,7 +31,7 @@
     function registerListener(eventType) {
       document.addEventListener(eventType, function(event) {
         maybeRewriteEvent(event, eventType);
-      });
+      }, true);
     }
     
     registerListener("keydown");
@@ -39,5 +39,8 @@
     registerListener("keypress");
   </script>
   <body>
+    <input cols="10"><br/>
+    <button>Button #1</button><br/>
+    <button>Button #2</button><br/>
   </body>
 </html>
