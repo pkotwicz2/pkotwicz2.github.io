@@ -70,7 +70,6 @@ const proxyHandler = {
       });
       console.log('Dispatching synthetic "b" event');
       const proxy = new Proxy(newEvent, proxyHandler);
-      proxy.setPrototypeOf(KeyboardEvent)
       event.target.dispatchEvent(proxy);
     }
 
