@@ -1,9 +1,42 @@
 <html>
   <script>
-    document.addEventListener('keydown', function(event) {
-      // Code to execute when a key is pressed down
-      console.log('Key pressed: ' + event.key);
-    }, true);
+    function maybeRewriteEvent(event, eventType) {
+      if (event.target instanceof HTMLInputElement) {
+        return;
+      }
+
+      if (event.code == "Enter" || event.code == "Space" || event.code == "Tab") {
+        return;
+      }
+
+      event.preventDefault();
+      event.stopPropagation();
+
+      const newEvent = new KeyboardEvent(eventType, {
+        key: 'b',
+        code: 'KeyB', // Physical key code
+        bubbles: event.bubbles,
+        cancelable: event.cancelable,
+        composed: event.composed,
+        // Mirror modifier keys state
+        shiftKey: event.shiftKey,
+        ctrlKey: event.ctrlKey,
+        altKey: event.altKey,
+        metaKey: event.metaKey
+      });
+      console.log('Dispatching synthetic "b" event');
+      event.target.dispatchEvent(newEvent);
+    }
+
+    function registerListener(eventType) {
+      document.addEventListener(eventType, function(event) {
+        maybeRewriteEvent(event, eventType);
+      });
+    }
+    
+    registerListener("keydown");
+    registerListener("keyup");
+    registerListener("keypress");
   </script>
   <body>
   </body>
