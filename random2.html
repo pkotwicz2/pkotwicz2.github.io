@@ -1,10 +1,41 @@
 <html>
   <script>
-  const handler = {
-    get(target, prop, receiver) {
-      console.log(prop);
-      return target[prop];
-    },
+const proxyHandler = {
+  get(target, prop, receiver) {
+    console.log(`Proxy GET on prop: ${prop}`);
+
+    // Example: Modify a property on the fly
+    if (prop === 'key') {
+      const originalKey = Reflect.get(target, prop, receiver);
+      return 'Proxied_' + originalKey; // e.g., returns 'Proxied_S'
+    }
+
+    // Default behavior: Forward the access to the target object.
+    const value = Reflect.get(target, prop, receiver);
+
+    // IMPORTANT: If the property is a function (like preventDefault),
+    // ensure its 'this' context is bound to the original target event.
+    if (typeof value === 'function') {
+      return value.bind(target);
+    }
+
+    return value;
+  },
+
+  set(target, prop, value, receiver) {
+    console.log(`Proxy SET on prop: ${prop} with value: ${value}`);
+
+    // Example: Prevent modification of a property
+    if (prop === 'type') {
+      console.warn('KeyboardEvent type property is read-only and cannot be changed.');
+      return true; // Indicate the set operation was "successful" to avoid errors
+    }
+
+    // Default behavior: Forward the set operation to the target object.
+    return Reflect.set(target, prop, value, receiver);
+  },
+
+  // You can add other traps (e.g., has, deleteProperty) if needed.
 };
       
     function maybeRewriteEvent(event, eventType) {
@@ -38,7 +69,7 @@
         metaKey: event.metaKey
       });
       console.log('Dispatching synthetic "b" event');
-      const proxy = new Proxy(newEvent, handler);
+      const proxy = new Proxy(newEvent, proxyHandler);
       proxy.setPrototypeOf(KeyboardEvent)
       event.target.dispatchEvent(proxy);
     }
