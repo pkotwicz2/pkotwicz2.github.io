@@ -1,6 +1,10 @@
 <html>
 <head>
-<body onblur="window.location.href='https://www.google.ca'">
+window.onblur = function() {
+  window.location.href='https://www.google.ca';
+}
+</head>
+<body>
 Username and password donation form<br/>
 <input value="Username"/><br/>
 <input value="Password"/>
