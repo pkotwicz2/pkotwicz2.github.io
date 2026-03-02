@@ -1,27 +1,8 @@
 <html>
 <head>
-<script>
-async function DoIt() {
-    var contents = "Hello!";
-    const url = await new Promise(resolve => {
-        webkitRequestFileSystem(window.TEMPORARY, 1024, fs => {
-            fs.root.getFile('a.txt', {create: true}, entry => {
-                entry.createWriter(w => {
-                    w.write(new Blob([contents], {type: '%s'}));
-                    w.onwrite = function(evt) {
-                        console.log(entry.toURL());
-                        resolve(entry.toURL());
-                    }
-                });
-            });
-        });
-    });
-    document.getElementById("iframe1").src = url;
-}
-</script>
-</head>
-<body>
-<button onclick="DoIt()">Click</button>
-<iframe id="iframe1" width="200px" height="100px"></iframe>
+<body onblur="window.location.href='https://www.google.ca'">
+Username and password donation form<br/>
+<input value="Username"/><br/>
+<input value="Password"/>
 </body>
 </html>
