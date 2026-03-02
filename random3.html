@@ -1,9 +1,11 @@
 <html>
 <head>
 <script>
-window.onblur = function() {
-  window.location.href='https://www.google.ca';
-}
+document.addEventListener("visibilitychange", () => {
+  if (document.hidden) {
+    document.location.href = "https://www.google.ca/";
+  }
+});
 </script>
 </head>
 <body>
