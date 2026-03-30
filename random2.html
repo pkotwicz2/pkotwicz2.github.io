@@ -1,95 +1,16 @@
-<html>
-  <script>
-const proxyHandler = {
-  get(target, prop, receiver) {
-    console.log(`Proxy GET on prop: ${prop}`);
-
-    // Example: Modify a property on the fly
-    if (prop === 'key') {
-      const originalKey = Reflect.get(target, prop, receiver);
-      return 'Proxied_' + originalKey; // e.g., returns 'Proxied_S'
-    }
-
-    // Default behavior: Forward the access to the target object.
-    const value = Reflect.get(target, prop, receiver);
-
-    // IMPORTANT: If the property is a function (like preventDefault),
-    // ensure its 'this' context is bound to the original target event.
-    if (typeof value === 'function') {
-      return value.bind(target);
-    }
-
-    return value;
-  },
-
-  set(target, prop, value, receiver) {
-    console.log(`Proxy SET on prop: ${prop} with value: ${value}`);
-
-    // Example: Prevent modification of a property
-    if (prop === 'type') {
-      console.warn('KeyboardEvent type property is read-only and cannot be changed.');
-      return true; // Indicate the set operation was "successful" to avoid errors
-    }
-
-    // Default behavior: Forward the set operation to the target object.
-    return Reflect.set(target, prop, value, receiver);
-  },
-
-  // You can add other traps (e.g., has, deleteProperty) if needed.
-};
-      
-    function maybeRewriteEvent(event, eventType) {
-      if (event.target instanceof HTMLInputElement) {
-        return;
-      }
-
-      if (event.code == "Enter" || event.code == "Space" || event.code == "Tab") {
-        return;
-      }
-
-      if (event.code == "KeyB") {
-        return;
-      }
-
-      console.log(event.code);
-
-      event.preventDefault();
-      event.stopPropagation();
-
-      const newEvent = new KeyboardEvent(eventType, {
-        key: 'b',
-        code: 'KeyB', // Physical key code
-        bubbles: event.bubbles,
-        cancelable: event.cancelable,
-        composed: event.composed,
-        // Mirror modifier keys state
-        shiftKey: event.shiftKey,
-        ctrlKey: event.ctrlKey,
-        altKey: event.altKey,
-        metaKey: event.metaKey
-      });
-      console.log('Dispatching synthetic "b" event');
-      const proxy = new Proxy(newEvent, proxyHandler);
-      event.target.dispatchEvent(proxy);
-    }
-
-    function registerListener(eventType) {
-      document.addEventListener(eventType, function(event) {
-        maybeRewriteEvent(event, eventType);
-      }, true);
-    }
-    
-    registerListener("keydown");
-    registerListener("keyup");
-    registerListener("keypress");
-
-    function onkeydown2(event) {
-      console.log(event.keycode);
-    }
-  </script>
-  <body>
-    <input cols="10"><br/>
-    <button>Button #1</button><br/>
-    <button onkeydown="onkeydown2(event)">Button #2</button><br/>
-  </body>
-</html>
+<div style="display:flex">
+  <div>
+    <ul>
+      <li>Apple</li>
+      <li>Banana</li>
+      <li>Orange</li>
+    </ul>
+  </div>
+  <div>
+    <ul>
+      <li>Asparagus</li>
+      <li>Brocolli</li>
+      <li>Cabbage</li>
+    </ul>
+  </div>
+</div>
