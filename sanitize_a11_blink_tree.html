@@ -51,6 +51,9 @@
         if (ShouldOutputToken(token, i, keysToOutput)) {
           result += token + ' ';
           tokenEndQuote = GetValueQuoteChar(token);
+          if (token.trim().endsWith(tokenEndQuote)) {
+            tokenEndQuote = undefined;
+          }
         } else if (tokenEndQuote !== undefined) {
           result += token + ' ';
           if (token.trim().endsWith(tokenEndQuote)) {
