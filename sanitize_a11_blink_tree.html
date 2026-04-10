@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+  function ShouldOutputToken(token, index) {
+    if (index < 2) {
+      return true;
+    }
+    const kv = token.split('=');
+    if (kv.length > 2) {
+      return false;
+    }
+    const key = kv[0];
+    return (key == 'focusable' || key == 'ignored' || key == 'name');
+  }
+  
+  function ProcessText() {
+    const inputText = document.getElementById('inputText').value;
+    const lines = inputText.split('\n');
+
+    let result = '';
+    lines.forEach((line) => {
+      const tokens = line.trim().split(/\s+/);
+      tokens.forEach((token, i) => {
+        if (ShouldOutputToken(token, i)) {
+          result += token + ' ';
+        }
+      });
+      result += '\n';
+    });
+    document.getElementById('results').textContent = result;
+  }
+</script>
+<title>Text Processor</title>
+</head>
+<body>
+  <h1>Line Processor</h1>
+  <textarea id="inputText" placeholder="unsanitized blink accessibility tree"></textarea><br>
+  <button onclick="ProcessText()">Process Text</button>
+  <h2>Results:</h2>
+  <div id="results"></div>
+</body>
+</html>
