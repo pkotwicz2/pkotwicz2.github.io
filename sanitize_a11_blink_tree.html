@@ -12,6 +12,27 @@
     }
     return keysToOutput.includes(kv[0]);
   }
+
+  function GetValueQuoteChar(token) {
+    const equalIndex = token.indexOf('=');
+    if (equalIndex < 0) {
+      return undefined;
+    }
+    if (equalIndex >= token.length - 1) {
+      return undefined;
+    }
+    const testChar = token.at(equalIndex + 1);
+    if (testChar == '\'') {
+      return '\'';
+    }
+    if (testChar == '"') {
+      return '"';
+    }
+    if (testChar == '(') {
+      return ')';
+    }
+    return undefined;
+  }
   
   function ProcessText() {
     const inputText = document.getElementById('inputText').value;
@@ -25,9 +46,16 @@
     let result = '';
     lines.forEach((line) => {
       const tokens = line.trim().split(/\s+/);
+      let tokenEndQuote = undefined;
       tokens.forEach((token, i) => {
         if (ShouldOutputToken(token, i, keysToOutput)) {
           result += token + ' ';
+          tokenEndQuote = GetValueQuoteChar(token);
+        } else if (tokenEndQuote !== undefined) {
+          result += token + ' ';
+          if (token.trim().endsWith(tokenEndQuote)) {
+            tokenEndQuote = undefined;
+          }
         }
       });
       result += "<br>";
