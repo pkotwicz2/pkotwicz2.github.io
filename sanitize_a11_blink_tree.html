@@ -2,27 +2,31 @@
 <html>
 <head>
 <script>
-  function ShouldOutputToken(token, index) {
+  function ShouldOutputToken(token, index, keysToOutput) {
     if (index < 2) {
       return true;
     }
     const kv = token.split('=');
-    if (kv.length > 2) {
+    if (kv.length > 2 || kv.length == 0) {
       return false;
     }
-    const key = kv[0];
-    return (key == 'focusable' || key == 'ignored' || key == 'name');
+    return keysToOutput.includes(kv[0]);
   }
   
   function ProcessText() {
     const inputText = document.getElementById('inputText').value;
+    const keysToOutput = ['focusable', 'ignored', 'name'];
+    const toIncludeText = document.getElementById('to_include').value;
+    if (toIncludeText.length > 0) {
+      keysToOutput.push(toIncludeText);
+    }
     const lines = inputText.split('\n');
 
     let result = '';
     lines.forEach((line) => {
       const tokens = line.trim().split(/\s+/);
       tokens.forEach((token, i) => {
-        if (ShouldOutputToken(token, i)) {
+        if (ShouldOutputToken(token, i, keysToOutput)) {
           result += token + ' ';
         }
       });
@@ -36,6 +40,7 @@
 <body>
   <h1>Line Processor</h1>
   <textarea id="inputText" rows=10 cols=100 placeholder="unsanitized blink accessibility tree"></textarea><br>
+  Key to include in output: <input id="to_include"></input>
   <button onclick="ProcessText()">Process Text</button>
   <h2>Results:</h2>
   <div id="results"></div>
