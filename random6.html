@@ -1,10 +1,13 @@
 <style>
-  .custom-select {
-  &, &::picker(select) {
-    appearance: base-select;    
-  }
+@import "https://unpkg.com/open-props" layer(design.system);
 
-select {  
+
+select {
+  /* opt into customizing select */
+  &, &::picker(select) {
+    appearance: base-select;
+  }
+  
   font-size: var(--font-size-1);
   
   /* removing open props normalize styles */
@@ -29,7 +32,7 @@ select {
 
   &.danger {
     background: var(--red-5);
-  }    
+  }
 }
 </style>
 <select>
