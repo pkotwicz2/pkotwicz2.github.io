@@ -1,142 +1,25 @@
 <style>
-@import "https://unpkg.com/open-props" layer(design.system);
-select {
-  /* opt into customizing select */
+  .custom-select {
   &, &::picker(select) {
-    appearance: base-select;
-  }
-  
-  font-size: var(--font-size-1);
-  
-  /* removing open props normalize styles */
-  background: none;
-  padding: 0;
-  
-  &::picker-icon {
-    display: none;
-  }
-}
-
-.indicator {
-  display: inline-block;
-  block-size: var(--size-2);
-  inline-size: var(--size-2);
-  border-radius: var(--radius-round);
-  background: var(--gray-5);
-
-  &.success {
-    background: var(--green-5);
-  }
-
-  &.danger {
-    background: var(--red-5);
-  }
-}
-
-/* utilities to aid in custom select children */
-.custom-option {
-  display: flex;
-  gap: var(--size-3);
-  align-items: center;
-  justify-content: space-between;
-
-  .primary & {
-    display: grid;
-    gap: var(--size-1);
-  }
-
-  &:has(.description) {
-    display: grid;
-    justify-items: start;
-    gap: var(--size-2);
-    padding-block: var(--size-2);
-    text-shadow: none;
-
-    & .description {
-      color: var(--text-2);
-    }
-  }
-
-  option:is(:checked) & .description {
-    font-weight: normal;
-    color: var(--surface-2);
-  }
-
-  selectedcontent & .description {
-    display: none;
-  }
-}
-
-.option-text {
-  flex: 2;
-}
-
-.avatar {
-  border-radius: var(--radius-round);
-  overflow: hidden;
-}
-
-
-
-
-
-
-
-@layer demo.support {
-  body {
-    display: grid;
-    place-items: start;
-    place-content: center;
-    padding: var(--size-5);
-    gap: var(--size-5);
-  }
-}
-
-#support {
-  position: fixed;
-  inset-block-start: 10px;
-  inset-inline: 10px;
-  padding-block: 10px;
-  background: var(--surface-1);
-  display: grid;
-  gap: 10px;
-  text-align: center;
-  place-content: center;
-  background: hsl(from yellow h s l / 25%);
-  
-  .supports-custom-select & {
-    display: none;
+    appearance: base-select;    
   }
 }
 </style>
-<select>
-  <button>
-    <div>
-      <selectedcontent> </selectedcontent>
-      <svg width="24" height="24" viewBox="0 0 24 24">
-        <path fill="currentColor" d="m7 10l5 5l5-5z"/>
-      </svg>
-    </div>
-  </button>
-  <div>
-    <option value="on">
-      <!-- custom so it's fully consumed for selectedcontent -->
-      <div class="custom-option">
-        <span class="indicator success"></span>
-        <span class="option-text">On</span>
-      </div>
-    </option>
-    <option value="off">
-      <div class="custom-option">
-        <span class="indicator danger"></span>
-        <span class="option-text">Off</span>
-      </div>
-    </option>
-    <option value="disable">
-      <div class="custom-option">
-        <span class="indicator disable"></span>
-        <span class="option-text">Disable</span>
-      </div>
-    </option>
-  </div>
+<select class="custom-select">
+  <option>
+    <svg aria-hidden>…</svg>
+    <span>HTML</span>
+  </option>
+  <option>
+    <svg aria-hidden>…</svg>
+    <span>CSS</span>
+  </option>
+  <option>
+    <svg aria-hidden>…</svg>
+    <span>JavaScript</span>
+  </option>
+  <option>
+    <svg aria-hidden>…</svg>
+    <span>WASM</span>
+  </option>
 </select>
