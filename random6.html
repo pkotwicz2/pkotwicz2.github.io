@@ -1,68 +1,75 @@
-<style>
-@import "https://unpkg.com/open-props" layer(design.system);
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Base-Select Example</title>
+    <style>
+        /* Opt-in to the customizable select behavior */
+        .custom-select {
+          &, &::picker(select) {
+            appearance: base-select;
+          }
+        }
 
+        /* Example custom styling */
+        .custom-select {
+            padding: 8px 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: white;
+            font-family: sans-serif;
+            min-width: 150px;
+        }
 
-select {
-  /* opt into customizing select */
-  &, &::picker(select) {
-    appearance: base-select;
-  }
-  
-  font-size: var(--font-size-1);
-  
-  /* removing open props normalize styles */
-  background: none;
-  padding: 0;
-  
-  &::picker-icon {
-    display: none;
-  }
-}
+        /* Style the dropdown picker/popover */
+        .custom-select::picker(select) {
+            border: 1px solid #a0a0a0;
+            border-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-top: 2px;
+        }
 
-.indicator {
-  display: inline-block;
-  block-size: var(--size-2);
-  inline-size: var(--size-2);
-  border-radius: var(--radius-round);
-  background: var(--gray-5);
+        /* Style individual options */
+        .custom-select option {
+            padding: 8px 12px;
+        }
 
-  &.success {
-    background: var(--green-5);
-  }
+        .custom-select option:hover {
+            background-color: #f0f0f0;
+        }
 
-  &.danger {
-    background: var(--red-5);
-  }
-}
-</style>
-<select>
-  <button>
-    <div>
-      <selectedcontent> </selectedcontent>
-      <svg width="24" height="24" viewBox="0 0 24 24">
-        <path fill="currentColor" d="m7 10l5 5l5-5z"/>
-      </svg>
-    </div>
-  </button>
-  <div>
-    <option value="on">
-      <!-- custom so it's fully consumed for selectedcontent -->
-      <div class="custom-option">
-        <span class="indicator success"></span>
-        <span class="option-text">On</span>
-      </div>
-    </option>
-    <option value="off">
-      <div class="custom-option">
-        <span class="indicator danger"></span>
-        <span class="option-text">Off</span>
-      </div>
-    </option>
-    <option value="disable">
-      <div class="custom-option">
-        <span class="indicator disable"></span>
-        <span class="option-text">Disable</span>
-      </div>
-    </option>
+         /* Example of adding content inside an option */
+        .custom-select option .icon {
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Customizable Select Element</h1>
+
+    <label for="my-select">Choose an option:</label>
+    <select id="my-select" class="custom-select" name="options">
+        <option value="option1">
+            Option 1
+        </option>
+        <option value="option2" selected>
+          <span class="icon">✨</span>
+          Option 2 (with icon)
+        </option>
+        <option value="option3">
+            Option 3
+        </option>
+        <option value="another">
+            Another Option
+        </option>
+    </select>
+
+    <p>Note: Browser support for <code>appearance: base-select</code> is still evolving. Check compatibility tables (e.g., on MDN) for the latest information.</p>
+
+</body>
+</html>
   </div>
 </select>
