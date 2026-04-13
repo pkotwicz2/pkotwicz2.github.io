@@ -1,75 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Base-Select Example</title>
-    <style>
-        /* Opt-in to the customizable select behavior */
-        .custom-select {
-          &, &::picker(select) {
-            appearance: base-select;
-          }
-        }
-
-        /* Example custom styling */
-        .custom-select {
-            padding: 8px 12px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            background-color: white;
-            font-family: sans-serif;
-            min-width: 150px;
-        }
-
-        /* Style the dropdown picker/popover */
-        .custom-select::picker(select) {
-            border: 1px solid #a0a0a0;
-            border-radius: 4px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            margin-top: 2px;
-        }
-
-        /* Style individual options */
-        .custom-select option {
-            padding: 8px 12px;
-        }
-
-        .custom-select option:hover {
-            background-color: #f0f0f0;
-        }
-
-         /* Example of adding content inside an option */
-        .custom-select option .icon {
-            margin-right: 8px;
-            vertical-align: middle;
-        }
-    </style>
-</head>
-<body>
-
-    <h1>Customizable Select Element</h1>
-
-    <label for="my-select">Choose an option:</label>
-    <select id="my-select" class="custom-select" name="options">
-        <option value="option1">
-            Option 1
-        </option>
-        <option value="option2" selected>
-          <span class="icon">✨</span>
-          Option 2 (with icon)
-        </option>
-        <option value="option3">
-            Option 3
-        </option>
-        <option value="another">
-            Another Option
-        </option>
-    </select>
-
-    <p>Note: Browser support for <code>appearance: base-select</code> is still evolving. Check compatibility tables (e.g., on MDN) for the latest information.</p>
-
-</body>
-</html>
-  </div>
+<style>
+  .custom-select {
+  &, &::picker(select) {
+    appearance: base-select;    
+  }
+}
+</style>
+<select class="custom-select">
+  <button>
+    <selectedcontent></selectedcontent>
+  </button>
+  <option>
+    <img src="https://dummyimage.com/16x16/000/000.png" atl="enterprise">
+    <span>Midtown</span>
+  </option>
+  <option>
+    <img src="https://dummyimage.com/16x16/000/000.png" atl="enterprise">
+    <span>Downtown</span>
+  </option>
+  <option>
+    <img src="https://dummyimage.com/16x16/f00/f00.png" atl="bar">
+    <span>Union</span>
+  </option>
+</select>
 </select>
