@@ -1,0 +1,28 @@
+<style>
+  .custom-select {
+  &, &::picker(select) {
+    appearance: base-select;    
+  }
+  table {
+    border-collapse: collapse;
+  }
+  td {
+    border: solid 1px;
+  }
+}
+</style>
+<select class="custom-select">
+  <button>
+    <selectedcontent></selectedcontent>
+  </button>
+  <option disabled selected>
+    <table>
+      <tr><td></td><td>B stays silent</td><td>B betrays A</td></tr>
+      <tr><td>A stays silent</td><td>Both serve 1 year</td><td>A serves 3 years, B goes free</td></tr>
+      <tr><td>A betrays B</td><td>A goes free, B serves 3 years</td><td>Both serve 2 years</td></tr>
+    </table>
+  </option>
+  <option>
+    Other
+  </option>
+</select>
