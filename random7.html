@@ -1,5 +1,9 @@
-<span id="color-label">Color</span>
-<input type="color"
-    value="oklab(50% 0.1 0.1 / 0.5)"
-    colorspace="display-p3"
-    aria-labelledby="color-label"></input>
+<h2 id="billing-address">Billing Address</h2>
+
+<div role="group" aria-labelledby="billing-address">
+  <!-- This content is NOT read when the div first gets focus -->
+  <p>Please enter your billing details below.</p>
+  <label for="street">Street:</label>
+  <input type="text" id="street">
+  <!-- ... more form fields ... -->
+</div>
