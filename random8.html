@@ -1,27 +1,6 @@
-<style>
-  .custom-select {
-  &, &::picker(select) {
-    appearance: base-select;    
-  }
-  table {
-    border-collapse: collapse;
-  }
-  td {
-    border: solid 1px;
-  }
-}
-</style>
-<select class="custom-select">
-  <button>
-    <selectedcontent></selectedcontent>
-  </button>
-  <option disabled selected>
-    <table>
-      <tr><td>row1</td></tr>
-      <tr><td>row2</td></tr>
-    </table>
-  </option>
-  <option>
-    Other
-  </option>
-</select>
+<div id="hidden-label" style="display: none;">
+This is the hidden label text.
+</div>
+<div tabindex=0>
+ <b tabindex=1 aria-labelledby="hidden-label">Visible</b> Content
+</div>
