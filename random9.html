@@ -1,21 +1,12 @@
 <!DOCTYPE html>
 <body>
 
-<div role="combobox" 
-    aria-expanded="true" 
-    aria-haspopup="listbox" 
-    aria-controls="results-listbox">
-       
-<input type="text" 
-    id="tag-input" 
-    value="Chromium" 
-    aria-autocomplete="list" 
-    aria-activedescendant="option-1">
-   
-<ul id="results-listbox" role="listbox">
-<li id="option-1" role="option" aria-selected="true">Chromium</li>
-<li id="option-2" role="option">Blink</li>
-</ul>
+<div id="combo1-label">Choose a fruit, with text content</div>
+<div aria-controls="listbox1" aria-expanded="false" aria-haspopup="listbox" aria-labelledby="combo1-label" role="combobox" tabindex="0" aria-activedescendant="combo1-0">Apple</div>
+<div role="listbox" id="listbox1" onclick="console.log('hi')">
+  <div role="option" id="combo1-0" aria-selected="true">Apple</div>
+  <div role="option" id="combo1-1">Banana</div>
+  <div role="option" id="combo1-2">Cherry</div>
 </div>
 </body>
 </html>
