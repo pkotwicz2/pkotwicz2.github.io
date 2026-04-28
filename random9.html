@@ -1,32 +1,43 @@
 <!DOCTYPE html>
-<body>
-<select id="menulist" aria-label="Transformer">
-  <option selected disabled>Random Transformer</option>
-  <optgroup label="group 1">
-    <option>Optimus Prime</option>
-    <option>Bumblebee</option>
-    <option>Jazz</option>
-  </optgroup>
-  <optgroup label="group 2">
-    <option>Megatron</option>
-    <option>Starscream</option>
-    <option>Brawl</option>
-  </optgroup>
-</select>
-<select id="menulist" title="Transformer2">
-  <option selected disabled>Random Transformer</option>
-  <optgroup label="group 1">
-    <option>Optimus Prime</option>
-    <option>Bumblebee</option>
-    <option>Jazz</option>
-  </optgroup>
-  <optgroup label="group 2">
-    <option>Megatron</option>
-    <option>Starscream</option>
-    <option>Brawl</option>
-  </optgroup>
-</select>
-</body>
+  <body>
+    <div id="state_label">State</div>
+
+    <!-- For the first combo box, we dynamically set aria-controls. -->
+    <div role="combobox"
+        aria-autocomplete="list"
+        aria-expanded="true"
+        aria-haspopup="listbox">
+      <input type="text"
+      aria-activedescendant="list1-state2"
+      autofocus>
+    </div>
+
+    <ul id="state_list1" role="listbox">
+      <li id="list1-state1" role="option">Alabama</li>
+      <li id="list1-state2" role="option">Alaska</li>
+    </ul>
+
+    <!-- For the second combo box, we dynamically set aria-controls and
+        aria-activedescendant and don't auto focus. -->
+    <div role="combobox"
+        aria-autocomplete="list"
+        aria-expanded="true"
+        aria-haspopup="listbox"
+        aria-labelledby="state_label">
+      <input type="text">
+    </div>
+
+    <ul id="state_list2" role="listbox">
+      <li id="list2-state1" role="option">Alabama</li>
+      <li id="list2-state2" role="option">Alaska</li>
+    </ul>
+
+    <script>
+      document.querySelectorAll('input')[0].setAttribute('aria-controls', 'state_list1');
+      document.querySelectorAll('input')[1].setAttribute('aria-controls', 'state_list2');
+      document.querySelectorAll('input')[1].setAttribute('aria-activedescendant', 'list2-state1');
+    </script>
+  </body>
 </html>
 
 
