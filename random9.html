@@ -1,139 +1,116 @@
 <!DOCTYPE html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Material Web Select</title>
-    <script type="module">
-        import { injectImportMap, loadAndWaitForReady } from "./resources/utils.js";
-        injectImportMap();
-
-        const components = [
-            "md-filled-select",
-            "md-outlined-select",
-            "md-select-option"
-        ];
-
-        loadAndWaitForReady(components, () => {
-            const statusDiv = document.getElementById("status");
-            const selects = [
-                {
-                    tag: "md-filled-select",
-                    label: "Filled select",
-                    id: "test-select",
-                    options: [
-                        { value: "option1", text: "Option 1" },
-                        { value: "option2", text: "Option 2" },
-                        { value: "option3", text: "Option 3" }
-                    ]
-                },
-                {
-                    tag: "md-outlined-select",
-                    label: "Outlined select",
-                    options: [
-                        { value: "apple", text: "Apple" },
-                        { value: "banana", text: "Banana", selected: true },
-                        { value: "orange", text: "Orange" }
-                    ]
-                },
-                {
-                    tag: "md-filled-select",
-                    label: "Required select",
-                    required: true,
-                    options: [
-                        { value: "red", text: "Red" },
-                        { value: "green", text: "Green" },
-                        { value: "blue", text: "Blue" }
-                    ]
-                },
-                {
-                    tag: "md-outlined-select",
-                    label: "Disabled select",
-                    disabled: true,
-                    options: [
-                        { value: "disabled1", text: "Disabled Option 1" },
-                        { value: "disabled2", text: "Disabled Option 2" }
-                    ]
-                }
-            ];
-
-            selects.forEach(selectInfo => {
-                const select = document.createElement(selectInfo.tag);
-                select.label = selectInfo.label;
-                if (selectInfo.id) {
-                    select.id = selectInfo.id;
-                }
-                if (selectInfo.required) {
-                    select.required = true;
-                }
-                if (selectInfo.disabled) {
-                    select.disabled = true;
-                }
-                selectInfo.options.forEach(optionInfo => {
-                    const option = document.createElement("md-select-option");
-                    option.value = optionInfo.value;
-                    option.textContent = optionInfo.text;
-                    if (optionInfo.selected) {
-                        option.selected = true;
-                    }
-                    select.appendChild(option);
-                });
-                statusDiv.appendChild(select);
-            });
-
-            statusDiv.setAttribute("aria-label", "Ready");
-        });
-    </script>
-</head>
 <body>
-    <div id="status" aria-label="Loading">
-    </div>
-</body>
+<div class="combobox-container">
+  <label id="fruit-label" for="fruit-combobox-button">Select a fruit:</label>
+
+  <!-- This button is likely to be recognized as Role::kComboBoxMenuButton -->
+  <button type="button"
+          id="fruit-combobox-button"
+          aria-haspopup="listbox"
+          aria-expanded="false"
+          aria-controls="fruit-listbox"
+          aria-labelledby="fruit-label fruit-selected-value">
+    <!-- Nested child for displaying the value -->
+    <span id="fruit-selected-value">Select...</span>
+    <!-- Nested child for the dropdown arrow -->
+    <span class="arrow" aria-hidden="true">▼</span>
+  </button>
+
+  <!-- The listbox controlled by the button -->
+  <ul role="listbox"
+      id="fruit-listbox"
+      tabindex="-1"
+      aria-labelledby="fruit-label"
+      style="display: none;">
+    <li role="option" id="opt-apple">Apple</li>
+    <li role="option" id="opt-banana">Banana</li>
+    <li role="option" id="opt-cherry">Cherry</li>
+  </ul>
+</div>
+
+<!-- Basic styles for demonstration -->
+<style>
+  .combobox-container {
+    position: relative;
+    display: inline-block;
+    font-family: sans-serif;
+  }
+
+  #fruit-combobox-button {
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    background-color: #f8f8f8;
+    cursor: pointer;
+    text-align: left;
+    min-width: 150px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .arrow {
+    margin-left: 8px;
+    color: #555;
+  }
+
+  #fruit-listbox {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    border: 1px solid #ccc;
+    background-color: white;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    z-index: 10;
+    max-height: 200px;
+    overflow-y: auto;
+  }
+
+  #fruit-listbox li {
+    padding: 8px 12px;
+    cursor: pointer;
+  }
+
+  #fruit-listbox li:hover {
+    background-color: #eee;
+  }
+</style>
+
+<!-- Script to toggle display (for demonstration) -->
 <script>
-    async function selectOption2() {
-        const select = document.getElementById("test-select");
-        if (select) {
-            await select.updateComplete;
-            select.value = "option2";
-            await select.updateComplete;
-            const statusDiv = document.getElementById("status");
-            const statusText = document.createElement("div");
-            statusText.textContent = "Option 2 Selected";
-            statusDiv.appendChild(statusText);
-            return "Option 2 Selected";
-        }
-        return "Failed to select Option 2";
-    }
+  const button = document.getElementById('fruit-combobox-button');
+  const listbox = document.getElementById('fruit-listbox');
+  const selectedValue = document.getElementById('fruit-selected-value');
 
-    async function selectOption3() {
-        const select = document.getElementById("test-select");
-        if (select) {
-            await select.updateComplete;
-            select.value = "option3";
-            await select.updateComplete;
-            const statusDiv = document.getElementById("status");
-            const statusText = document.createElement("div");
-            statusText.textContent = "Option 3 Selected";
-            statusDiv.appendChild(statusText);
-            return "Option 3 Selected";
-        }
-        return "Failed to select Option 3";
+  button.addEventListener('click', () => {
+    const expanded = button.getAttribute('aria-expanded') === 'true' || false;
+    button.setAttribute('aria-expanded', !expanded);
+    listbox.style.display = expanded ? 'none' : 'block';
+    if (!expanded) {
+      listbox.focus();
     }
+  });
 
-    async function selectOption1() {
-        const select = document.getElementById("test-select");
-        if (select) {
-            await select.updateComplete;
-            select.value = "option1";
-            await select.updateComplete;
-            const statusDiv = document.getElementById("status");
-            const statusText = document.createElement("div");
-            statusText.textContent = "Option 1 Selected";
-            statusDiv.appendChild(statusText);
-            return "Option 1 Selected";
-        }
-        return "Failed to select Option 1";
+  listbox.addEventListener('click', (e) => {
+    if (e.target.role === 'option') {
+      selectedValue.textContent = e.target.textContent;
+      button.setAttribute('aria-expanded', false);
+      listbox.style.display = 'none';
+      button.focus();
     }
+  });
+
+  // Close when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!button.contains(e.target) && !listbox.contains(e.target)) {
+      button.setAttribute('aria-expanded', false);
+      listbox.style.display = 'none';
+    }
+  });
 </script>
+</body>
 </html>
 
 
