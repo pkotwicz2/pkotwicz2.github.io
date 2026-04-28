@@ -1,22 +1,13 @@
 <html>
-  <head>
-    <script>
-      function go() {
-        document.getElementById('test-input').focus();
-        document.getElementById('test-combobox').setAttribute('aria-expanded', 'true');
-        document.getElementById('test-listbox').removeAttribute('hidden');
-        document.getElementById('test-input').setAttribute('aria-controls', 'test-listbox');
-      }
-    </script>
-  </head>
   <body>
-    <div id="test-combobox" role="combobox" aria-expanded="false">
-      <input id="test-input" type="text">
-      <ul id="test-listbox" role="listbox" hidden>
-        <li role="option">Chrome</li>
-        <li role="option">Chromium</li>
-        <li role="option">Clank</li>
-      </ul>
+    <div role="combobox"
+        aria-autocomplete="list"
+        aria-expanded="true"
+        aria-haspopup="listbox"
+        aria-labelledby="state_label">
+      <input type="text"
+      aria-activedescendant="list1-state2"
+      autofocus>
     </div>
   </body>
 </html>
