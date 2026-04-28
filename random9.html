@@ -1,22 +1,24 @@
 <!DOCTYPE html>
-  <body>
-    <div id="state_label">State</div>
+<body>
 
-    <!-- For the first combo box, we dynamically set aria-controls. -->
-    <div role="combobox"
-        aria-autocomplete="list"
-        aria-expanded="true"
-        aria-haspopup="listbox">
-      <input type="text"
-      aria-activedescendant="list1-state2"
-      autofocus>
-    </div>
-
-    <ul id="state_list1" role="listbox">
-      <li id="list1-state1" role="option" selected>Alabama</li>
-      <li id="list1-state2" role="option">Alaska</li>
-    </ul>
-  </body>
+<div role="combobox" 
+    aria-label="Tag Search" 
+    aria-expanded="true" 
+    aria-haspopup="listbox" 
+    aria-controls="results-listbox">
+       
+<input type="text" 
+    id="tag-input" 
+    value="Chromium" 
+    aria-autocomplete="list" 
+    aria-activedescendant="option-1">
+   
+<ul id="results-listbox" role="listbox">
+<li id="option-1" role="option" aria-selected="true">Chromium</li>
+<li id="option-2" role="option">Blink</li>
+</ul>
+</div>
+</body>
 </html>
 
 
