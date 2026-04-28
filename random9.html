@@ -1,115 +1,15 @@
 <!DOCTYPE html>
 <body>
-<div class="combobox-container">
-  <label id="fruit-label" for="fruit-combobox-button">Select a fruit:</label>
-
-  <!-- This button is likely to be recognized as Role::kComboBoxMenuButton -->
-  <button type="button"
-          id="fruit-combobox-button"
-          aria-haspopup="listbox"
-          aria-expanded="false"
-          aria-controls="fruit-listbox"
-          aria-labelledby="fruit-label fruit-selected-value">
-    <!-- Nested child for displaying the value -->
-    <span id="fruit-selected-value">Select...</span>
-    <!-- Nested child for the dropdown arrow -->
-    <span class="arrow" aria-hidden="true">▼</span>
-  </button>
-
-  <!-- The listbox controlled by the button -->
-  <ul role="listbox"
-      id="fruit-listbox"
-      tabindex="-1"
-      aria-labelledby="fruit-label"
-      style="display: none;">
-    <li role="option" id="opt-apple">Apple</li>
-    <li role="option" id="opt-banana">Banana</li>
-    <li role="option" id="opt-cherry">Cherry</li>
-  </ul>
+<div id="test" role="combobox" tabindex="0" title="Choose your language.">
+<div role="textbox"></div>
+    <ul role="listbox" style="list-style-type: none;">
+      <li role="option" aria-selected="true">1</li>
+      <li role="option">2</li>
+      <li role="option">3</li>
+    </ul>
 </div>
-
-<!-- Basic styles for demonstration -->
-<style>
-  .combobox-container {
-    position: relative;
-    display: inline-block;
-    font-family: sans-serif;
-  }
-
-  #fruit-combobox-button {
-    padding: 8px 12px;
-    border: 1px solid #ccc;
-    background-color: #f8f8f8;
-    cursor: pointer;
-    text-align: left;
-    min-width: 150px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .arrow {
-    margin-left: 8px;
-    color: #555;
-  }
-
-  #fruit-listbox {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    border: 1px solid #ccc;
-    background-color: white;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    width: 100%;
-    z-index: 10;
-    max-height: 200px;
-    overflow-y: auto;
-  }
-
-  #fruit-listbox li {
-    padding: 8px 12px;
-    cursor: pointer;
-  }
-
-  #fruit-listbox li:hover {
-    background-color: #eee;
-  }
-</style>
-
-<!-- Script to toggle display (for demonstration) -->
-<script>
-  const button = document.getElementById('fruit-combobox-button');
-  const listbox = document.getElementById('fruit-listbox');
-  const selectedValue = document.getElementById('fruit-selected-value');
-
-  button.addEventListener('click', () => {
-    const expanded = button.getAttribute('aria-expanded') === 'true' || false;
-    button.setAttribute('aria-expanded', !expanded);
-    listbox.style.display = expanded ? 'none' : 'block';
-    if (!expanded) {
-      listbox.focus();
-    }
-  });
-
-  listbox.addEventListener('click', (e) => {
-    if (e.target.role === 'option') {
-      selectedValue.textContent = e.target.textContent;
-      button.setAttribute('aria-expanded', false);
-      listbox.style.display = 'none';
-      button.focus();
-    }
-  });
-
-  // Close when clicking outside
-  document.addEventListener('click', (e) => {
-    if (!button.contains(e.target) && !listbox.contains(e.target)) {
-      button.setAttribute('aria-expanded', false);
-      listbox.style.display = 'none';
-    }
-  });
-</script>
+</body>
+</html>
 </body>
 </html>
 
