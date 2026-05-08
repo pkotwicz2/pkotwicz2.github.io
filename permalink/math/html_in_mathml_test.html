@@ -44,7 +44,15 @@
     </math><br/>
     <h4>Image inside of MathML with glyph tag</h4><br/>
     <math>
-      <mi><mglyph src="https://dummyimage.com/16x16/0011ff/0011ff" alt="Perpendicular to surface"/>Length</mi>
+      <semantics>
+        <!-- The visible MathML token (acting as a fallback) -->
+        <mi>Length perpendicular to surface</mi> 
+      
+        <!-- The embedded HTML Image -->
+        <annotation-xml encoding="text/html">
+          <img src="https://dummyimage.com/16x16/0011ff/0011ff" alt="Perpendicular to surface"/>Length
+        </annotation-xml>
+      </semantics>
       <mo>=</mo>
       <mn>2</mn>
     </math><br/>
