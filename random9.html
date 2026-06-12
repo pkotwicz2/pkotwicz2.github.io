@@ -1,37 +1,20 @@
 <html>
 <head>
 <style>
-p {
-  color: gray;
+.translucent {
+  opacity: 0.4;
 }
 
-@media (inverted-colors: inverted) {
-  p {
-    background: black;
-    color: yellow;
-    text-decoration: overline;
-  }
-}
-
-@media (inverted-colors: none) {
-  p {
-    background: #eeeeee;
-    color: red;
+@media (prefers-reduced-transparency) {
+  .translucent {
+    opacity: 0.8;
   }
 }
 </style>
 </head>
 <body>
-<p>
-  If color inversion is detected, this text will appear blue on white (the
-  inverse of yellow on black) along with a line over the text. If no color
-  inversion is happening, the text will appear red on light gray without the
-  line over the text.
-</p>
-<p>
-  If the text is gray and no overline is present, it means your browser doesn't
-  support the
-  <code>inverted-colors</code> media feature.
-</p>
+<div style="background-color:purple;width:500px;height:500px">
+  <div class="translucent">translucent box</div>
+</div>
 </body>
 </html>
