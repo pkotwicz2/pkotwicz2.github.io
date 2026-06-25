@@ -1,7 +1,41 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <body>
-<input style="width:200px"/>
+    <h1>Text Area to Strip Script Tags</h1>
+    <textarea id="myTextArea" placeholder="Paste your text with script tags here...">
+<p>This is some text.</p>
+<script>
+    console.log("This should be removed");
+    alert("Remove me!");
+</script>
+<p>More text here.</p>
+<script type="text/javascript">
+    // Another script block
+    var x = 10;
+</script>
+<p>End of text.</p>
+    </textarea>
+
+    <br>
+
+    <button onclick="stripScripts()">Strip <script> Tags</button>
+
+    <script>
+        function stripScripts() {
+            const textArea = document.getElementById('myTextArea');
+            let content = textArea.value;
+
+            // Regular expression to find <script> tags and everything between them.
+            // .*? matches any character (.) zero or more times (*), non-greedily (?).
+            // The 's' flag allows '.' to match newlines.
+            // The 'gi' flags make it global (g) and case-insensitive (i).
+            const scriptRegExp = /<script[^>]*>[\s\S]*?<\/script>/gi;
+
+            content = content.replace(scriptRegExp, '');
+
+            textArea.value = content;
+        }
+    </script>
+
 </body>
 </html>
