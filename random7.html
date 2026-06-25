@@ -1,19 +1,64 @@
-<!DOCTYPE html>
-<html>
-<body>
-<button>Button2</button>
-<br/>
-<math>
-  <mrow intent="point($x,$y)">
-    <mo>(</mo>
-    <mi arg="x">0</mi>
-    <mo>,</mo>
-    <mi arg="y">5</mi>
-    <mo>)</mo>
-  </mrow>
-</math>
-<br/>
-<button>Button3</button>
-</body>
-</html>
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Reproduction Page for Caret Magnifier Bug</title>
+      <style>
+        body {
+          font-family: sans-serif;
+          margin: 20px;
+        }
+        .spacer {
+          height: 1500px; /* Force scrolling */
+          background: linear-gradient(to bottom, #f0f0f0, #ccc);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: #666;
+          font-size: 20px;
+          border: 1px solid #aaa;
+        }
+        .input-container {
+          margin-top: 50px;
+          margin-bottom: 800px; /* Allow scrolling well past the input */
+          padding: 20px;
+          border: 2px dashed #007bff;
+          background-color: #f8f9fa;
+        }
+        input[type="text"] {
+          width: 80%;
+          padding: 10px;
+          font-size: 18px;
+        }
+      </style>
+    </head>
+    <body>
+      <h1>Caret Magnifier Bug Reproduction</h1>
+      <p>This page demonstrates the bug where the caret coordinates sent to the Android View system (via
+  <code>requestRectangleOnScreen</code>) are incorrect when the page is scrolled.</p>
+      
+      <h2>Instructions to reproduce:</h2>
+      <ol>
+        <li>Enable <strong>Accessibility Magnification</strong> on your Android device (usually via Triple-tap or Accessibility
+  shortcut).</li>
+        <li>Open this page in Chrome or WebView.</li>
+        <li><strong>Scroll down</strong> past the grey gradient spacer to find the blue dashed box.</li>
+        <li>Tap the input field below to focus it.</li>
+        <li>Type some text to move the caret.</li>
+        <li>Observe the magnifier window. Instead of centering on the caret, the magnifier will center <strong>far below</strong> the
+  actual caret position (potentially off-screen) because the Y coordinate is incorrectly offset by the scroll amount (it is document-
+  relative instead of viewport-relative).</li>
+      </ol>
+
+      <div class="spacer">
+        [SCROLL DOWN TO FIND INPUT FIELD]
+      </div>
+
+      <div class="input-container">
+        <label for="buggy-input"><strong>Type here after scrolling:</strong></label><br><br>
+        <input type="text" id="buggy-input" placeholder="Type something to trigger caret updates...">
+      </div>
+    </body>
+    </html>
 
