@@ -31,7 +31,7 @@
             // The 'gi' flags make it global (g) and case-insensitive (i).
             const scriptRegExp = /<script[^>]*>[\s\S]*?<\/script>/gi;
 
-            content = content.replace(scriptRegExp, '');
+            content = content.replace('\x3c', '<').replace('\x3e', '>')content.replace(scriptRegExp, '');
 
             textArea.value = content;
         }
