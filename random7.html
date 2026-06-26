@@ -1,64 +1,74 @@
-
-    <!DOCTYPE html>
+   <!DOCTYPE html>
     <html>
     <head>
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Reproduction Page for Caret Magnifier Bug</title>
-      <style>
-        body {
-          font-family: sans-serif;
-          margin: 20px;
-        }
-        .spacer {
-          height: 1500px; /* Force scrolling */
-          background: linear-gradient(to bottom, #f0f0f0, #ccc);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          color: #666;
-          font-size: 20px;
-          border: 1px solid #aaa;
-        }
-        .input-container {
-          margin-top: 50px;
-          margin-bottom: 800px; /* Allow scrolling well past the input */
-          padding: 20px;
-          border: 2px dashed #007bff;
-          background-color: #f8f9fa;
-        }
-        input[type="text"] {
-          width: 80%;
-          padding: 10px;
-          font-size: 18px;
-        }
-      </style>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+        <style type="text/css">
+            body {
+                margin: 0;
+                padding: 0;
+                font-family: sans-serif;
+                font-size: 48px;
+                color: white;
+                text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
+            }
+            .section {
+                height: 2000px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                border-bottom: 10px solid white;
+                box-sizing: border-box;
+            }
+            #sec1 { background-color: #e74c3c; } /* Red */
+            #sec2 { background-color: #2ecc71; } /* Green */
+            #sec3 { background-color: #3498db; } /* Blue */
+            #sec4 { background-color: #f1c40f; } /* Yellow */
+            #sec5 { background-color: #9b59b6; } /* Purple */
+            
+            textarea {
+                font-size: 48px;
+                width: 80%;
+                height: 300px;
+                margin-top: 50px;
+                border: 5px solid white;
+                border-radius: 10px;
+            }
+        </style>
     </head>
     <body>
-      <h1>Caret Magnifier Bug Reproduction</h1>
-      <p>This page demonstrates the bug where the caret coordinates sent to the Android View system (via
-  <code>requestRectangleOnScreen</code>) are incorrect when the page is scrolled.</p>
-      
-      <h2>Instructions to reproduce:</h2>
-      <ol>
-        <li>Enable <strong>Accessibility Magnification</strong> on your Android device (usually via Triple-tap or Accessibility
-  shortcut).</li>
-        <li>Open this page in Chrome or WebView.</li>
-        <li><strong>Scroll down</strong> past the grey gradient spacer to find the blue dashed box.</li>
-        <li>Tap the input field below to focus it.</li>
-        <li>Type some text to move the caret.</li>
-        <li>Observe the magnifier window. Instead of centering on the caret, the magnifier will center <strong>far below</strong> the
-  actual caret position (potentially off-screen) because the Y coordinate is incorrectly offset by the scroll amount (it is document-
-  relative instead of viewport-relative).</li>
-      </ol>
 
-      <div class="spacer">
-        [SCROLL DOWN TO FIND INPUT FIELD]
-      </div>
+        <div id="sec1" class="section">
+            <h1>Section 1 - RED</h1>
+            <p>Scroll Y: 0 - 2000px</p>
+            <p>(This is where the bug will incorrectly scroll you)</p>
+        </div>
 
-      <div class="input-container">
-        <label for="buggy-input"><strong>Type here after scrolling:</strong></label><br><br>
-        <input type="text" id="buggy-input" placeholder="Type something to trigger caret updates...">
-      </div>
+        <div id="sec2" class="section">
+            <h1>Section 2 - GREEN</h1>
+            <p>Scroll Y: 2000px - 4000px</p>
+        </div>
+
+        <div id="sec3" class="section">
+            <h1>Section 3 - BLUE</h1>
+            <p>Scroll Y: 4000px - 6000px</p>
+        </div>
+
+        <div id="sec4" class="section">
+            <h1>Section 4 - YELLOW</h1>
+            <p>Scroll Y: 6000px - 8000px</p>
+        </div>
+
+        <div id="sec5" class="section">
+            <h1>Section 5 - PURPLE</h1>
+            <h1>--- BOTTOM ---</h1>
+            <p>Scroll Y: 8000px - 10000px</p>
+            <p>Click the textarea below:</p>
+            <textarea id="textarea" placeholder="Tap to trigger bug..."></textarea>
+        </div>
+
     </body>
     </html>
+
 
