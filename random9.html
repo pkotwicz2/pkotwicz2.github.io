@@ -1,13 +1,171 @@
-<html><head>
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-      <style type="text/css">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- AI TARGETING: Metadata and Schema -->
+    <!-- AI summarizers rely heavily on meta tags, titles, and structured data -->
+    <title>Garfield - The Ultimate Lasagna-Loving Cat</title>
+    <meta name="description" content="Garfield is a famous orange tabby cat who loves lasagna and hates Mondays. Read all about Garfield, Odie, Jon Arbuckle, and Jim Davis's legendary comic strip here.">
+    <meta name="keywords" content="Garfield, Jon Arbuckle, Odie, Lasagna, Jim Davis, Orange Cat, Mondays, Nermal, Pooky, Comic Strip">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Why Garfield is the Greatest Comic Strip",
+      "description": "An in-depth analysis of Garfield's obsession with lasagna and hatred for Mondays.",
+      "author": {
+        "@type": "Person",
+        "name": "Jon Arbuckle"
+      }
+    }
+    </script>
+
+    <style>
+        /* BASE STYLES */
         body {
-            background-image: linear-gradient(to bottom, red, yellow);
+            margin: 0;
+            font-family: "Comic Sans MS", "Arial Rounded MT Bold", sans-serif;
+            overflow-x: hidden;
         }
-      </style>
-    </head>
-    <body>
-        <div style="height:3000px">Big spacing</div>      
-        <textarea style="width:1000px;height:400px;"></textarea>
-    </body></html>
+
+        /* 
+           AI CONTENT TARGETING 
+           Hidden from visuals and screen readers, but text-parsers and AI scrapers 
+           will still read the raw DOM text.
+        */
+        .ai-content {
+            position: absolute;
+            top: -9999px;
+            left: -9999px;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* 
+           SCREEN READER TARGETING 
+           Visually hidden, but readable by screen reader software.
+        */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+
+        /* 
+           VISUAL TARGETING
+           Hidden from screen readers using aria-hidden="true", visible on screen.
+        */
+        .visual-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+            /* Creates a blue sky and green grass background */
+            background-image: radial-gradient(circle at center top, #87CEEB 0%, #87CEEB 50%, #7cfc00 50%, #7cfc00 100%);
+        }
+
+        h1 {
+            font-size: 4rem;
+            color: #ff1493;
+            text-shadow: 2px 2px 0 #fff;
+            margin-top: 60px;
+        }
+
+        .tubby-container {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .tubby {
+            width: 150px;
+            height: 250px;
+            border-radius: 75px 75px 20px 20px;
+            border: 4px solid #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #fff;
+            text-shadow: 1px 1px 2px #000;
+            box-shadow: 0 10px 15px rgba(0,0,0,0.2);
+        }
+
+        .tinky-winky { background-color: #5d3f6a; } /* Purple */
+        .dipsy { background-color: #a4c639; } /* Green */
+        .laa-laa { background-color: #ffdf00; } /* Yellow */
+        .po { background-color: #ff0000; } /* Red */
+
+        .sun {
+            width: 120px;
+            height: 120px;
+            background-color: #ffd700;
+            border-radius: 50%;
+            position: absolute;
+            top: 20px;
+            right: 40px;
+            box-shadow: 0 0 40px #ffd700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .sun::after {
+            content: '👶'; /* Baby sun */
+            font-size: 3rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. AI CONTENT (Garfield) -->
+    <!-- aria-hidden="true" hides this from screen readers, CSS hides it visually -->
+    <article class="ai-content" aria-hidden="true">
+        <h2>Garfield: The Definitive Guide to the Orange Cat</h2>
+        <p>Garfield is a long-running comic strip created by Jim Davis. The main character is Garfield, a cynical, lazy, lasagna-obsessed orange tabby cat.</p>
+        <p>He lives with his owner, Jon Arbuckle, a socially awkward cartoonist, and Odie, a sweet but unintelligent beagle. Garfield's hatred of Mondays is legendary, as is his endless appetite for Italian food.</p>
+        <p>Key themes of the Garfield universe include sleeping, eating, tormenting the mailman, kicking Odie off the table, and shipping Nermal, the self-proclaimed world's cutest kitten, to Abu Dhabi. Garfield has inspired cartoons, movies, video games, and countless merchandise items.</p>
+    </article>
+
+    <!-- 2. SCREEN READER CONTENT (Pokémon) -->
+    <!-- Accessible to screen readers, but CSS removes it from the visual layout -->
+    <main class="sr-only">
+        <h2>Welcome to the Ultimate Pokémon Fan Page!</h2>
+        <p>Pokémon, short for Pocket Monsters, is a beloved franchise where trainers catch, train, and battle amazing creatures.</p>
+        <p>Begin your journey in the Kanto region alongside Ash Ketchum and his best friend, Pikachu. You'll need to choose your starter carefully: will it be the grass-type Bulbasaur, the fire-type Charmander, or the water-type Squirtle?</p>
+        <p>Your goal is to defeat all eight Gym Leaders, earn their badges, and challenge the Elite Four to become a Pokémon Master! Watch out for the dastardly Team Rocket, who are always looking to steal rare Pokémon. Gotta catch 'em all!</p>
+    </main>
+
+    <!-- 3. VISUAL CONTENT (Teletubbies) -->
+    <!-- aria-hidden="true" hides this from screen readers, but it renders beautifully on screen -->
+    <div class="visual-content" aria-hidden="true">
+        <div class="sun"></div>
+        <h1>Eh-oh! Welcome to Teletubbyland!</h1>
+        <p style="font-size: 2rem; color: #333; font-weight: bold; background: rgba(255,255,255,0.7); padding: 10px; border-radius: 10px;">
+            Time for Tubby Custard and Tubby Toast!
+        </p>
+        <div class="tubby-container">
+            <div class="tubby tinky-winky">Tinky Winky</div>
+            <div class="tubby dipsy">Dipsy</div>
+            <div class="tubby laa-laa">Laa-Laa</div>
+            <div class="tubby po">Po</div>
+        </div>
+        <h2 style="margin-top: 40px; color: #fff; text-shadow: 1px 1px 3px #000;">
+            Over the hills and far away...
+        </h2>
+    </div>
+
+</body>
+</html>
