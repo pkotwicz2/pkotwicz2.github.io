@@ -1,4 +1,162 @@
-<ul role="tree">
-  <li role="treeitem" tabindex=0><strong>Cat</strong></li>
-  <li role="treeitem" tabindex=0>Dog</li>
-</ul>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>10 Ways to Make Text Large</title>
+<style>
+    body {
+        font-family: system-ui, -apple-system, sans-serif;
+        line-height: 1.6;
+        padding: 30px;
+        max-width: 1000px;
+        margin: 0 auto;
+        color: #222;
+        background-color: #f4f4f9;
+    }
+    
+    .example-container {
+        margin-bottom: 30px;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background: #ffffff;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        overflow: hidden;
+    }
+    
+    .label {
+        font-weight: 700;
+        color: #d32f2f;
+        margin-bottom: 15px;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-bottom: 2px solid #eee;
+        padding-bottom: 5px;
+    }
+
+    /* Method 2: Absolute Pixels */
+    .size-px { 
+        font-size: 48px; 
+        line-height: 1.2;
+    }
+
+    /* Method 3: Ems (Relative to parent) */
+    .size-em { 
+        font-size: 3em; 
+        line-height: 1.2; 
+    }
+
+    /* Method 4: Rems (Relative to root HTML element) */
+    .size-rem { 
+        font-size: 3rem; 
+        line-height: 1.2; 
+    }
+
+    /* Method 5: Percentages */
+    .size-percent { 
+        font-size: 300%; 
+        line-height: 1.2; 
+    }
+
+    /* Method 6: Viewport Width (Scales with window size) */
+    .size-vw { 
+        font-size: 4vw; 
+        line-height: 1.2; 
+    }
+
+    /* Method 7: Standard Keyword */
+    .size-keyword { 
+        font-size: xx-large; 
+    }
+
+    /* Method 8: Calc Function (Mixes units) */
+    .size-calc { 
+        font-size: calc(20px + 2vw); 
+        line-height: 1.2; 
+    }
+
+    /* Method 9: Clamp Function (Min, Ideal, Max) */
+    .size-clamp { 
+        font-size: clamp(24px, 5vw, 64px); 
+        line-height: 1.2; 
+    }
+
+    /* Method 10: Transform Scale */
+    .size-scale-container {
+        padding-bottom: 60px; /* Extra padding for the scaled element */
+    }
+    .size-scale {
+        display: inline-block;
+        transform: scale(2.5);
+        transform-origin: left top;
+    }
+</style>
+</head>
+<body>
+
+    <p>Below are 10 distinct methods using HTML and CSS to render large text, featuring standard Lorem Ipsum placeholder text.</p>
+
+    <!-- Method 1 -->
+    <div class="example-container">
+        <div class="label">1. HTML Native Heading Element (&lt;h1&gt;)</div>
+        <h1 style="margin: 0;">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h1>
+    </div>
+
+    <!-- Method 2 -->
+    <div class="example-container">
+        <div class="label">2. CSS Absolute Pixels (font-size: 48px)</div>
+        <div class="size-px">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
+    </div>
+
+    <!-- Method 3 -->
+    <div class="example-container">
+        <div class="label">3. CSS Em Units (font-size: 3em)</div>
+        <div class="size-em">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
+    </div>
+
+    <!-- Method 4 -->
+    <div class="example-container">
+        <div class="label">4. CSS Rem Units (font-size: 3rem)</div>
+        <div class="size-rem">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
+    </div>
+
+    <!-- Method 5 -->
+    <div class="example-container">
+        <div class="label">5. CSS Percentages (font-size: 300%)</div>
+        <div class="size-percent">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
+    </div>
+
+    <!-- Method 6 -->
+    <div class="example-container">
+        <div class="label">6. CSS Viewport Width (font-size: 4vw)</div>
+        <div class="size-vw">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
+    </div>
+
+    <!-- Method 7 -->
+    <div class="example-container">
+        <div class="label">7. CSS Keywords (font-size: xx-large)</div>
+        <div class="size-keyword">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
+    </div>
+
+    <!-- Method 8 -->
+    <div class="example-container">
+        <div class="label">8. CSS Calc() Function (font-size: calc(20px + 2vw))</div>
+        <div class="size-calc">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
+    </div>
+
+    <!-- Method 9 -->
+    <div class="example-container">
+        <div class="label">9. CSS Clamp() Function (font-size: clamp(24px, 5vw, 64px))</div>
+        <div class="size-clamp">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
+    </div>
+
+    <!-- Method 10 -->
+    <div class="example-container size-scale-container">
+        <div class="label">10. CSS Transform Scale (transform: scale(2.5))</div>
+        <div class="size-scale">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
+    </div>
+
+</body>
+</html>
