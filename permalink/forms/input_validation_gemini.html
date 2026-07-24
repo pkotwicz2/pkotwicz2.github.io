@@ -78,10 +78,7 @@
             <div class="form-group">
                 <!-- 1. The label is explicitly tied to the input via 'for' -->
                 <label for="phone">Phone Number <span aria-hidden="true">*</span></label>
-                
-                <!-- 2. The hint gives formatting context -->
-                <span id="phone-hint" class="hint">Enter a 10-digit number. Example: 555-019-2838</span>
-                
+                            
                 <!-- 3. The input uses aria-describedby to link both the hint and the error container -->
                 <input 
                     type="tel" 
@@ -90,7 +87,7 @@
                     required 
                     aria-required="true" 
                     autocomplete="tel" 
-                    aria-describedby="phone-hint phone-error"
+                    aria-describedby="phone-error"
                 >
                 
                 <!-- 4. aria-live="polite" ensures screen readers announce errors dynamically as they appear -->
