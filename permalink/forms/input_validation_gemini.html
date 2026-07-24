@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accessible Phone Number Input</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            padding: 2rem;
+            max-width: 500px;
+            margin: 0 auto;
+            color: #333;
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        .hint {
+            font-size: 0.875rem;
+            color: #555;
+            margin-bottom: 0.5rem;
+        }
+        input {
+            padding: 0.75rem;
+            font-size: 1rem;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+            transition: border-color 0.2s;
+        }
+        /* Visual feedback for validation states */
+        input:focus {
+            outline: none;
+            border-color: #0056b3;
+            box-shadow: 0 0 0 3px rgba(0, 86, 179, 0.2);
+        }
+        input[aria-invalid="true"] {
+            border-color: #d32f2f;
+        }
+        input[aria-invalid="false"] {
+            border-color: #2e7d32;
+        }
+        .error-message {
+            color: #d32f2f;
+            font-weight: 500;
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+            min-height: 1.2em; /* Prevents layout shift */
+            display: block;
+        }
+        button {
+            padding: 0.75rem 1.5rem;
+            background-color: #0056b3;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        button:hover {
+            background-color: #004494;
+        }
+    </style>
+</head>
+<body>
+
+    <main>
+        <h1>Contact Details</h1>
+        
+        <!-- novalidate disables the browser's default accessible-hostile tooltips -->
+        <form id="contact-form" novalidate>
+            <div class="form-group">
+                <!-- 1. The label is explicitly tied to the input via 'for' -->
+                <label for="phone">Phone Number <span aria-hidden="true">*</span></label>
+                
+                <!-- 2. The hint gives formatting context -->
+                <span id="phone-hint" class="hint">Enter a 10-digit number. Example: 555-019-2838</span>
+                
+                <!-- 3. The input uses aria-describedby to link both the hint and the error container -->
+                <input 
+                    type="tel" 
+                    id="phone" 
+                    name="phone" 
+                    required 
+                    aria-required="true" 
+                    autocomplete="tel" 
+                    aria-describedby="phone-hint phone-error"
+                >
+                
+                <!-- 4. aria-live="polite" ensures screen readers announce errors dynamically as they appear -->
+                <span id="phone-error" class="error-message" aria-live="polite"></span>
+            </div>
+
+            <button type="submit">Submit</button>
+        </form>
+    </main>
+
+    <script>
+        const form = document.getElementById('contact-form');
+        const phoneInput = document.getElementById('phone');
+        const phoneError = document.getElementById('phone-error');
+
+        // Regex for testing a basic North American 10-digit format (ignores spaces, dashes, parens)
+        const phoneRegex = /^[0-9]{10}$/;
+
+        function validatePhone() {
+            // Strip out common formatting characters to just check the digits
+            const rawValue = phoneInput.value.replace(/[\s\-\(\)]/g, '');
+
+            if (rawValue === '') {
+                // Empty state (Required)
+                setInvalid('Error: Phone number is required.');
+                return false;
+            } else if (!phoneRegex.test(rawValue)) {
+                // Invalid format
+                setInvalid('Error: Please enter a valid 10-digit phone number.');
+                return false;
+            } else {
+                // Valid state
+                setValid();
+                return true;
+            }
+        }
+
+        function setInvalid(message) {
+            phoneInput.setAttribute('aria-invalid', 'true');
+            phoneError.textContent = message;
+        }
+
+        function setValid() {
+            phoneInput.setAttribute('aria-invalid', 'false');
+            phoneError.textContent = ''; // Clear error message
+        }
+
+        // Validate on blur (when the user leaves the field)
+        // This is best practice for accessibility so screen readers don't announce errors mid-keystroke.
+        phoneInput.addEventListener('blur', validatePhone);
+
+        // Validate on input ONLY if the field is currently invalid.
+        // This provides real-time feedback to clear the error as soon as the user fixes it.
+        phoneInput.addEventListener('input', () => {
+            if (phoneInput.getAttribute('aria-invalid') === 'true') {
+                validatePhone();
+            }
+        });
+
+        // Form submission handling
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
+            
+            const isValid = validatePhone();
+            
+            if (isValid) {
+                alert('Form submitted successfully!');
+                // form.submit(); // Uncomment to actually submit
+            } else {
+                // If invalid on submit, shift focus back to the input so the screen reader 
+                // user is right where they need to be to fix the issue.
+                phoneInput.focus();
+            }
+        });
+    </script>
+</body>
+</html>
