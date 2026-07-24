@@ -14,7 +14,7 @@ function $(id) {
     
 function ValidateEmail() {
     var field = $("email");
-    if (field.indexOf("@") >= 0) {
+    if (field.value.indexOf("@") >= 0) {
         field.setAttribute("aria-errormessage", "");
         $("error").style.display = "none";
     }
