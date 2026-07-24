@@ -22,7 +22,13 @@ function ValidateEmailKeyUp() {
 }
     
 function ValidateEmailBlur() {
-    $("email").setAttribute("aria-invalid", IsEmailValid() ? "false" : "true");
+    if (IsEmailValid()) {
+        $("email").setAttribute("aria-invalid", "true");
+        $("email").setAttribute("aria-errormessage", "error");
+    } else {
+        $("email").setAttribute("aria-invalid", "false");
+        $("email").removeAttribute("aria-errormessage", "error");
+    }
 }
 </script>
 </head>
