@@ -15,8 +15,11 @@ function $(id) {
 function ValidateEmail() {
     var field = $("email");
     if (field.value.indexOf("@") >= 0) {
-        field.removeAttribute("aria-invalid");
+        field.setAttribute("aria-invalid", "false");
         $("error").style.display = "none";
+    } else {
+        field.setAttribute("aria-invalid", "true");
+        $("error").style.display = "block";
     }
 }
 </script>
