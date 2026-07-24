@@ -1,49 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Email Pattern Validation</title>
-  <style>
-    .valid { color: green; }
-    .invalid { color: red; }
-  </style>
+<style>
+    #error {
+      color:red;
+      font-weight:bold;
+    }
+</style>
+<script>
+function $(id) {
+    return document.getElementById(id);
+}
+    
+function ValidateEmail() {
+    var field = $("email");
+    if (field.value.indexOf("@") >= 0) {
+        field.setAttribute("aria-invalid", "false");
+        $("error").style.display = "none";
+    } else {
+        field.setAttribute("aria-invalid", "true");
+        $("error").style.display = "block";
+    }
+}
+</script>
 </head>
 <body>
-
-  <label for="email">Enter Email: </label>
-  <input 
-    type="text" 
-    id="email" 
-    pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}"
-    placeholder="user@example.com"
-    required
-  >
-  <span id="status"></span>
-
-  <script>
-    const emailInput = document.getElementById('email');
-    const statusDisplay = document.getElementById('status');
-
-    // Trigger validation when a key is pressed
-    emailInput.addEventListener('keyup', function() {
-      // Clear status if the input is empty
-      if (this.value.length === 0) {
-        statusDisplay.textContent = '';
-        statusDisplay.className = '';
-        return;
-      }
-
-      // Check validity solely based on the patternMismatch property
-      if (this.validity.patternMismatch) {
-        statusDisplay.textContent = 'Invalid Email Format';
-        statusDisplay.className = 'invalid';
-      } else {
-        statusDisplay.textContent = 'Valid Email Format';
-        statusDisplay.className = 'valid';
-      }
-    });
-  </script>
-
+<label for="email">E-mail</label><input aria-required="true" aria-invalid="true" aria-errormessage="error" id="email" onblur="ValidateEmail()" required></input><br/>
+<span id="error">Invalid e-mail</span><br/>
+<label for="other">Other</label><input id="other"></input>
 </body>
 </html>
