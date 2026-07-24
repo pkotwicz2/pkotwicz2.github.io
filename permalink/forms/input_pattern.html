@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Email Pattern Validation</title>
+  <style>
+    .valid { color: green; }
+    .invalid { color: red; }
+  </style>
+</head>
+<body>
+
+  <label for="email">Enter Email: </label>
+  <input 
+    type="text" 
+    id="email" 
+    pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}"
+    required
+  >
+  <span id="status"></span>
+
+  <script>
+    const emailInput = document.getElementById('email');
+    const statusDisplay = document.getElementById('status');
+
+    // Trigger validation when a key is pressed
+    emailInput.addEventListener('keyup', function() {
+      // Clear status if the input is empty
+      if (this.value.length === 0) {
+        statusDisplay.textContent = '';
+        statusDisplay.className = '';
+        return;
+      }
+
+      // Check validity solely based on the patternMismatch property
+      if (this.validity.patternMismatch) {
+        statusDisplay.textContent = 'Invalid Email Format';
+        statusDisplay.className = 'invalid';
+      } else {
+        statusDisplay.textContent = 'Valid Email Format';
+        statusDisplay.className = 'valid';
+      }
+    });
+  </script>
+
+</body>
+</html>
