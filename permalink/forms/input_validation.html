@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<style>
+    #error {
+      color:red;
+      font-weight:bold;
+    }
+</style>
+<script>
+function $(id) {
+    return document.getElementById(id);
+}
+
+function IsEmailValid() {
+    var field = $("email");
+    return field.value.indexOf("@") >= 0;
+}
+
+function ValidateEmailKeyUp() {
+    $("error").style.display = IsEmailValid() ? "none" : "block";
+}
+    
+function ValidateEmailBlur() {
+    if (IsEmailValid()) {
+        $("email").setAttribute("aria-invalid", "true");
+        $("email").setAttribute("aria-errormessage", "error");
+    } else {
+        $("email").setAttribute("aria-invalid", "false");
+        $("email").removeAttribute("aria-errormessage", "error");
+    }
+}
+</script>
+</head>
+<body>
+<label for="email">E-mail</label><input aria-required="true" aria-errormessage="error" id="email" onkeyup="ValidateEmailKeyUp()" onblur="ValidateEmailBlur()" required></input><br/>
+<span id="error">Invalid e-mail</span><br/>
+<label for="other">Other</label><input id="other"></input>
+</body>
+</html>
