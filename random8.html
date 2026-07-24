@@ -5,19 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Email Pattern Validation</title>
   <style>
-    body {
-      font-family: system-ui, -apple-system, sans-serif;
-      padding: 2rem;
-    }
-    input {
-      padding: 8px;
-      font-size: 16px;
-      width: 250px;
-    }
-    #status {
-      margin-left: 10px;
-      font-weight: bold;
-    }
     .valid { color: green; }
     .invalid { color: red; }
   </style>
@@ -25,10 +12,6 @@
 <body>
 
   <label for="email">Enter Email: </label>
-  <!-- 
-    The pattern attribute implicitly anchors to the start and end of the string (^...$).
-    This regex checks for standard email formatting: local-part @ domain . tld 
-  -->
   <input 
     type="text" 
     id="email" 
