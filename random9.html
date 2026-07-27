@@ -1,32 +1,130 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<style>
-    #error {
-      color:red;
-      font-weight:bold;
-    }
-</style>
-<script>
-function $(id) {
-    return document.getElementById(id);
-}
-    
-function ValidateEmail() {
-    var field = $("email");
-    if (field.value.indexOf("@") >= 0) {
-        field.setAttribute("aria-invalid", "false");
-        $("error").style.display = "none";
-    } else {
-        field.setAttribute("aria-invalid", "true");
-        $("error").style.display = "block";
-    }
-}
-</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radio Button Group & Buttons Demo</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 20px;
+            color: #3c4043;
+        }
+        .form-group {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #dadce0;
+            border-radius: 8px;
+            max-width: 400px;
+        }
+        .form-group legend {
+            font-weight: bold;
+            padding: 0 5px;
+        }
+        .radio-option {
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+        }
+        .radio-option input {
+            margin-right: 10px;
+            cursor: pointer;
+        }
+        .radio-option label {
+            cursor: pointer;
+        }
+        .button-group {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+        }
+        button {
+            padding: 10px 24px;
+            border: none;
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        /* Primary Action Button */
+        button.primary {
+            background-color: #1a73e8; /* Google Blue */
+            color: white;
+        }
+        button.primary:hover {
+            background-color: #174ea6;
+        }
+        /* Secondary Action Button */
+        button.secondary {
+            background-color: white;
+            color: #3c4043;
+            border: 1px solid #dadce0;
+        }
+        button.secondary:hover {
+            background-color: #f1f3f4;
+        }
+    </style>
 </head>
 <body>
-<label for="email">E-mail</label><input aria-required="true" aria-invalid="true" aria-errormessage="error" id="email" onkeyup="ValidateEmail()" required></input><br/>
-<span id="error">Invalid e-mail</span><br/>
-<label for="other">Other</label><input id="other"></input>
+
+    <h2>Preferences Setup</h2>
+
+    <form id="MySimpleForm">
+        <!-- Radio Button Group 1 -->
+        <fieldset class="form-group">
+            <legend>Notification Frequency</legend>
+            <div class="radio-option">
+                <input type="radio" id="notifyInstantly" name="notifyFreq" value="Instantly" checked>
+                <label for="notifyInstantly">Instantly</label>
+            </div>
+            <div class="radio-option">
+                <input type="radio" id="notifyDaily" name="notifyFreq" value="Daily Summary">
+                <label for="notifyDaily">Daily Summary</label>
+            </div>
+            <div class="radio-option">
+                <input type="radio" id="notifyNever" name="notifyFreq" value="Never">
+                <label for="notifyNever">Never</label>
+            </div>
+        </fieldset>
+
+        <!-- Radio Button Group 2 -->
+        <fieldset class="form-group">
+            <legend>Theme Mode</legend>
+            <div class="radio-option">
+                <input type="radio" id="themeLight" name="themeMode" value="Light">
+                <label for="themeLight">Light Mode</label>
+            </div>
+            <div class="radio-option">
+                <input type="radio" id="themeDark" name="themeMode" value="Dark">
+                <label for="themeDark">Dark Mode</label>
+            </div>
+            <div class="radio-option">
+                <input type="radio" id="themeAuto" name="themeMode" value="Auto" disabled>
+                <label for="themeAuto">Auto (System Default - Unavailable)</label>
+            </div>
+        </fieldset>
+
+        <!-- Action Buttons -->
+        <div class="button-group">
+            <button type="button" class="primary" onclick="handleMyFormSubmit()">Apply Settings</button>
+            <button type="reset" class="secondary">Reset to Default</button>
+        </div>
+    </form>
+
+    <div id="FormOutput" style="margin-top: 20px; font-weight: bold;"></div>
+
+    <script>
+        function handleMyFormSubmit() {
+            const form = document.getElementById('MySimpleForm');
+            const formData = new FormData(form);
+            
+            const notify = formData.get('notifyFreq') || 'Not Selected';
+            const theme = formData.get('themeMode') || 'Not Selected';
+
+            const outputDiv = document.getElementById('FormOutput');
+            outputDiv.innerText = `Settings Saved!\nFrequency: ${notify}\nTheme: ${theme}`;
+        }
+    </script>
+
 </body>
 </html>
