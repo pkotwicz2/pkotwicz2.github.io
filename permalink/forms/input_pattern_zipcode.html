@@ -10,7 +10,6 @@
   </style>
 </head>
 <body>
-
   <label for="email">US ZIP code: </label>
   <input 
     type="text" 
@@ -18,33 +17,7 @@
     pattern="\d{5}"
     required
   >
-  <span id="status"></span><br/>
   <label for="other">Other: </label>
   <input id="other"></input>
-
-  <script>
-    const postcodeInput = document.getElementById('zipcode');
-    const statusDisplay = document.getElementById('status');
-
-    // Trigger validation when a key is pressed
-    postcodeInput.addEventListener('keyup', function() {
-      // Clear status if the input is empty
-      if (this.value.length === 0) {
-        statusDisplay.textContent = '';
-        statusDisplay.className = '';
-        return;
-      }
-
-      // Check validity solely based on the patternMismatch property
-      if (this.validity.patternMismatch) {
-        statusDisplay.textContent = 'Invalid Zipcode';
-        statusDisplay.className = 'invalid';
-      } else {
-        statusDisplay.textContent = 'Valid Zipcode';
-        statusDisplay.className = 'valid';
-      }
-    });
-  </script>
-
 </body>
 </html>
