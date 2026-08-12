@@ -1,10 +1,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <!-- The scrollable container -->
-  <div class="my-scrollable-content" 
-       tabindex="0" 
-       role="region" 
-       aria-labelledby="MyDialogTitle">
+  <div class="my-scrollable-content">
     <p>Please browse the following list of links:</p>
     <ul class="my-link-list">
       <li><a href="https://example.com/foo" class="my-dialog-link">Resource Foo</a></li>
@@ -27,12 +24,6 @@
     padding: 16px;
     max-height: 200px; /* Fixed height forces scrolling on overflow */
     overflow-y: auto;  /* Enables vertical scrolling */
-  }
-
-  /* Visually indicate focus for keyboard users (A11y) */
-  .my-scrollable-content:focus {
-    outline: 2px solid #0056b3;
-    outline-offset: -2px;
   }
 
   .my-link-list {
