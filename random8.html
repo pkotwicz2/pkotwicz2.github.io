@@ -1,22 +1,36 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <ul class="my-link-list">
-      <li><a href="https://example.com/foo" class="my-dialog-link">Resource Foo</a></li>
-      <li><a href="https://example.com/bar" class="my-dialog-link">Resource Bar</a></li>
-      <li><a href="https://example.com/baz" class="my-dialog-link">Resource Baz</a></li>
-      <!-- Repeat links to force overflow and show scrolling -->
-      <li><a href="https://example.com/1" class="my-dialog-link">Additional Link 1</a></li>
-      <li><a href="https://example.com/2" class="my-dialog-link">Additional Link 2</a></li>
-      <li><a href="https://example.com/3" class="my-dialog-link">Additional Link 3</a></li>
-      <li><a href="https://example.com/4" class="my-dialog-link">Additional Link 4</a></li>
-      <li><a href="https://example.com/5" class="my-dialog-link">Additional Link 5</a></li>
-      <li><a href="https://example.com/6" class="my-dialog-link">Additional Link 6</a></li>
-      <li><a href="https://example.com/7" class="my-dialog-link">Additional Link 7</a></li>
-    </ul>
+<div class="a"></div>
+<div class="b"></div>
+<div class="c"></div>
+<div class="d"></div>
+<div class="e"></div>
 
 <style>
-  li {
-    margin-bottom: 12px;
+  div {
     height:300px;
+    tabindex=0;
+    border-style:solid;
+    border-width:1px;
+  }
+
+  .a {
+    background-color:"blue";
+  }
+
+  .b {
+    background-color:"green";
+  }
+    
+  .c {
+    background-color:"orange";
+  }
+
+  .d {
+    background-color:"yellow";
+  }
+
+  .e {
+    background-color:"purple";
   }
 </style>
