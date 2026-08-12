@@ -1,130 +1,114 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Radio Button Group & Buttons Demo</title>
-    <style>
-        body {
-            font-family: 'Roboto', sans-serif;
-            margin: 20px;
-            color: #3c4043;
-        }
-        .form-group {
-            margin-bottom: 20px;
-            padding: 15px;
-            border: 1px solid #dadce0;
-            border-radius: 8px;
-            max-width: 400px;
-        }
-        .form-group legend {
-            font-weight: bold;
-            padding: 0 5px;
-        }
-        .radio-option {
-            margin: 10px 0;
-            display: flex;
-            align-items: center;
-        }
-        .radio-option input {
-            margin-right: 10px;
-            cursor: pointer;
-        }
-        .radio-option label {
-            cursor: pointer;
-        }
-        .button-group {
-            margin-top: 20px;
-            display: flex;
-            gap: 10px;
-        }
-        button {
-            padding: 10px 24px;
-            border: none;
-            border-radius: 4px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
-        /* Primary Action Button */
-        button.primary {
-            background-color: #1a73e8; /* Google Blue */
-            color: white;
-        }
-        button.primary:hover {
-            background-color: #174ea6;
-        }
-        /* Secondary Action Button */
-        button.secondary {
-            background-color: white;
-            color: #3c4043;
-            border: 1px solid #dadce0;
-        }
-        button.secondary:hover {
-            background-color: #f1f3f4;
-        }
-    </style>
-</head>
-<body>
+<div role="dialog" 
+     aria-modal="true" 
+     aria-labelledby="MyDialogTitle" 
+     class="my-dialog-container">
+  
+  <div class="my-dialog-header">
+    <h2 id="MyDialogTitle">Useful Resources</h2>
+  </div>
 
-    <h2>Preferences Setup</h2>
+  <!-- The scrollable container -->
+  <div class="my-scrollable-content" 
+       tabindex="0" 
+       role="region" 
+       aria-labelledby="MyDialogTitle">
+    <p>Please browse the following list of links:</p>
+    <ul class="my-link-list">
+      <li><a href="https://example.com/foo" class="my-dialog-link">Resource Foo</a></li>
+      <li><a href="https://example.com/bar" class="my-dialog-link">Resource Bar</a></li>
+      <li><a href="https://example.com/baz" class="my-dialog-link">Resource Baz</a></li>
+      <!-- Repeat links to force overflow and show scrolling -->
+      <li><a href="https://example.com/1" class="my-dialog-link">Additional Link 1</a></li>
+      <li><a href="https://example.com/2" class="my-dialog-link">Additional Link 2</a></li>
+      <li><a href="https://example.com/3" class="my-dialog-link">Additional Link 3</a></li>
+      <li><a href="https://example.com/4" class="my-dialog-link">Additional Link 4</a></li>
+      <li><a href="https://example.com/5" class="my-dialog-link">Additional Link 5</a></li>
+      <li><a href="https://example.com/6" class="my-dialog-link">Additional Link 6</a></li>
+      <li><a href="https://example.com/7" class="my-dialog-link">Additional Link 7</a></li>
+    </ul>
+  </div>
 
-    <form id="MySimpleForm">
-        <!-- Radio Button Group 1 -->
-        <fieldset class="form-group">
-            <legend>Notification Frequency</legend>
-            <div class="radio-option">
-                <input type="radio" id="notifyInstantly" name="notifyFreq" value="Instantly" checked>
-                <label for="notifyInstantly">Instantly</label>
-            </div>
-            <div class="radio-option">
-                <input type="radio" id="notifyDaily" name="notifyFreq" value="Daily Summary">
-                <label for="notifyDaily">Daily Summary</label>
-            </div>
-            <div class="radio-option">
-                <input type="radio" id="notifyNever" name="notifyFreq" value="Never">
-                <label for="notifyNever">Never</label>
-            </div>
-        </fieldset>
+  <div class="my-dialog-actions">
+    <button type="button" class="my-dialog-button">Cancel</button>
+    <button type="button" class="my-dialog-button primary">Confirm</button>
+  </div>
+</div>
 
-        <!-- Radio Button Group 2 -->
-        <fieldset class="form-group">
-            <legend>Theme Mode</legend>
-            <div class="radio-option">
-                <input type="radio" id="themeLight" name="themeMode" value="Light">
-                <label for="themeLight">Light Mode</label>
-            </div>
-            <div class="radio-option">
-                <input type="radio" id="themeDark" name="themeMode" value="Dark">
-                <label for="themeDark">Dark Mode</label>
-            </div>
-            <div class="radio-option">
-                <input type="radio" id="themeAuto" name="themeMode" value="Auto" disabled>
-                <label for="themeAuto">Auto (System Default - Unavailable)</label>
-            </div>
-        </fieldset>
+<style>
+  .my-dialog-container {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    width: 400px;
+    max-width: 90%;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    background-color: #fff;
+    font-family: sans-serif;
+    display: flex;
+    flex-direction: column;
+  }
 
-        <!-- Action Buttons -->
-        <div class="button-group">
-            <button type="button" class="primary" onclick="handleMyFormSubmit()">Apply Settings</button>
-            <button type="reset" class="secondary">Reset to Default</button>
-        </div>
-    </form>
+  .my-dialog-header {
+    padding: 16px;
+    border-bottom: 1px solid #eee;
+  }
 
-    <div id="FormOutput" style="margin-top: 20px; font-weight: bold;"></div>
+  .my-dialog-header h2 {
+    margin: 0;
+    font-size: 1.25rem;
+  }
 
-    <script>
-        function handleMyFormSubmit() {
-            const form = document.getElementById('MySimpleForm');
-            const formData = new FormData(form);
-            
-            const notify = formData.get('notifyFreq') || 'Not Selected';
-            const theme = formData.get('themeMode') || 'Not Selected';
+  /* Scrollable Container settings */
+  .my-scrollable-content {
+    padding: 16px;
+    max-height: 200px; /* Fixed height forces scrolling on overflow */
+    overflow-y: auto;  /* Enables vertical scrolling */
+  }
 
-            const outputDiv = document.getElementById('FormOutput');
-            outputDiv.innerText = `Settings Saved!\nFrequency: ${notify}\nTheme: ${theme}`;
-        }
-    </script>
+  /* Visually indicate focus for keyboard users (A11y) */
+  .my-scrollable-content:focus {
+    outline: 2px solid #0056b3;
+    outline-offset: -2px;
+  }
 
-</body>
-</html>
+  .my-link-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .my-link-list li {
+    margin-bottom: 12px;
+  }
+
+  .my-dialog-link {
+    color: #0056b3;
+    text-decoration: none;
+  }
+
+  .my-dialog-link:hover, 
+  .my-dialog-link:focus {
+    text-decoration: underline;
+  }
+
+  .my-dialog-actions {
+    padding: 16px;
+    border-top: 1px solid #eee;
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+  }
+
+  .my-dialog-button {
+    padding: 8px 16px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .my-dialog-button.primary {
+    background-color: #0056b3;
+    color: white;
+    border: none;
+  }
+</style>
