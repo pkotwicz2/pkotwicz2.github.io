@@ -1,49 +1,7 @@
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<html>
+<body>
+<button aria-label="Button">Button</button><br/>
+<button>Button</button>
+</body>
+</html>
 
-  <!-- The scrollable container -->
-  <div class="my-scrollable-content">
-    <p>Please browse the following list of links:</p>
-    <ul class="my-link-list">
-      <li><a href="https://example.com/foo" class="my-dialog-link">Resource Foo</a></li>
-      <li><a href="https://example.com/bar" class="my-dialog-link">Resource Bar</a></li>
-      <li><a href="https://example.com/baz" class="my-dialog-link">Resource Baz</a></li>
-      <!-- Repeat links to force overflow and show scrolling -->
-      <li><a href="https://example.com/1" class="my-dialog-link">Additional Link 1</a></li>
-      <li><a href="https://example.com/2" class="my-dialog-link">Additional Link 2</a></li>
-      <li><a href="https://example.com/3" class="my-dialog-link">Additional Link 3</a></li>
-      <li><a href="https://example.com/4" class="my-dialog-link">Additional Link 4</a></li>
-      <li><a href="https://example.com/5" class="my-dialog-link">Additional Link 5</a></li>
-      <li><a href="https://example.com/6" class="my-dialog-link">Additional Link 6</a></li>
-      <li><a href="https://example.com/7" class="my-dialog-link">Additional Link 7</a></li>
-    </ul>
-  </div>
-
-<style>
-  /* Scrollable Container settings */
-  .my-scrollable-content {
-    padding: 16px;
-    max-height: 200px; /* Fixed height forces scrolling on overflow */
-    overflow-y: auto;  /* Enables vertical scrolling */
-  }
-
-  .my-link-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  .my-link-list li {
-    margin-bottom: 12px;
-    height:100px;
-  }
-
-  .my-dialog-link {
-    color: #0056b3;
-    text-decoration: none;
-  }
-
-  .my-dialog-link:hover, 
-  .my-dialog-link:focus {
-    text-decoration: underline;
-  }
-</style>
