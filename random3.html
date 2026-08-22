@@ -6,14 +6,14 @@
     <style>div { margin: 10px 0; padding: 10px; border: 1px solid #666; font-family: sans-serif; }</style>
 </head>
 <body>
-    <button onclick="document.getElementById('BarPoliteBox').innerText = ''">
+    <button onclick="document.getElementById('BarPoliteBox').innerText = 'CRITICAL ALERT @ ' + new Date().toLocaleTimeString()">
         Trigger Polite
     </button>
     <button onclick="document.getElementById('BazAssertiveBox').innerText = 'CRITICAL ALERT @ ' + new Date().toLocaleTimeString()">
         Trigger Assertive
     </button>
 
-    <div id="BarPoliteBox" aria-live="assertive" aria-label="polite">Polite region ready</div>
+    <h3 id="BarPoliteBox" aria-live="assertive">Polite region ready</h3>
     <div id="BazAssertiveBox" aria-live="assertive">Assertive region ready</div>
 </body>
 </html>
