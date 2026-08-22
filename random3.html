@@ -1,6 +1,19 @@
-<html>
-  <body>
-    <h3 id="label1">Salutation</h3>
-    <input aria-labelledby="label1" aria-invalid="spelling" value="Helllo">
-  </body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Minimal ARIA Live Demo</title>
+    <style>div { margin: 10px 0; padding: 10px; border: 1px solid #666; font-family: sans-serif; }</style>
+</head>
+<body>
+    <button onclick="document.getElementById('BarPoliteBox').innerText = 'Dynamic Polite Update @ ' + new Date().toLocaleTimeString()">
+        Trigger Polite
+    </button>
+    <button onclick="document.getElementById('BazAssertiveBox').innerText = 'CRITICAL ALERT @ ' + new Date().toLocaleTimeString()">
+        Trigger Assertive
+    </button>
+
+    <div id="BarPoliteBox" aria-live="assertive" aria-label="polite">Polite region ready</div>
+    <div id="BazAssertiveBox" aria-live="assertive">Assertive region ready</div>
+</body>
 </html>
