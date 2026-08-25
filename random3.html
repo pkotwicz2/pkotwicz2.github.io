@@ -5,14 +5,14 @@
     <title>Minimal ARIA Live Demo</title>
     <style>
         div.a {margin: 10px 0; padding: 10px; border: 1px solid #666; font-family: sans-serif;
-            content: '⚠️ Warning: ';
+            content: url('https://dummyimage.com/16x16/000/fff')
         }
     </style>
     <script>
         function update123() {
           var el = document.getElementById('BarPoliteBox');
           el.innerHTML = '<strong>CRITICAL<sup>2</sup></strong> ALERT @ ' + new Date().toLocaleTimeString();
-          el.style.className = "a";
+          el.className = "a";
         }
     </script>
 </head>
