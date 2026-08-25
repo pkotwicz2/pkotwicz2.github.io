@@ -3,10 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <title>Minimal ARIA Live Demo</title>
-    <style>div { margin: 10px 0; padding: 10px; border: 1px solid #666; font-family: sans-serif; }</style>
+    <style>
+        div {margin: 10px 0; padding: 10px; border: 1px solid #666; font-family: sans-serif; 
+        strong {
+            content: '⚠️ Warning: ';
+        }
+    </style>
+    <script>
+        function update() {
+          document.getElementById('BarPoliteBox').innerHTML = '<strong>CRITICAL<sup>2</sup></strong> ALERT @ ' + new Date().toLocaleTimeString()">  
+        }
+    </script>
 </head>
 <body>
-    <button onclick="document.getElementById('BarPoliteBox').innerHTML = '<strong>CRITICAL<sup>2</sup></strong> ALERT @ ' + new Date().toLocaleTimeString()">
+    <button onclick="update();">
         Trigger Polite
     </button>
     <button onclick="document.getElementById('BazAssertiveBox').innerText = 'CRITICAL ALERT @ ' + new Date().toLocaleTimeString()">
