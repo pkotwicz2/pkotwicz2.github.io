@@ -1,14 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<body>
-<style>
-    h1 {
-      content: url('https://dummyimage.com/16x16/000000/fff') / 'Chapter 1: Getting Started';
-    }
-</style>
-<h1>
-        Fallback Heading <strong>Tex<sup>t</sup></strong>
-      </h1>
 
+<html>
+<body>
+  <div role="heading" aria-label="Foo" aria-level="1">
+    <p>bar</p>
+    <p>baz</p>
+  </div>
+  <h1 aria-label="foo">
+    <p>bar</p>
+    <p>baz</p>
+  </h1>
+  <h1 aria-label="Section">
+    <a href="#">Read More</a>
+  </h1>
 </body>
 </html>
