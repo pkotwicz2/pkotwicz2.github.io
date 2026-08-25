@@ -9,15 +9,15 @@
         }
     </style>
     <script>
-        function update() {
+        function update123() {
           var el = document.getElementById('BarPoliteBox');
-          el.innerHTML = '<strong>CRITICAL<sup>2</sup></strong> ALERT @ ' + new Date().toLocaleTimeString()"> 
+          el.innerHTML = '<strong>CRITICAL<sup>2</sup></strong> ALERT @ ' + new Date().toLocaleTimeString();
           el.style.className = "a";
         }
     </script>
 </head>
 <body>
-    <button onclick="update();">
+    <button onclick="update123();">
         Trigger Polite
     </button>
     <button onclick="document.getElementById('BazAssertiveBox').innerText = 'CRITICAL ALERT @ ' + new Date().toLocaleTimeString()">
