@@ -11,7 +11,7 @@
     <script>
         function update123() {
           var el = document.getElementById('BarPoliteBox');
-          el.className = "a";
+          el.setAttribute('ariaLabel', 'aria text');
           el.innerHTML = '<strong>CRITICAL<sup>2</sup></strong> ALERT @ ' + new Date().toLocaleTimeString();
         }
     </script>
