@@ -5,27 +5,12 @@
     <title>Minimal ARIA Live Demo</title>
     <style>
         h3.a {margin: 10px 0; padding: 10px; border: 1px solid #666; font-family: sans-serif;
-            content: url('https://dummyimage.com/16x16/000/fff') / "Alt Text";
+            content: url('https://dummyimage.com/16x16/000/fff') / "Denotes completed task";
         }
     </style>
-    <script>
-        function update123() {
-          var el = document.getElementById('BarPoliteBox');
-          //el.setAttribute('ariaLabel', 'aria text');
-          el.innerHTML = '<div aria-live="polite" aria-atomic="true" id="cart-status"><p>Item added to cart.</p><p>Subtotal: $45.00</p></div>';
-          //'<strong>CRITICAL<sup>2</sup></strong> ALERT @ ' + new Date().toLocaleTimeString();
-        }
-    </script>
 </head>
 <body>
-    <button onclick="update123();">
-        Trigger Polite
-    </button>
-    <button onclick="document.getElementById('BazAssertiveBox').innerText = 'CRITICAL ALERT @ ' + new Date().toLocaleTimeString()">
-        Trigger Assertive
-    </button>
-
-    <h3 id="BarPoliteBox" aria-live="assertive" aria-atomic="true"><strong>Polite</strong> region ready</h3>
-    <div id="BazAssertiveBox" aria-live="assertive" aria-atomic="true">Assertive region ready</div>
+    <h2>Tasks</h2>
+    <h3 id="BarPoliteBox" aria-live="assertive" aria-atomic="true" class="a">Task1</h3>
 </body>
 </html>
