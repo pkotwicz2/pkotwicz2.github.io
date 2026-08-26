@@ -1,12 +1,18 @@
 <!DOCTYPE html>
 <form>
   <label for="in1">Pet name:</label><input id="in1" required>
-  <button onclick="verify()">Verify</button>
+  <button onclick="verify()">Verify</button><br/>
+  <div tabindex="0" id="abcd">abcd</div>
 </form>
 <script>
   function verify() {
     const in1 = document.querySelector('input');
     in1.setCustomValidity('Please enter pet name');
     in1.reportValidity();
+    document.getElementById('abcd').focus();
+    window.setTimeout(function() {
+        const in2 = document.querySelector('input');
+        in2.focus()
+    }, 10000));
   }
 </script>
