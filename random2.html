@@ -1,28 +1,12 @@
-
-<html>
-<body>
-  <div role="heading" aria-label="Foo" aria-level="1">
-    <p>bar</p>
-    <p>baz</p>
-  </div>
-  <h1 aria-label="foo">
-    <p>bar</p>
-    <p>baz</p>
-  </h1>
-  <h1 aria-label="Section">
-    <strong>Strong<sup>2</sup></strong>
-  </h1>
-  <div tabindex=0 aria-label="Section2">
-        <strong>Strong<sup>2</sup></strong>
-  </div>
-  <div tabindex=0 aria-label="Section3">
-    Strong
-  </div>
-<ul role="tree" aria-label="My Project Directory" class="MyTreeContainer">
-  <!-- Leaf node: has no children -->
-  <li role="treeitem" aria-selected="true" aria-label="Tree item" tabindex="0" class="MyTreeItem">
-    <strong>Strong</strong>
-  </li>
-</ul>
-</body>
-</html>
+<!DOCTYPE html>
+<form>
+  <label for="in1">Pet name:</label><input id="in1" required>
+  <button onclick="verify()">Verify</button>
+</form>
+<script>
+  function verify() {
+    const in1 = document.querySelector('input');
+    in1.setCustomValidity('Please enter pet name');
+    in1.reportValidity();
+  }
+</script>
