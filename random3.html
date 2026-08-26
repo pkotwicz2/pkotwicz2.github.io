@@ -11,8 +11,9 @@
     <script>
         function update123() {
           var el = document.getElementById('BarPoliteBox');
-          el.setAttribute('ariaLabel', 'aria text');
-          el.innerHTML = '<strong>CRITICAL<sup>2</sup></strong> ALERT @ ' + new Date().toLocaleTimeString();
+          //el.setAttribute('ariaLabel', 'aria text');
+          el.innerHTML = '<div aria-live="polite" aria-atomic="true" id="cart-status"><p>Item added to cart.</p><p>Subtotal: $45.00</p></div>';
+          //'<strong>CRITICAL<sup>2</sup></strong> ALERT @ ' + new Date().toLocaleTimeString();
         }
     </script>
 </head>
