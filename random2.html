@@ -7,11 +7,9 @@
 <script>
   function verify() {
     document.getElementById('abcd').focus();
-    window.setTimeout(function() {
     const in1 = document.querySelector('input');
+    in1.focus();
     in1.setCustomValidity('Please enter pet name');
     in1.reportValidity();
-    in1.focus();
-    }, 10000);
   }
 </script>
