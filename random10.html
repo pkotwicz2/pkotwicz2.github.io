@@ -1,16 +1,22 @@
 <html>
-<head></head>
 <body>
-<fieldset tabindex="0">
-  <legend>Choose your favorite monsters</legend>
-
-  <input type="radio" id="kraken" name="monster" value="K">
-  <label for="kraken">Kraken</label><br>
-
-  <input type="radio" id="sasquatch" name="monster" value="S">
-  <label for="sasquatch">Sasquatch</label><br>
-
-  <input type="radio" id="mothman" name="monster" value="M">
-  <label for="mothman">Mothman</label>
-</fieldset>
-</body></html>
+<button id="test">Test</button>
+<div id="done"></div>
+<script>
+function addAriaPressed() {
+    document
+        .getElementById("test")
+        .setAttribute("aria-pressed", "true");
+    document.getElementById('done').innerText = 'Test 1';
+    return 'Test 1';
+}
+function removeAriaPressed() {
+    document
+        .getElementById("test")
+        .removeAttribute("aria-pressed");
+    document.getElementById('done').innerText = 'Test 2';
+    return 'Test 2';
+}
+</script>
+</body>
+</html>
