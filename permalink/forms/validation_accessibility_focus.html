@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<form>
+  <label for="in1">Pet name:</label><input id="in1" required>
+  <button onclick="verify()" type="button">Verify</button>
+</form>
+<script>
+  function verify() {
+    const in1 = document.querySelector('input');
+    in1.setCustomValidity('Please enter pet name');
+    in1.reportValidity();
+  }
+</script>
