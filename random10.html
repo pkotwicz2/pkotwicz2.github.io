@@ -1,21 +1,17 @@
 <html>
 <body>
-<button id="test">Test</button>
+<button id="test" onclick="ABCD()">Test</button>
 <div id="done"></div>
 <script>
-function addAriaPressed() {
-    document
-        .getElementById("test")
-        .setAttribute("aria-pressed", "true");
-    document.getElementById('done').innerText = 'Test 1';
-    return 'Test 1';
-}
-function removeAriaPressed() {
-    document
-        .getElementById("test")
-        .removeAttribute("aria-pressed");
-    document.getElementById('done').innerText = 'Test 2';
-    return 'Test 2';
+function ABCD() {
+    var el = document.getElementById("test");
+    if (el.hasAttribute("aria-pressed")) {
+        el.removeAttribute("aria-pressed");
+        el.innerText = "Test 1";
+    } else {
+        el.setAttribute("aria-pressed", "true");
+        el.innerText = "Test 2";
+    }
 }
 </script>
 </body>
