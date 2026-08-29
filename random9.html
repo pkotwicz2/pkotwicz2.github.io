@@ -5,11 +5,11 @@
 <script>
 function ABCD() {
     var el = document.getElementById("test");
-    if (el.hasAttribute("aria-pressed")) {
-        el.removeAttribute("aria-pressed");
+    if (el.hasAttribute("aria-checked")) {
+        el.removeAttribute("aria-checked");
         el.innerText = "Test 1";
     } else {
-        el.setAttribute("aria-pressed", "true");
+        el.setAttribute("aria-checked", "true");
         el.innerText = "Test 2";
     }
 }
