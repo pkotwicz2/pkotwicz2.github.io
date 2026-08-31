@@ -1,0 +1,23 @@
+<html>
+<head>
+<script>
+function SetInvalid() {
+  SetInvalidToState(true);
+}
+
+function ClearInvalid() {
+  SetInvalidToState(false);
+}
+
+function SetInvalidToState(state) {
+  document.getElementById('quantity').setAttribute('aria-invalid') = state; 
+}
+</script>
+</head>
+<body>
+<label for="quantity">Select Quantity:</label>
+<input type="number" id="quantity" name="quantity" min="1" max="10" step="1" value="1">
+<button onclick="SetInvalid()">Set Invalid</button>
+<button onclick="ClearInvalid()">Clear Invalid</button>
+</body>
+</html>
