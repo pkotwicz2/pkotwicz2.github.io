@@ -1,5 +1,17 @@
 <html>
 <body>
-<label for="fries_id">Extra fries</label><input type="checkbox" id="fries_id">
+<form>
+  <p id="sides-group-label" class="group-heading">Select your fast food sides</p>
+  <div role="group" aria-labelledby="sides-group-label">
+    <div class="checkbox-container">
+      <input type="checkbox" id="side-fries" name="sides" value="fries">
+      <label for="side-fries">Fries</label>
+    </div>
+    <div class="checkbox-container">
+      <input type="checkbox" id="side-chips" name="sides" value="chips">
+      <label for="side-chips">Chips</label>
+    </div>
+  </div>
+</form>
 </body>
 </html>
