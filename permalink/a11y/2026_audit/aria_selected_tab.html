@@ -1,0 +1,59 @@
+<html>
+<body>
+<div role="tablist" aria-label="Project Dashboard Sections">
+  <button
+    role="tab"
+    aria-selected="true"
+    aria-controls="dashboard-panel-1"
+    id="dashboard-tab-1"
+    tabindex="0">
+    Overview
+  </button>
+  
+  <button
+    role="tab"
+    aria-selected="false"
+    aria-controls="dashboard-panel-2"
+    id="dashboard-tab-2"
+    tabindex="-1">
+    Analytics
+  </button>
+
+  <button
+    role="tab"
+    aria-selected="false"
+    aria-controls="dashboard-panel-3"
+    id="dashboard-tab-3"
+    tabindex="-1">
+    Settings
+  </button>
+</div>
+
+<!-- Tab Panels -->
+<div
+  role="tabpanel"
+  id="dashboard-panel-1"
+  aria-labelledby="dashboard-tab-1"
+  tabindex="0">
+  <p>This is the Overview panel content.</p>
+</div>
+
+<div
+  role="tabpanel"
+  id="dashboard-panel-2"
+  aria-labelledby="dashboard-tab-2"
+  tabindex="0"
+  hidden>
+  <p>This is the Analytics panel content.</p>
+</div>
+
+<div
+  role="tabpanel"
+  id="dashboard-panel-3"
+  aria-labelledby="dashboard-tab-3"
+  tabindex="0"
+  hidden>
+  <p>This is the Settings panel content.</p>
+</div>
+</body>
+</html>
