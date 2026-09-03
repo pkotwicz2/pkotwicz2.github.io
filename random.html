@@ -6,80 +6,30 @@
 </head>
 <body>
 
-<div role="treegrid" aria-label="Project Repository" id="my-treegrid" class="tg-container">
-  <!-- Column Headers -->
-  <div role="rowgroup" class="tg-header">
-    <div role="row" class="tg-row">
-      <div role="columnheader" class="tg-cell" id="col-name">Name</div>
-      <div role="columnheader" class="tg-cell" id="col-type">Type</div>
-      <div role="columnheader" class="tg-cell" id="col-size">Size</div>
-    </div>
+<div role="list" aria-label="Virtualized User List">
+  <!-- 
+    The browser and assistive technologies are informed that this is the 
+    42nd item in a list of 100, even if preceding items are not currently rendered in the DOM.
+  -->
+  <div 
+    role="listitem" 
+    aria-posinset="42" 
+    aria-setsize="100">
+    User: MyData Profile 42
   </div>
-
-  <!-- Body -->
-  <div role="rowgroup" id="tg-body">
-    
-    <!-- Level 1: Item 1 -->
-    <div 
-      role="row" 
-      class="tg-row" 
-      aria-level="1" 
-      aria-posinset="1" 
-      aria-setsize="2" 
-      aria-expanded="true" 
-      id="row-src">
-      <!-- First cell serves as the tree node controller -->
-      <div role="gridcell" class="tg-cell" tabindex="0">
-        <span class="tg-expander" aria-hidden="true">▼</span>
-        <span>src</span>
-      </div>
-      <div role="gridcell" class="tg-cell" tabindex="-1">Folder</div>
-      <div role="gridcell" class="tg-cell" tabindex="-1">—</div>
-    </div>
-
-    <!-- Nested Level 2 Children -->
-    <div class="tg-children" id="children-src">
-      <div 
-        role="row" 
-        class="tg-row" 
-        aria-level="2" 
-        aria-posinset="1" 
-        aria-setsize="2" 
-        id="row-index">
-        <div role="gridcell" class="tg-cell" tabindex="-1">index.js</div>
-        <div role="gridcell" class="tg-cell" tabindex="-1">JS File</div>
-        <div role="gridcell" class="tg-cell" tabindex="-1">4 KB</div>
-      </div>
-
-      <div 
-        role="row" 
-        class="tg-row" 
-        aria-level="2" 
-        aria-posinset="2" 
-        aria-setsize="2" 
-        id="row-styles">
-        <div role="gridcell" class="tg-cell" tabindex="-1">styles.css</div>
-        <div role="gridcell" class="tg-cell" tabindex="-1">CSS File</div>
-        <div role="gridcell" class="tg-cell" tabindex="-1">2 KB</div>
-      </div>
-    </div>
-
-    <!-- Level 1: Item 2 -->
-    <div 
-      role="row" 
-      class="tg-row" 
-      aria-level="1" 
-      aria-posinset="2" 
-      aria-setsize="2" 
-      aria-expanded="false" 
-      id="row-public">
-      <div role="gridcell" class="tg-cell" tabindex="-1">
-        <span class="tg-expander" aria-hidden="true">▶</span>
-        <span>public</span>
-      </div>
-      <div role="gridcell" class="tg-cell" tabindex="-1">Folder</div>
-      <div role="gridcell" class="tg-cell" tabindex="-1">—</div>
-    </div>
+  
+  <div 
+    role="listitem" 
+    aria-posinset="43" 
+    aria-setsize="100">
+    User: MyData Profile 43
+  </div>
+  
+  <div 
+    role="listitem" 
+    aria-posinset="44" 
+    aria-setsize="100">
+    User: MyData Profile 44
   </div>
 </div>
 </body>
