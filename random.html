@@ -1,53 +1,293 @@
 <html>
 <head></head>
 <body>
-<div role="tree" aria-label="Project Directory">
-  <!-- Level 1: Item 1 of 2 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Accessible ARIA Tree View</title>
+  <style>
+    .tree-container {
+      background: #ffffff;
+      border: 1px solid #dadce0;
+      border-radius: 8px;
+      font-family: Roboto, Arial, sans-serif;
+      max-width: 360px;
+      padding: 8px 0;
+      user-select: none;
+    }
+
+    .tree-item {
+      align-items: center;
+      cursor: pointer;
+      display: flex;
+      font-size: 14px;
+      height: 36px;
+      padding-right: 16px;
+      position: relative;
+    }
+
+    /* Roving focus indicator */
+    .tree-item:focus {
+      background-color: #f1f3f4;
+      outline: 2px solid #1a73e8;
+      outline-offset: -2px;
+    }
+
+    /* Selection State styling */
+    .tree-item[aria-selected="true"] {
+      background-color: #e8f0fe;
+      color: #1a73e8;
+      font-weight: 500;
+    }
+
+    /* Indentation by hierarchical level */
+    .tree-item[aria-level="1"] { padding-left: 8px; }
+    .tree-item[aria-level="2"] { padding-left: 32px; }
+    .tree-item[aria-level="3"] { padding-left: 56px; }
+
+    .tree-icon {
+      align-items: center;
+      color: #5f6368;
+      display: inline-flex;
+      font-size: 10px;
+      justify-content: center;
+      margin-right: 8px;
+      width: 20px;
+    }
+
+    .tree-item.leaf .tree-icon {
+      font-size: 14px;
+    }
+
+    .tree-group {
+      margin: 0;
+      padding: 0;
+    }
+
+    .tree-group.collapsed {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+<div role="tree" aria-label="Project Directory" id="my-tree" class="tree-container">
+  <!-- Node 1 (Parent, Expanded) -->
   <div 
     role="treeitem" 
+    id="node-src"
     aria-level="1" 
     aria-posinset="1" 
     aria-setsize="2" 
     aria-expanded="true" 
+    aria-selected="false"
     tabindex="0"
-    id="node-src">
-    <span>src</span>
-    
-    <!-- Sub-tree Group -->
-    <div role="group">
-      <!-- Level 2: Item 1 of 2 -->
-      <div 
-        role="treeitem" 
-        aria-level="2" 
-        aria-posinset="1" 
-        aria-setsize="2" 
-        tabindex="-1"
-        id="node-index-js">
-        <span>index.js</span>
-      </div>
-      
-      <!-- Level 2: Item 2 of 2 -->
-      <div 
-        role="treeitem" 
-        aria-level="2" 
-        aria-posinset="2" 
-        aria-setsize="2" 
-        tabindex="-1"
-        id="node-app-js">
-        <span>app.js</span>
-      </div>
+    class="tree-item">
+    <span class="tree-icon" aria-hidden="true">▼</span>
+    <span class="tree-label">src</span>
+  </div>
+  
+  <!-- Group containing Node 1's children -->
+  <div role="group" id="group-src" class="tree-group">
+    <!-- Sub-node 1.1 (Leaf) -->
+    <div 
+      role="treeitem" 
+      id="node-index"
+      aria-level="2" 
+      aria-posinset="1" 
+      aria-setsize="2" 
+      aria-selected="false"
+      tabindex="-1"
+      class="tree-item leaf">
+      <span class="tree-icon" aria-hidden="true">📄</span>
+      <span class="tree-label">index.js</span>
+    </div>
+
+    <!-- Sub-node 1.2 (Leaf) -->
+    <div 
+      role="treeitem" 
+      id="node-styles"
+      aria-level="2" 
+      aria-posinset="2" 
+      aria-setsize="2" 
+      aria-selected="false"
+      tabindex="-1"
+      class="tree-item leaf">
+      <span class="tree-icon" aria-hidden="true">📄</span>
+      <span class="tree-label">styles.css</span>
     </div>
   </div>
 
-  <!-- Level 1: Item 2 of 2 -->
+  <!-- Node 2 (Parent, Collapsed) -->
   <div 
     role="treeitem" 
+    id="node-public"
     aria-level="1" 
     aria-posinset="2" 
     aria-setsize="2" 
     aria-expanded="false" 
-    id="node-assets">
-    <span>assets</span>
+    aria-selected="false"
+    tabindex="-1"
+    class="tree-item">
+    <span class="tree-icon" aria-hidden="true">▶</span>
+    <span class="tree-label">public</span>
+  </div>
+  
+  <!-- Group containing Node 2's children -->
+  <div role="group" id="group-public" class="tree-group collapsed">
+    <!-- Sub-node 2.1 (Leaf) -->
+    <div 
+      role="treeitem" 
+      id="node-html"
+      aria-level="2" 
+      aria-posinset="1" 
+      aria-setsize="1" 
+      aria-selected="false"
+      tabindex="-1"
+      class="tree-item leaf">
+      <span class="tree-icon" aria-hidden="true">📄</span>
+      <span class="tree-label">index.html</span>
+    </div>
   </div>
 </div>
+
+<script>
+  const tree = document.getElementById('my-tree');
+
+  // Returns array of treeitems not hidden inside collapsed folders
+  function getVisibleItems() {
+    const allItems = Array.from(tree.querySelectorAll('[role="treeitem"]'));
+    return allItems.filter(item => {
+      let parent = item.parentElement;
+      while (parent && parent !== tree) {
+        if (parent.getAttribute('role') === 'group' && parent.classList.contains('collapsed')) {
+          return false;
+        }
+        parent = parent.parentElement;
+      }
+      return true;
+    });
+  }
+
+  function focusItem(item) {
+    if (!item) return;
+    // Roving focus: clear tabindex on all items, set to 0 on the active one
+    tree.querySelectorAll('[role="treeitem"]').forEach(el => el.setAttribute('tabindex', '-1'));
+    item.setAttribute('tabindex', '0');
+    item.focus();
+  }
+
+  function selectItem(item) {
+    tree.querySelectorAll('[role="treeitem"]').forEach(el => el.setAttribute('aria-selected', 'false'));
+    item.setAttribute('aria-selected', 'true');
+  }
+
+  function expandNode(item) {
+    if (!item.hasAttribute('aria-expanded') || item.getAttribute('aria-expanded') === 'true') return;
+    item.setAttribute('aria-expanded', 'true');
+    const group = item.nextElementSibling;
+    if (group && group.getAttribute('role') === 'group') {
+      group.classList.remove('collapsed');
+    }
+    const icon = item.querySelector('.tree-icon');
+    if (icon) icon.textContent = '▼';
+  }
+
+  function collapseNode(item) {
+    if (!item.hasAttribute('aria-expanded') || item.getAttribute('aria-expanded') === 'false') return;
+    item.setAttribute('aria-expanded', 'false');
+    const group = item.nextElementSibling;
+    if (group && group.getAttribute('role') === 'group') {
+      group.classList.add('collapsed');
+    }
+    const icon = item.querySelector('.tree-icon');
+    if (icon) icon.textContent = '▶';
+  }
+
+  function getParentNode(item) {
+    const parentGroup = item.closest('[role="group"]');
+    if (!parentGroup) return null;
+    return parentGroup.previousElementSibling;
+  }
+
+  // Keyboard Handlers (WAI-ARIA Pattern)
+  tree.addEventListener('keydown', (event) => {
+    const activeItem = document.activeElement;
+    if (!activeItem || activeItem.getAttribute('role') !== 'treeitem') return;
+
+    const visibleItems = getVisibleItems();
+    const index = visibleItems.indexOf(activeItem);
+    let handled = true;
+
+    switch (event.key) {
+      case 'ArrowDown':
+        if (index < visibleItems.length - 1) focusItem(visibleItems[index + 1]);
+        break;
+
+      case 'ArrowUp':
+        if (index > 0) focusItem(visibleItems[index - 1]);
+        break;
+
+      case 'ArrowRight':
+        if (activeItem.hasAttribute('aria-expanded')) {
+          if (activeItem.getAttribute('aria-expanded') === 'false') {
+            expandNode(activeItem);
+          } else {
+            if (index < visibleItems.length - 1) focusItem(visibleItems[index + 1]);
+          }
+        }
+        break;
+
+      case 'ArrowLeft':
+        if (activeItem.hasAttribute('aria-expanded') && activeItem.getAttribute('aria-expanded') === 'true') {
+          collapseNode(activeItem);
+        } else {
+          const parentNode = getParentNode(activeItem);
+          if (parentNode) focusItem(parentNode);
+        }
+        break;
+
+      case 'Home':
+        if (visibleItems.length > 0) focusItem(visibleItems[0]);
+        break;
+
+      case 'End':
+        if (visibleItems.length > 0) focusItem(visibleItems[visibleItems.length - 1]);
+        break;
+
+      case ' ':
+      case 'Enter':
+        selectItem(activeItem);
+        if (activeItem.hasAttribute('aria-expanded')) {
+          const isExpanded = activeItem.getAttribute('aria-expanded') === 'true';
+          isExpanded ? collapseNode(activeItem) : expandNode(activeItem);
+        }
+        break;
+
+      default:
+        handled = false;
+    }
+
+    if (handled) {
+      event.preventDefault();
+    }
+  });
+
+  // Mouse selection/toggle logic
+  tree.addEventListener('click', (event) => {
+    const item = event.target.closest('[role="treeitem"]');
+    if (!item) return;
+
+    selectItem(item);
+    focusItem(item);
+
+    if (item.hasAttribute('aria-expanded')) {
+      const isExpanded = item.getAttribute('aria-expanded') === 'true';
+      isExpanded ? collapseNode(item) : expandNode(item);
+    }
+  });
+</script>
+</body>
+</html>
 </body></html>
