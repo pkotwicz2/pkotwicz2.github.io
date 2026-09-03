@@ -1,35 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Accessible Treegrid</title>
-</head>
+<html>
 <body>
-
-<div role="list" aria-label="Virtualized User List">
-  <!-- 
-    The browser and assistive technologies are informed that this is the 
-    42nd item in a list of 100, even if preceding items are not currently rendered in the DOM.
-  -->
-  <div 
-    role="listitem" 
-    aria-posinset="42" 
-    aria-setsize="100">
-    User: MyData Profile 42
+<div role="grid" aria-rowcount="2000">
+  <div role="rowgroup">
+    <div role="row" aria-rowindex="1">
+      <span role="columnheader">First Name</span>
+      <span role="columnheader">Last Name</span>
+      <span role="columnheader">Company</span>
+      <span role="columnheader">Phone</span>
+    </div>
   </div>
-  
-  <div 
-    role="listitem" 
-    aria-posinset="43" 
-    aria-setsize="100">
-    User: MyData Profile 43
-  </div>
-  
-  <div 
-    role="listitem" 
-    aria-posinset="44" 
-    aria-setsize="100">
-    User: MyData Profile 44
+  <div role="rowgroup">
+    <div role="row" aria-rowindex="100">
+      <span role="gridcell">Fred</span>
+      <span role="gridcell">Jackson</span>
+      <span role="gridcell">Acme, Inc.</span>
+      <span role="gridcell">555-1234</span>
+    </div>
+    <div role="row" aria-rowindex="101">
+      <span role="gridcell">Sara</span>
+      <span role="gridcell">James</span>
+      <span role="gridcell">Acme, Inc.</span>
+      <span role="gridcell">555-1235</span>
+    </div>
+    <div role="row" aria-rowindex="102">
+      <span role="gridcell">Taylor</span>
+      <span role="gridcell">Johnson</span>
+      <span role="gridcell">Acme, Inc.</span>
+      <span role="gridcell">555-1236</span>
+    </div>
   </div>
 </div>
 </body>
