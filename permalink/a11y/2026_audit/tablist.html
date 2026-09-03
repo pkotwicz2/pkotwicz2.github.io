@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<div role="tablist" aria-label="Project Settings">
+  
+  <button 
+    role="tab" 
+    aria-selected="true" 
+    aria-controls="panel-general" 
+    id="tab-general" 
+    aria-posinset="1" 
+    aria-setsize="3"
+    tabindex="0">
+    General
+  </button>
+
+  <button 
+    role="tab" 
+    aria-selected="false" 
+    aria-controls="panel-security" 
+    id="tab-security" 
+    aria-posinset="2" 
+    aria-setsize="3"
+    tabindex="-1">
+    Security
+  </button>
+
+  <button 
+    role="tab" 
+    aria-selected="false" 
+    aria-controls="panel-notifications" 
+    id="tab-notifications" 
+    aria-posinset="3" 
+    aria-setsize="3"
+    tabindex="-1">
+    Notifications
+  </button>
+
+</div>
+
+<!-- Tab Panels -->
+<div role="tabpanel" id="panel-general" aria-labelledby="tab-general">
+  <p>General project settings configuration...</p>
+</div>
+
+<div role="tabpanel" id="panel-security" aria-labelledby="tab-security" hidden>
+  <p>Security and authentication settings...</p>
+</div>
+
+<div role="tabpanel" id="panel-notifications" aria-labelledby="tab-notifications" hidden>
+  <p>Notification and alert preferences...</p>
+</div>
+</body>
+</html>
