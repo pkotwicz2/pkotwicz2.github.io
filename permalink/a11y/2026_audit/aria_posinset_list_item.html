@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Accessible Treegrid</title>
+</head>
+<body>
+
+<div role="list" aria-label="Virtualized User List">
+  <!-- 
+    The browser and assistive technologies are informed that this is the 
+    42nd item in a list of 100, even if preceding items are not currently rendered in the DOM.
+  -->
+  <div 
+    role="listitem" 
+    aria-posinset="42" 
+    aria-setsize="100">
+    User: MyData Profile 42
+  </div>
+  
+  <div 
+    role="listitem" 
+    aria-posinset="43" 
+    aria-setsize="100">
+    User: MyData Profile 43
+  </div>
+  
+  <div 
+    role="listitem" 
+    aria-posinset="44" 
+    aria-setsize="100">
+    User: MyData Profile 44
+  </div>
+</div>
+</body>
+</html>
