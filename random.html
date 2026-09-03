@@ -1,54 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
 <body>
-<div role="tablist" aria-label="Project Settings">
+<div role="treegrid" aria-label="Project File Directory" aria-colcount="3">
   
-  <button 
-    role="tab" 
-    aria-selected="true" 
-    aria-controls="panel-general" 
-    id="tab-general" 
-    aria-posinset="1" 
-    aria-setsize="3"
-    tabindex="0">
-    General
-  </button>
+  <!-- Column Headers -->
+  <div role="rowgroup">
+    <div role="row">
+      <div role="columnheader" aria-colindex="1">Name</div>
+      <div role="columnheader" aria-colindex="2">Type</div>
+      <div role="columnheader" aria-colindex="3">Size</div>
+    </div>
+  </div>
 
-  <button 
-    role="tab" 
-    aria-selected="false" 
-    aria-controls="panel-security" 
-    id="tab-security" 
-    aria-posinset="2" 
-    aria-setsize="3"
-    tabindex="-1">
-    Security
-  </button>
+  <!-- Treegrid Body -->
+  <div role="rowgroup">
+    
+    <!-- Level 1: Item 1 of 2 -->
+    <div 
+      role="row" 
+      aria-level="1" 
+      aria-posinset="1" 
+      aria-setsize="2" 
+      aria-expanded="true" 
+      tabindex="0">
+      <div role="gridcell">src</div>
+      <div role="gridcell">Folder</div>
+      <div role="gridcell">—</div>
+    </div>
 
-  <button 
-    role="tab" 
-    aria-selected="false" 
-    aria-controls="panel-notifications" 
-    id="tab-notifications" 
-    aria-posinset="3" 
-    aria-setsize="3"
-    tabindex="-1">
-    Notifications
-  </button>
+    <!-- Level 2 (Nested): Item 1 of 2 -->
+    <div 
+      role="row" 
+      aria-level="2" 
+      aria-posinset="1" 
+      aria-setsize="2">
+      <div role="gridcell">index.js</div>
+      <div role="gridcell">JS File</div>
+      <div role="gridcell">4 KB</div>
+    </div>
 
-</div>
+    <!-- Level 2 (Nested): Item 2 of 2 -->
+    <div 
+      role="row" 
+      aria-level="2" 
+      aria-posinset="2" 
+      aria-setsize="2">
+      <div role="gridcell">styles.css</div>
+      <div role="gridcell">CSS Stylesheet</div>
+      <div role="gridcell">2 KB</div>
+    </div>
 
-<!-- Tab Panels -->
-<div role="tabpanel" id="panel-general" aria-labelledby="tab-general">
-  <p>General project settings configuration...</p>
-</div>
+    <!-- Level 1: Item 2 of 2 -->
+    <div 
+      role="row" 
+      aria-level="1" 
+      aria-posinset="2" 
+      aria-setsize="2" 
+      aria-expanded="false">
+      <div role="gridcell">public</div>
+      <div role="gridcell">Folder</div>
+      <div role="gridcell">—</div>
+    </div>
 
-<div role="tabpanel" id="panel-security" aria-labelledby="tab-security" hidden>
-  <p>Security and authentication settings...</p>
-</div>
-
-<div role="tabpanel" id="panel-notifications" aria-labelledby="tab-notifications" hidden>
-  <p>Notification and alert preferences...</p>
+  </div>
 </div>
 </body>
 </html>
