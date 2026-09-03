@@ -1,53 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
 <body>
-<label for="virtualized-users">Select a User (Showing subset 101-105 of 500):</label>
-<select id="virtualized-users" name="users">
-  <option value="user_101" aria-posinset="1" aria-setsize="15">
-    User 101: John Doe
-  </option>
-  <option value="user_102" aria-posinset="2" aria-setsize="15">
-    User 102: Jane Smith
-  </option>
-  <option value="user_103" aria-posinset="3" aria-setsize="15">
-    User 103: Alex Kim
-  </option>
-  <option value="user_104" aria-posinset="4" aria-setsize="15">
-    User 104: Morgan Lee
-  </option>
-  <option value="user_105" aria-posinset="5" aria-setsize="15">
-    User 105: Sam Wilson
-  </option>
-    <option value="user_101" aria-posinset="6" aria-setsize="15">
-    User 101: John Doe
-  </option>
-  <option value="user_102" aria-posinset="7" aria-setsize="15">
-    User 102: Jane Smith
-  </option>
-  <option value="user_103" aria-posinset="8" aria-setsize="15">
-    User 103: Alex Kim
-  </option>
-  <option value="user_104" aria-posinset="9" aria-setsize="15">
-    User 104: Morgan Lee
-  </option>
-  <option value="user_105" aria-posinset="10" aria-setsize="15">
-    User 105: Sam Wilson
-  </option>
-    <option value="user_101" aria-posinset="11" aria-setsize="15">
-    User 101: John Doe
-  </option>
-  <option value="user_102" aria-posinset="12" aria-setsize="15">
-    User 102: Jane Smith
-  </option>
-  <option value="user_103" aria-posinset="13" aria-setsize="15">
-    User 103: Alex Kim
-  </option>
-  <option value="user_104" aria-posinset="14" aria-setsize="15">
-    User 104: Morgan Lee
-  </option>
-  <option value="user_105" aria-posinset="15" aria-setsize="15">
-    User 105: Sam Wilson
-  </option>
-</select>
+<div role="tablist" aria-label="Project Settings">
+  
+  <button 
+    role="tab" 
+    aria-selected="true" 
+    aria-controls="panel-general" 
+    id="tab-general" 
+    aria-posinset="1" 
+    aria-setsize="3"
+    tabindex="0">
+    General
+  </button>
+
+  <button 
+    role="tab" 
+    aria-selected="false" 
+    aria-controls="panel-security" 
+    id="tab-security" 
+    aria-posinset="2" 
+    aria-setsize="3"
+    tabindex="-1">
+    Security
+  </button>
+
+  <button 
+    role="tab" 
+    aria-selected="false" 
+    aria-controls="panel-notifications" 
+    id="tab-notifications" 
+    aria-posinset="3" 
+    aria-setsize="3"
+    tabindex="-1">
+    Notifications
+  </button>
+
+</div>
+
+<!-- Tab Panels -->
+<div role="tabpanel" id="panel-general" aria-labelledby="tab-general">
+  <p>General project settings configuration...</p>
+</div>
+
+<div role="tabpanel" id="panel-security" aria-labelledby="tab-security" hidden>
+  <p>Security and authentication settings...</p>
+</div>
+
+<div role="tabpanel" id="panel-notifications" aria-labelledby="tab-notifications" hidden>
+  <p>Notification and alert preferences...</p>
+</div>
 </body>
 </html>
