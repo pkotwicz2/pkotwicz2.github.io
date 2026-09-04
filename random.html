@@ -1,36 +1,13 @@
 <html>
 <body>
 <h3>Before</h3>
-<div role="grid" aria-rowcount="2000">
-  <div role="rowgroup">
-    <div role="row" aria-rowindex="1">
-      <span role="columnheader">First Name</span>
-      <span role="columnheader">Last Name</span>
-      <span role="columnheader">Company</span>
-      <span role="columnheader">Phone</span>
-    </div>
-  </div>
-  <div role="rowgroup">
-    <div role="row" aria-rowindex="100">
-      <span role="gridcell">Fred</span>
-      <span role="gridcell">Jackson</span>
-      <span role="gridcell">Acme, Inc.</span>
-      <span role="gridcell">555-1234</span>
-    </div>
-    <div role="row" aria-rowindex="101">
-      <span role="gridcell">Sara</span>
-      <span role="gridcell">James</span>
-      <span role="gridcell">Acme, Inc.</span>
-      <span role="gridcell">555-1235</span>
-    </div>
-    <div role="row" aria-rowindex="102">
-      <span role="gridcell">Taylor</span>
-      <span role="gridcell">Johnson</span>
-      <span role="gridcell">Acme, Inc.</span>
-      <span role="gridcell">555-1236</span>
-    </div>
-  </div>
-</div>
+<h2 id="label_fruit"> Available Fruit </h2>
+<ul role="listbox" aria-labelledby="label_fruit">
+  <li role="option" aria-setsize="16" aria-posinset="5"> apples </li>
+  <li role="option" aria-setsize="16" aria-posinset="6"> bananas </li>
+  <li role="option" aria-setsize="16" aria-posinset="7"> cantaloupes </li>
+  <li role="option" aria-setsize="16" aria-posinset="8"> dates </li>
+</ul>
 <h3>After</h3>
 </body>
 </html>
