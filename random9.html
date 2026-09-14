@@ -1,19 +1,177 @@
 <html>
 <head>
-<script>
-function DoIt() {
-    var newEl = document.createElement('b');
-    newEl.innerText = "EFGH";
-    document.getElementById('bq').replaceChildren(newEl);
-}
-</script>
 </head>
 <body>
-<blockquote id='bq'>
-    <p>
-        ABCD
-    </p>
-</blockquote>
-<button onclick="DoIt()"></button>
+<style>
+    .combobox-list {
+  position: relative;
+}
+
+.combobox .group {
+  display: inline-flex;
+  padding: 4px;
+  cursor: pointer;
+}
+
+.combobox input,
+.combobox button {
+  background-color: white;
+  color: black;
+  box-sizing: border-box;
+  height: 24px;
+  padding: 0;
+  margin: 0;
+  vertical-align: bottom;
+  border: 1px solid gray;
+  position: relative;
+  cursor: pointer;
+}
+
+.combobox input {
+  width: 150px;
+  border-right: none;
+  outline: none;
+  font-size: 87.5%;
+  padding: 1px 3px;
+}
+
+.combobox button {
+  width: 19px;
+  border-left: none;
+  outline: none;
+  color: rgb(0 90 156);
+}
+
+.combobox button[aria-expanded="true"] svg {
+  transform: rotate(180deg) translate(0, -3px);
+}
+
+ul[role="listbox"] {
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  left: 4px;
+  top: 28px;
+  list-style: none;
+  background-color: white;
+  display: none;
+  box-sizing: border-box;
+  border: 2px currentcolor solid;
+  max-height: 250px;
+  width: 168px;
+  overflow: scroll;
+  overflow-x: hidden;
+  font-size: 87.5%;
+  cursor: pointer;
+}
+
+ul[role="listbox"] li[role="option"] {
+  margin: 0;
+  display: block;
+  padding-left: 3px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+
+/* focus and hover styling */
+
+.combobox .group.focus,
+.combobox .group:hover {
+  padding: 2px;
+  border: 2px solid currentcolor;
+  border-radius: 4px;
+}
+
+.combobox .group.focus polygon,
+.combobox .group:hover polygon {
+  fill-opacity: 1;
+}
+
+.combobox .group.focus input,
+.combobox .group.focus button,
+.combobox .group input:hover,
+.combobox .group button:hover {
+  background-color: #def;
+}
+
+[role="listbox"].focus [role="option"][aria-selected="true"],
+[role="listbox"] [role="option"]:hover {
+  background-color: #def;
+  padding-top: 0;
+  padding-bottom: 0;
+  border-top: 2px solid currentcolor;
+  border-bottom: 2px solid currentcolor;
+}
+</style>
+<label for="cb1-input">State</label>
+<div class="combobox combobox-list">
+  <div class="group">
+    <input id="cb1-input" class="cb_edit" type="text" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="cb1-listbox">
+    <button id="cb1-button" tabindex="-1" aria-label="States" aria-expanded="false" aria-controls="cb1-listbox">
+      <svg width="18" height="16" aria-hidden="true" focusable="false" style="forced-color-adjust: auto">
+        <polygon class="arrow" stroke-width="0" fill-opacity="0.75" fill="currentcolor" points="3,6 15,6 9,14"></polygon>
+      </svg>
+    </button>
+  </div>
+  <ul id="cb1-listbox" role="listbox" aria-label="States">
+    <li id="lb1-al" role="option">Alabama</li>
+    <li id="lb1-ak" role="option">Alaska</li>
+    <li id="lb1-as" role="option">American Samoa</li>
+    <li id="lb1-az" role="option">Arizona</li>
+    <li id="lb1-ar" role="option">Arkansas</li>
+    <li id="lb1-ca" role="option">California</li>
+    <li id="lb1-co" role="option">Colorado</li>
+    <li id="lb1-ct" role="option">Connecticut</li>
+    <li id="lb1-de" role="option">Delaware</li>
+    <li id="lb1-dc" role="option">District of Columbia</li>
+    <li id="lb1-fl" role="option">Florida</li>
+    <li id="lb1-ga" role="option">Georgia</li>
+    <li id="lb1-gm" role="option">Guam</li>
+    <li id="lb1-hi" role="option">Hawaii</li>
+    <li id="lb1-id" role="option">Idaho</li>
+    <li id="lb1-il" role="option">Illinois</li>
+    <li id="lb1-in" role="option">Indiana</li>
+    <li id="lb1-ia" role="option">Iowa</li>
+    <li id="lb1-ks" role="option">Kansas</li>
+    <li id="lb1-ky" role="option">Kentucky</li>
+    <li id="lb1-la" role="option">Louisiana</li>
+    <li id="lb1-me" role="option">Maine</li>
+    <li id="lb1-md" role="option">Maryland</li>
+    <li id="lb1-ma" role="option">Massachusetts</li>
+    <li id="lb1-mi" role="option">Michigan</li>
+    <li id="lb1-mn" role="option">Minnesota</li>
+    <li id="lb1-ms" role="option">Mississippi</li>
+    <li id="lb1-mo" role="option">Missouri</li>
+    <li id="lb1-mt" role="option">Montana</li>
+    <li id="lb1-ne" role="option">Nebraska</li>
+    <li id="lb1-nv" role="option">Nevada</li>
+    <li id="lb1-nh" role="option">New Hampshire</li>
+    <li id="lb1-nj" role="option">New Jersey</li>
+    <li id="lb1-nm" role="option">New Mexico</li>
+    <li id="lb1-ny" role="option">New York</li>
+    <li id="lb1-nc" role="option">North Carolina</li>
+    <li id="lb1-nd" role="option">North Dakota</li>
+    <li id="lb1-mp" role="option">Northern Marianas Islands</li>
+    <li id="lb1-oh" role="option">Ohio</li>
+    <li id="lb1-ok" role="option">Oklahoma</li>
+    <li id="lb1-or" role="option">Oregon</li>
+    <li id="lb1-pa" role="option">Pennsylvania</li>
+    <li id="lb1-pr" role="option">Puerto Rico</li>
+    <li id="lb1-ri" role="option">Rhode Island</li>
+    <li id="lb1-sc" role="option">South Carolina</li>
+    <li id="lb1-sd" role="option">South Dakota</li>
+    <li id="lb1-tn" role="option">Tennessee</li>
+    <li id="lb1-tx" role="option">Texas</li>
+    <li id="lb1-ut" role="option">Utah</li>
+    <li id="lb1-ve" role="option">Vermont</li>
+    <li id="lb1-va" role="option">Virginia</li>
+    <li id="lb1-vi" role="option">Virgin Islands</li>
+    <li id="lb1-wa" role="option">Washington</li>
+    <li id="lb1-wv" role="option">West Virginia</li>
+    <li id="lb1-wi" role="option">Wisconsin</li>
+    <li id="lb1-wy" role="option">Wyoming</li>
+  </ul>
+</div>
+        
 </body>
 </html>
