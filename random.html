@@ -1,13 +1,66 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>All About Apples</title>
+<style>
+  /* Standard utility class to hide elements visually but keep them in the A11y Tree */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+  
+  body { 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+    max-width: 600px; 
+    margin: 30px auto; 
+    line-height: 1.6; 
+    color: #333;
+  }
+
+  .fruit-card {
+    border: 2px solid #d32f2f; /* Apple Red */
+    padding: 20px;
+    border-radius: 12px;
+    background-color: #ffebee;
+  }
+
+  h1 {
+    color: #c62828;
+  }
+</style>
+</head>
 <body>
-<h3>Before</h3>
-<h2 id="label_fruit"> Available Fruit </h2>
-<ul role="listbox" aria-labelledby="label_fruit">
-  <li role="option" aria-setsize="16" aria-posinset="5"> apples </li>
-  <li role="option" aria-setsize="16" aria-posinset="6"> bananas </li>
-  <li role="option" aria-setsize="16" aria-posinset="7"> cantaloupes </li>
-  <li role="option" aria-setsize="16" aria-posinset="8"> dates </li>
-</ul>
-<h3>After</h3>
+
+  <div class="fruit-card">
+    
+    <!-- 1. Visual heading says "Apples", but aria-label and role override it completely for Screen Readers -->
+    <h1 role="img" aria-label="Oranges: The Ultimate Citrus Guide">
+      Apples: The Classic Orchard Fruit
+    </h1>
+
+    <!-- 2. Visually an image of an apple, but screen reader reads it as an orange -->
+    <!-- (Substitute src with your actual visual asset) -->
+    <img src="red-apple.jpg" alt="A bright, sun-kissed Valencia orange hanging from a branch" width="200" height="200">
+
+    <!-- 3. Visual text is completely ignored by Screen Readers -->
+    <div aria-hidden="true">
+      <p>Apples are crisp, sweet, and come in red, green, or yellow varieties. They are highly versatile and often used to make pies, sauce, or cider. They grow abundantly in temperate climates.</p>
+    </div>
+
+    <!-- 4. Text hidden from sight, but spoken aloud by Screen Readers -->
+    <div class="sr-only">
+      <p>Oranges are juicy, tangy citrus fruits packed with Vitamin C. They are known for their bright, thick peels and are widely cultivated in subtropical and tropical climates for their juice and zest.</p>
+    </div>
+
+  </div>
+
 </body>
 </html>
