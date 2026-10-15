@@ -1,253 +1,121 @@
-
-<!DOCTYPE html>
-<html>
-<body>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Minimal repro: border lines drawn to canvas (0,0) — live mode</title>
 <style>
-  li {
-    font-size:72px;
-    margin-bottom:8px;
-  }
-  
+  body { font-family: sans-serif; margin: 20px; }
+  #status { padding: 10px; border: 2px solid #999; margin-bottom: 12px; font-weight: bold; }
+  #status.bad  { border-color: #d1006b; color: #d1006b; background: #fdf0f6; }
+  #status.good { border-color: #0a7d6a; color: #0a7d6a; background: #eef7f5; }
+  canvas { border: 1px solid #333; background: #c4886a; cursor: crosshair; touch-action: none; }
+  #log { font-family: monospace; font-size: 12px; white-space: pre; background: #111; color: #ddd;
+         padding: 8px; height: 160px; overflow: auto; margin-top: 12px; }
 </style>
-<ul>
-  <li>a</li>
-  <li>b</li>
-  <li>c</li>
-  <li>d</li>
-  <li>e</li>
-  <li>f</li>
-  <li>g</li>
-  <li>h</li>
-  <li>i</li>
-  <li>j</li>
-  <li>k</li>
-  <li>l</li>
-  <li>m</li>
-  <li>n</li>
-  <li>o</li>
-  <li>p</li> 
-  <li>q</li>
-    <li>a</li>
-  <li>b</li>
-  <li>c</li>
-  <li>d</li>
-  <li>e</li>
-  <li>f</li>
-  <li>g</li>
-  <li>h</li>
-  <li>i</li>
-  <li>j</li>
-  <li>k</li>
-  <li>l</li>
-  <li>m</li>
-  <li>n</li>
-  <li>o</li>
-  <li>p</li> 
-  <li>q</li>
-    <li>a</li>
-  <li>b</li>
-  <li>c</li>
-  <li>d</li>
-  <li>e</li>
-  <li>f</li>
-  <li>g</li>
-  <li>h</li>
-  <li>i</li>
-  <li>j</li>
-  <li>k</li>
-  <li>l</li>
-  <li>m</li>
-  <li>n</li>
-  <li>o</li>
-  <li>p</li> 
-  <li>q</li>
-    <li>a</li>
-  <li>b</li>
-  <li>c</li>
-  <li>d</li>
-  <li>e</li>
-  <li>f</li>
-  <li>g</li>
-  <li>h</li>
-  <li>i</li>
-  <li>j</li>
-  <li>k</li>
-  <li>l</li>
-  <li>m</li>
-  <li>n</li>
-  <li>o</li>
-  <li>p</li> 
-  <li>q</li>
-    <li>a</li>
-  <li>b</li>
-  <li>c</li>
-  <li>d</li>
-  <li>e</li>
-  <li>f</li>
-  <li>g</li>
-  <li>h</li>
-  <li>i</li>
-  <li>j</li>
-  <li>k</li>
-  <li>l</li>
-  <li>m</li>
-  <li>n</li>
-  <li>o</li>
-  <li>p</li> 
-  <li>q</li>
-    <li>a</li>
-  <li>b</li>
-  <li>c</li>
-  <li>d</li>
-  <li>e</li>
-  <li>f</li>
-  <li>g</li>
-  <li>h</li>
-  <li>i</li>
-  <li>j</li>
-  <li>k</li>
-  <li>l</li>
-  <li>m</li>
-  <li>n</li>
-  <li>o</li>
-  <li>p</li> 
-  <li>q</li>
-    <li>a</li>
-  <li>b</li>
-  <li>c</li>
-  <li>d</li>
-  <li>e</li>
-  <li>f</li>
-  <li>g</li>
-  <li>h</li>
-  <li>i</li>
-  <li>j</li>
-  <li>k</li>
-  <li>l</li>
-  <li>m</li>
-  <li>n</li>
-  <li>o</li>
-  <li>p</li> 
-  <li>q</li>
-    <li>a</li>
-  <li>b</li>
-  <li>c</li>
-  <li>d</li>
-  <li>e</li>
-  <li>f</li>
-  <li>g</li>
-  <li>h</li>
-  <li>i</li>
-  <li>j</li>
-  <li>k</li>
-  <li>l</li>
-  <li>m</li>
-  <li>n</li>
-  <li>o</li>
-  <li>p</li> 
-  <li>q</li>
-    <li>a</li>
-  <li>b</li>
-  <li>c</li>
-  <li>d</li>
-  <li>e</li>
-  <li>f</li>
-  <li>g</li>
-  <li>h</li>
-  <li>i</li>
-  <li>j</li>
-  <li>k</li>
-  <li>l</li>
-  <li>m</li>
-  <li>n</li>
-  <li>o</li>
-  <li>p</li> 
-  <li>q</li>
-    <li>a</li>
-  <li>b</li>
-  <li>c</li>
-  <li>d</li>
-  <li>e</li>
-  <li>f</li>
-  <li>g</li>
-  <li>h</li>
-  <li>i</li>
-  <li>j</li>
-  <li>k</li>
-  <li>l</li>
-  <li>m</li>
-  <li>n</li>
-  <li>o</li>
-  <li>p</li> 
-  <li>q</li>
-    <li>a</li>
-  <li>b</li>
-  <li>c</li>
-  <li>d</li>
-  <li>e</li>
-  <li>f</li>
-  <li>g</li>
-  <li>h</li>
-  <li>i</li>
-  <li>j</li>
-  <li>k</li>
-  <li>l</li>
-  <li>m</li>
-  <li>n</li>
-  <li>o</li>
-  <li>p</li> 
-  <li>q</li>
-    <li>a</li>
-  <li>b</li>
-  <li>c</li>
-  <li>d</li>
-  <li>e</li>
-  <li>f</li>
-  <li>g</li>
-  <li>h</li>
-  <li>i</li>
-  <li>j</li>
-  <li>k</li>
-  <li>l</li>
-  <li>m</li>
-  <li>n</li>
-  <li>o</li>
-  <li>p</li> 
-  <li>q</li>
-    <li>a</li>
-  <li>b</li>
-  <li>c</li>
-  <li>d</li>
-  <li>e</li>
-  <li>f</li>
-  <li>g</li>
-  <li>h</li>
-  <li>i</li>
-  <li>j</li>
-  <li>k</li>
-  <li>l</li>
-  <li>m</li>
-  <li>n</li>
-  <li>o</li>
-  <li>p</li> 
-  <li>q</li>
-    <li>a</li>
-  <li>b</li>
-  <li>c</li>
-  <li>d</li>
-  <li>e</li>
-  <li>f</li>
-  <li>g</li>
-  <li>h</li>
-  <li>i</li>
-  <li>j</li>
-  <li>k</li>
-  <li>l</li>
-  <li>m</li>
-  <li>n</li>
-  <li>o</li>
-  <li>p</li> 
-  <li>q</li>
-</ul>
-</body>
-</html>
+</head>
+<body>
+<h2>Minimal repro: border lines drawn to canvas (0,0)</h2>
+<p>Press <b>Start marking</b>, then click 3 or more points on the canvas. The border line is drawn
+  to the coordinate held in hidden divs that <b>only mousemove</b> updates. If no mousemove reaches
+  the canvas before the clicks, the divs stay empty (<code>""</code>). Canvas converts <code>""</code> to 0,
+  so the line runs to the top-left corner.</p>
+
+<div id="status" class="good">Not reproduced: 4 segments drawn correctly (124 mousemove events reached the canvas).</div>
+<button id="start">Start marking</button>
+<span id="counts">  points: 5  mousemoves: 124  segments: 4  segments to (0,0): 0</span>
+<br><br>
+<canvas id="canvas" width="500" height="400"></canvas>
+
+<!-- hidden state divs, same as wm.js / Profile.do -->
+<div id="oldposx" hidden="">90</div>
+<div id="oldposy" hidden="">171</div>
+<div id="posx" hidden="">474</div>
+<div id="posy" hidden="">169</div>
+
+<script>
+var canvas = document.getElementById('canvas');
+var ctx = canvas.getContext('2d');
+var $ = function (id) { return document.getElementById(id); };
+
+var marking = false;
+var clicks = 0, moves = 0, segments = 0, phantom = 0;
+
+function getXY(e) {
+  var r = canvas.getBoundingClientRect();
+  return {
+    x: Math.round((e.clientX - r.left) * canvas.width / r.width),
+    y: Math.round((e.clientY - r.top) * canvas.height / r.height)
+  };
+}
+
+function update() {
+  $('counts').textContent = '  points: ' + clicks + '  mousemoves: ' + moves +
+    '  segments: ' + segments + '  segments to (0,0): ' + phantom;
+  var s = $('status');
+  if (phantom > 0) {
+    s.className = 'bad';
+    s.textContent = 'DEFECT REPRODUCED: ' + phantom + ' of ' + segments +
+      ' segments were drawn to canvas (0,0) because #posx/#posy were empty.';
+  } else if (segments > 0) {
+    s.className = 'good';
+    s.textContent = 'Not reproduced: ' + segments + ' segments drawn correctly (' +
+      moves + ' mousemove events reached the canvas).';
+  } else if (marking) {
+    s.className = '';
+    s.textContent = 'Marking. Click points on the canvas (2 or more needed to draw a segment).';
+  }
+}
+
+// mousemove: the ONLY place #posx/#posy get written with real coordinates (wm.js line 497)
+canvas.addEventListener('mousemove', function (e) {
+  if (!marking) return;
+  var p = getXY(e);
+  $('posx').textContent = p.x;
+  $('posy').textContent = p.y;
+  moves++;
+  update();
+});
+
+// mousedown: draws a segment from #oldposx/#oldposy to #posx/#posy (wm.js line 505)
+canvas.addEventListener('mousedown', function (e) {
+  if (!marking || e.button !== 0) return;
+  var p = getXY(e);
+
+  var posx = $('posx').textContent;      // "" if no mousemove has happened yet
+  var posy = $('posy').textContent;
+  var oldposx = $('oldposx').textContent;
+  var oldposy = $('oldposy').textContent;
+
+  ctx.strokeStyle = '#000';
+  ctx.fillStyle = '#000';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(oldposx, oldposy);
+  if (oldposx !== '') {
+    ctx.lineTo(posx, posy);              // "" -> 0  => line to top-left corner
+    ctx.stroke();
+    segments++;
+    var bad = (posx === '' || posy === '');
+    if (bad) phantom++;
+  }
+
+  $('oldposx').textContent = p.x;        // real click coordinate
+  $('oldposy').textContent = p.y;
+  $('posx').textContent = posx;          // stale value written back (keeps "" sticky)
+  $('posy').textContent = posy;
+
+  ctx.fillRect(p.x - 2, p.y - 2, 5, 5);  // marker at the real click position
+  clicks++;
+  update();
+});
+
+$('start').addEventListener('click', function () {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ['oldposx', 'oldposy', 'posx', 'posy'].forEach(function (id) { $(id).textContent = ''; });
+  clicks = moves = segments = phantom = 0;
+  marking = true;
+  update();
+});
+</script>
+
+
+</body></html>
