@@ -31,6 +31,19 @@
 <div id="posx" hidden="">474</div>
 <div id="posy" hidden="">169</div>
 
+<div id="log">Marking started. UA: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36
+maxTouchPoints=10  pointer:fine=true  hover:hover=true
+click 1 at canvas(98,126)  isTrusted=true  #posx=98
+segment (98,126) -&gt; (277,202)
+click 2 at canvas(277,202)  isTrusted=true  #posx=277
+segment (277,202) -&gt; (312,283)
+click 3 at canvas(312,283)  isTrusted=true  #posx=312
+segment (312,283) -&gt; (174,297)
+click 4 at canvas(174,297)  isTrusted=true  #posx=174
+segment (174,297) -&gt; (90,171)
+click 5 at canvas(90,171)  isTrusted=true  #posx=90
+</div>
+
 <script>
 var canvas = document.getElementById('canvas');
 var ctx = canvas.getContext('2d');
@@ -45,6 +58,12 @@ function getXY(e) {
     x: Math.round((e.clientX - r.left) * canvas.width / r.width),
     y: Math.round((e.clientY - r.top) * canvas.height / r.height)
   };
+}
+
+function log(msg) {
+  var el = $('log');
+  el.textContent += msg + '\n';
+  el.scrollTop = el.scrollHeight;
 }
 
 function update() {
@@ -72,7 +91,6 @@ canvas.addEventListener('mousemove', function (e) {
   $('posx').textContent = p.x;
   $('posy').textContent = p.y;
   moves++;
-  console.log("Pos X " + p.x);
   update();
 });
 
@@ -85,7 +103,6 @@ canvas.addEventListener('mousedown', function (e) {
   var posy = $('posy').textContent;
   var oldposx = $('oldposx').textContent;
   var oldposy = $('oldposy').textContent;
-  console.log("Pos X " + p.x + " " + posx);
 
   ctx.strokeStyle = '#000';
   ctx.fillStyle = '#000';
@@ -98,6 +115,9 @@ canvas.addEventListener('mousedown', function (e) {
     segments++;
     var bad = (posx === '' || posy === '');
     if (bad) phantom++;
+    log('segment (' + oldposx + ',' + oldposy + ') -> (' +
+        (posx === '' ? '""' : posx) + ',' + (posy === '' ? '""' : posy) + ')' +
+        (bad ? '   <== drawn to (0,0)' : ''));
   }
 
   $('oldposx').textContent = p.x;        // real click coordinate
@@ -107,6 +127,8 @@ canvas.addEventListener('mousedown', function (e) {
 
   ctx.fillRect(p.x - 2, p.y - 2, 5, 5);  // marker at the real click position
   clicks++;
+  log('click ' + clicks + ' at canvas(' + p.x + ',' + p.y + ')  isTrusted=' + e.isTrusted +
+      '  #posx=' + (posx === '' ? '""' : posx));
   update();
 });
 
@@ -115,6 +137,11 @@ $('start').addEventListener('click', function () {
   ['oldposx', 'oldposy', 'posx', 'posy'].forEach(function (id) { $(id).textContent = ''; });
   clicks = moves = segments = phantom = 0;
   marking = true;
+  $('log').textContent = '';
+  log('Marking started. UA: ' + navigator.userAgent);
+  log('maxTouchPoints=' + navigator.maxTouchPoints +
+      '  pointer:fine=' + matchMedia('(pointer: fine)').matches +
+      '  hover:hover=' + matchMedia('(hover: hover)').matches);
   update();
 });
 </script>
