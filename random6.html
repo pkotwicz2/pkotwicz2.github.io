@@ -72,6 +72,7 @@ canvas.addEventListener('mousemove', function (e) {
   $('posx').textContent = p.x;
   $('posy').textContent = p.y;
   moves++;
+  console.log("Pos X " + p.x);
   update();
 });
 
@@ -84,6 +85,7 @@ canvas.addEventListener('mousedown', function (e) {
   var posy = $('posy').textContent;
   var oldposx = $('oldposx').textContent;
   var oldposy = $('oldposy').textContent;
+  console.log("Pos X " + p.x + " " + posx);
 
   ctx.strokeStyle = '#000';
   ctx.fillStyle = '#000';
