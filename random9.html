@@ -1,59 +1,130 @@
 <html lang="en"><head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pixel Trail Canvas</title>
-  <meta name="description" content="Move your mouse over the canvas to turn pixels black.">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Frequently Asked Questions – Exclusive Accordion</title>
   <style>
-    html, body { margin: 0; height: 100%; overflow: hidden; background: #fff; }
-    canvas { display: block; cursor: crosshair; }
+    :root {
+      --fg: #1a1a1a;
+      --bg: #ffffff;
+      --border: #6b6b6b;       /* 5.3:1 against white – meets WCAG 1.4.11 */
+      --accent: #0b57d0;       /* 6.4:1 against white */
+      --summary-bg: #f1f4f9;
+    }
+
+    body {
+      font-family: system-ui, sans-serif;
+      line-height: 1.5;
+      color: var(--fg);
+      background: var(--bg);
+      max-width: 45rem;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    details {
+      border: 1px solid var(--border);
+      border-radius: 0.5rem;
+      margin-block: 0.5rem;
+    }
+
+    summary {
+      cursor: pointer;
+      padding: 0.75rem 1rem;
+      background: var(--summary-bg);
+      border-radius: 0.5rem;
+      font-weight: 600;
+      /* Keep the native disclosure marker (display: list-item) so the
+         expanded/collapsed state is also conveyed visually. */
+    }
+
+    details[open] > summary {
+      border-bottom: 1px solid var(--border);
+      border-radius: 0.5rem 0.5rem 0 0;
+    }
+
+    /* Clearly visible keyboard focus indicator (WCAG 2.4.7 / 2.4.11). */
+    summary:focus-visible {
+      outline: 3px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    .panel {
+      padding: 0.75rem 1rem;
+    }
+
+    @media (forced-colors: active) {
+      summary:focus-visible { outline-color: Highlight; }
+    }
   </style>
 </head>
 <body>
-  <canvas id="pixel-canvas" width="487" height="1073"></canvas>
-  <script>
-    const canvas = document.getElementById('pixel-canvas');
-    const ctx = canvas.getContext('2d');
-    let last = null;
+  <header>
+    <h1>Product Support</h1>
+  </header>
 
-    // One canvas pixel == one CSS pixel. Resizing clears the canvas.
-    function resize() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      ctx.fillStyle = '#000';
-      last = null;
-    }
+  <main>
+    <section aria-labelledby="faq-heading">
+      <h2 id="faq-heading">Frequently asked questions</h2>
+      <p id="faq-hint">
+        Only one answer can be open at a time. Opening a question closes the
+        previously open one.
+      </p>
 
-    function setPixel(x, y) {
-      ctx.fillRect(x, y, 1, 1);
-    }
+      <!--
+        All <details> share name="faq", forming an exclusive accordion.
+        Chromium exposes each <summary> as Role::kDisclosureTriangleGrouped,
+        with expanded/collapsed state taken from the <details open> attribute
+        and set size / position computed automatically.
+        Do NOT add role="button" or aria-expanded: the native semantics are
+        already correct and an explicit role would override them.
+      -->
+      <details name="faq">
+        <summary>How do I reset my password?</summary>
+        <div class="panel">
+          <p>
+            Go to <strong>Settings &gt; Account &gt; Security</strong> and
+            select <strong>Reset password</strong>. A reset link will be sent
+            to your registered email address.
+          </p>
+        </div>
+      </details>
 
-    // Bresenham line so fast mouse movements don't skip pixels.
-    function drawLine(x0, y0, x1, y1) {
-      const dx = Math.abs(x1 - x0), sx = x0 < x1 ? 1 : -1;
-      const dy = -Math.abs(y1 - y0), sy = y0 < y1 ? 1 : -1;
-      let err = dx + dy;
-      while (true) {
-        setPixel(x0, y0);
-        if (x0 === x1 && y0 === y1) break;
-        const e2 = 2 * err;
-        if (e2 >= dy) { err += dy; x0 += sx; }
-        if (e2 <= dx) { err += dx; y0 += sy; }
-      }
-    }
+      <details name="faq">
+        <summary>Can I change my username?</summary>
+        <div class="panel">
+          <p>
+            Yes. Usernames can be changed once every 30 days from the
+            <strong>Profile</strong> page.
+          </p>
+        </div>
+      </details>
 
-    canvas.addEventListener('mousemove', (e) => {
-      const rect = canvas.getBoundingClientRect();
-      const x = Math.floor(e.clientX - rect.left);
-      const y = Math.floor(e.clientY - rect.top);
-      if (last) drawLine(last.x, last.y, x, y);
-      else setPixel(x, y);
-      last = { x, y };
-    });
+      <details name="faq">
+        <summary>How do I delete my account?</summary>
+        <div class="panel">
+          <p>
+            Account deletion is permanent. Before deleting, download a copy of
+            your data. Then follow these steps:
+          </p>
+          <ol>
+            <li>Open <strong>Settings</strong>.</li>
+            <li>Select <strong>Account</strong>.</li>
+            <li>Choose <strong>Delete account</strong> and confirm.</li>
+          </ol>
+        </div>
+      </details>
 
-    canvas.addEventListener('mouseleave', () => { last = null; });
-    window.addEventListener('resize', resize);
-    resize();
-  </script>
+      <details name="faq" open="">
+        <summary>Which browsers are supported?</summary>
+        <div class="panel">
+          <p>
+            The latest two versions of Chrome, Edge, Firefox, and Safari are
+            supported.
+          </p>
+        </div>
+      </details>
+    </section>
+  </main>
 
 
 </body></html>
