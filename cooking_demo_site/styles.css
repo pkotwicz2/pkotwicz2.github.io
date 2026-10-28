@@ -7,9 +7,9 @@
 :root {
   --bg: hsl(40 45% 96%);
   --surface: hsl(40 40% 99%);
-  --sidebar: hsl(150 30% 16%);
-  --sidebar-text: hsl(45 40% 95%);
-  --sidebar-hover: hsl(150 26% 24%);
+  --header: hsl(150 30% 16%);
+  --header-text: hsl(45 40% 95%);
+  --header-hover: hsl(150 26% 24%);
   --text: hsl(20 15% 11%);
   --muted: hsl(20 10% 28%);
   --accent: hsl(0 65% 30%);
@@ -26,9 +26,9 @@
   :root {
     --bg: hsl(30 10% 9%);
     --surface: hsl(30 10% 13%);
-    --sidebar: hsl(150 25% 11%);
-    --sidebar-text: hsl(45 40% 94%);
-    --sidebar-hover: hsl(150 22% 19%);
+    --header: hsl(150 25% 11%);
+    --header-text: hsl(45 40% 94%);
+    --header-hover: hsl(150 22% 19%);
     --text: hsl(40 30% 93%);
     --muted: hsl(40 15% 78%);
     --accent: hsl(15 85% 75%);
@@ -58,24 +58,6 @@ body {
   line-height: 1.65;
 }
 
-/* ---------- Skip link ---------- */
-.skip-link {
-  position: absolute;
-  left: 1rem;
-  top: -100%;
-  z-index: 100;
-  padding: 0.75rem 1.25rem;
-  background: var(--focus);
-  color: #000;
-  font-weight: 700;
-  border-radius: 0 0 0.5rem 0.5rem;
-  text-decoration: underline;
-}
-
-.skip-link:focus {
-  top: 0;
-}
-
 /* ---------- Focus ---------- */
 :focus-visible {
   outline: 3px solid var(--focus);
@@ -86,26 +68,23 @@ body {
 
 /* ---------- Layout ---------- */
 .layout {
-  display: grid;
-  grid-template-columns: minmax(15rem, 18rem) 1fr;
   min-height: 100vh;
 }
 
-.sidebar {
-  background: var(--sidebar);
-  color: var(--sidebar-text);
-  padding: 2rem 1.25rem;
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  overflow-y: auto;
+.site-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 1rem clamp(1.5rem, 4vw, 3.5rem);
+  background: var(--header);
+  color: var(--header-text);
   background-image:
-    radial-gradient(circle at 20% 0%, hsl(150 30% 24% / 0.6), transparent 60%),
+    radial-gradient(circle at 10% 0%, hsl(150 30% 24% / 0.6), transparent 60%),
     radial-gradient(circle at 100% 100%, hsl(0 50% 20% / 0.35), transparent 55%);
 }
 
 .site-title {
-  margin: 0 0 2rem;
+  margin: 0;
   font-family: var(--font-display);
   font-size: 1.6rem;
   font-weight: 700;
@@ -113,86 +92,12 @@ body {
   letter-spacing: -0.01em;
 }
 
-.site-title a {
-  color: inherit;
-  text-decoration: none;
-  display: block;
-  padding: 0.25rem 0.5rem;
-}
-
-.site-title a:hover {
-  text-decoration: underline;
-  text-underline-offset: 0.2em;
-}
-
-.site-title .crown {
-  display: block;
-  font-family: var(--font);
-  font-size: 0.8rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  opacity: 0.85;
-  margin-bottom: 0.35rem;
-}
-
-.nav-heading {
-  margin: 0 0 0.5rem;
-  padding: 0 0.5rem;
-  font-size: 0.85rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--sidebar-text);
-  opacity: 0.85;
-}
-
-.nav-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.nav-list li + li {
-  margin-top: 0.25rem;
-}
-
-.nav-list a {
-  display: block;
-  min-height: 44px; /* WCAG 2.5.5 target size */
-  padding: 0.65rem 0.75rem;
-  color: var(--sidebar-text);
-  text-decoration: none;
-  border-radius: 0.5rem;
-  transition: background-color 0.15s ease, transform 0.15s ease;
-}
-
-.nav-list a:hover {
-  background: var(--sidebar-hover);
-  text-decoration: underline;
-  text-underline-offset: 0.2em;
-  transform: translateX(2px);
-}
-
-.nav-list a[aria-current="page"] {
-  background: var(--sidebar-text);
-  color: var(--sidebar);
-  font-weight: 700;
-}
-
-.nav-list a[aria-current="page"]:hover {
-  transform: none;
-}
-
 /* ---------- Main content ---------- */
 main {
   padding: clamp(1.5rem, 4vw, 3.5rem);
   max-width: 52rem;
   width: 100%;
-}
-
-main:focus {
-  outline: none;
+  margin-inline: auto;
 }
 
 h1,
@@ -384,23 +289,6 @@ a:hover {
   font-size: 0.95rem;
 }
 
-/* ---------- Responsive: stack nav above content on narrow screens ---------- */
-@media (max-width: 48rem) {
-  .layout {
-    grid-template-columns: 1fr;
-  }
-
-  .sidebar {
-    position: static;
-    height: auto;
-    padding: 1.25rem 1rem;
-  }
-
-  .site-title {
-    margin-bottom: 1rem;
-  }
-}
-
 /* ---------- Motion & forced colours ---------- */
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -413,10 +301,6 @@ a:hover {
 }
 
 @media (forced-colors: active) {
-  .nav-list a[aria-current="page"] {
-    border: 2px solid CanvasText;
-  }
-
   :focus-visible {
     outline: 3px solid Highlight;
     box-shadow: none;
@@ -425,8 +309,7 @@ a:hover {
 
 /* ---------- Print ---------- */
 @media print {
-  .sidebar,
-  .skip-link,
+  .site-header,
   .site-footer {
     display: none;
   }
