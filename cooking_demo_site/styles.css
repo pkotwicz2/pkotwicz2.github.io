@@ -1,0 +1,447 @@
+/* Ole British Recipes — shared styles
+   Accessibility notes:
+   - All colour pairs meet WCAG 2.2 AAA (≥ 7:1) contrast for body text.
+   - Sizes use rem so text scales with user font settings (up to 200%+).
+   - Visible focus indicators, reduced-motion and forced-colours support. */
+
+:root {
+  --bg: hsl(40 45% 96%);
+  --surface: hsl(40 40% 99%);
+  --sidebar: hsl(150 30% 16%);
+  --sidebar-text: hsl(45 40% 95%);
+  --sidebar-hover: hsl(150 26% 24%);
+  --text: hsl(20 15% 11%);
+  --muted: hsl(20 10% 28%);
+  --accent: hsl(0 65% 30%);
+  --accent-soft: hsl(40 55% 90%);
+  --rule: hsl(35 25% 80%);
+  --focus: hsl(45 100% 50%);
+  --shadow: 0 1px 2px hsl(20 30% 20% / 0.06), 0 8px 24px hsl(20 30% 20% / 0.08);
+  --radius: 0.75rem;
+  --font: "Atkinson Hyperlegible", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --font-display: "Fraunces", Georgia, "Times New Roman", serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: hsl(30 10% 9%);
+    --surface: hsl(30 10% 13%);
+    --sidebar: hsl(150 25% 11%);
+    --sidebar-text: hsl(45 40% 94%);
+    --sidebar-hover: hsl(150 22% 19%);
+    --text: hsl(40 30% 93%);
+    --muted: hsl(40 15% 78%);
+    --accent: hsl(15 85% 75%);
+    --accent-soft: hsl(30 15% 18%);
+    --rule: hsl(30 8% 28%);
+    --shadow: 0 1px 2px hsl(0 0% 0% / 0.3), 0 8px 24px hsl(0 0% 0% / 0.35);
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 1.125rem;
+  line-height: 1.65;
+}
+
+/* ---------- Skip link ---------- */
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -100%;
+  z-index: 100;
+  padding: 0.75rem 1.25rem;
+  background: var(--focus);
+  color: #000;
+  font-weight: 700;
+  border-radius: 0 0 0.5rem 0.5rem;
+  text-decoration: underline;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+/* ---------- Focus ---------- */
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 6px #000;
+  border-radius: 4px;
+}
+
+/* ---------- Layout ---------- */
+.layout {
+  display: grid;
+  grid-template-columns: minmax(15rem, 18rem) 1fr;
+  min-height: 100vh;
+}
+
+.sidebar {
+  background: var(--sidebar);
+  color: var(--sidebar-text);
+  padding: 2rem 1.25rem;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  background-image:
+    radial-gradient(circle at 20% 0%, hsl(150 30% 24% / 0.6), transparent 60%),
+    radial-gradient(circle at 100% 100%, hsl(0 50% 20% / 0.35), transparent 55%);
+}
+
+.site-title {
+  margin: 0 0 2rem;
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+
+.site-title a {
+  color: inherit;
+  text-decoration: none;
+  display: block;
+  padding: 0.25rem 0.5rem;
+}
+
+.site-title a:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.site-title .crown {
+  display: block;
+  font-family: var(--font);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.85;
+  margin-bottom: 0.35rem;
+}
+
+.nav-heading {
+  margin: 0 0 0.5rem;
+  padding: 0 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--sidebar-text);
+  opacity: 0.85;
+}
+
+.nav-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-list li + li {
+  margin-top: 0.25rem;
+}
+
+.nav-list a {
+  display: block;
+  min-height: 44px; /* WCAG 2.5.5 target size */
+  padding: 0.65rem 0.75rem;
+  color: var(--sidebar-text);
+  text-decoration: none;
+  border-radius: 0.5rem;
+  transition: background-color 0.15s ease, transform 0.15s ease;
+}
+
+.nav-list a:hover {
+  background: var(--sidebar-hover);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  transform: translateX(2px);
+}
+
+.nav-list a[aria-current="page"] {
+  background: var(--sidebar-text);
+  color: var(--sidebar);
+  font-weight: 700;
+}
+
+.nav-list a[aria-current="page"]:hover {
+  transform: none;
+}
+
+/* ---------- Main content ---------- */
+main {
+  padding: clamp(1.5rem, 4vw, 3.5rem);
+  max-width: 52rem;
+  width: 100%;
+}
+
+main:focus {
+  outline: none;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+
+h1 {
+  font-size: clamp(2rem, 1.4rem + 2.5vw, 2.9rem);
+  margin: 0 0 0.75rem;
+}
+
+h2 {
+  font-size: 1.6rem;
+  margin: 2.5rem 0 1rem;
+}
+
+h3 {
+  font-size: 1.25rem;
+  margin: 1.5rem 0 0.5rem;
+}
+
+p {
+  margin: 0 0 1rem;
+  max-width: 68ch;
+}
+
+a {
+  color: var(--accent);
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.18em;
+}
+
+a:hover {
+  text-decoration-thickness: 0.15em;
+}
+
+.lede {
+  font-size: 1.25rem;
+  color: var(--muted);
+}
+
+/* ---------- Recipe time summary ---------- */
+.recipe-times {
+  margin: 1.75rem 0 0.5rem;
+  padding: 1.25rem 1.5rem;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.recipe-times h2 {
+  margin: 0 0 0.75rem;
+  font-size: 1.2rem;
+}
+
+.recipe-times dl {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  gap: 1rem;
+  margin: 0;
+}
+
+.recipe-times dl > div {
+  padding: 0.75rem 1rem;
+  background: var(--accent-soft);
+  border-radius: 0.5rem;
+}
+
+.recipe-times dt {
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.recipe-times dd {
+  margin: 0.15rem 0 0;
+  font-size: 1.35rem;
+  font-weight: 700;
+}
+
+.recipe-times .times-note {
+  margin: 0.85rem 0 0;
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+
+/* ---------- Ingredients & method ---------- */
+.ingredients,
+.method {
+  padding-left: 1.5rem;
+}
+
+.ingredients li,
+.method li {
+  margin-bottom: 0.5rem;
+  max-width: 68ch;
+}
+
+.method li {
+  padding-left: 0.35rem;
+  margin-bottom: 0.9rem;
+}
+
+.method li::marker {
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.note {
+  margin-top: 2rem;
+  padding: 1rem 1.25rem;
+  background: var(--accent-soft);
+  border-radius: var(--radius);
+}
+
+.note h2 {
+  margin: 0 0 0.5rem;
+  font-size: 1.2rem;
+}
+
+.note p:last-child {
+  margin-bottom: 0;
+}
+
+/* ---------- Home page cards ---------- */
+.recipe-cards {
+  list-style: none;
+  padding: 0;
+  margin: 2rem 0 0;
+  display: grid;
+  gap: 1.25rem;
+}
+
+.recipe-card {
+  position: relative;
+  padding: 1.5rem;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.recipe-card:hover,
+.recipe-card:focus-within {
+  transform: translateY(-2px);
+  box-shadow: 0 2px 4px hsl(20 30% 20% / 0.08), 0 14px 32px hsl(20 30% 20% / 0.12);
+}
+
+.recipe-card h2 {
+  margin: 0 0 0.5rem;
+  font-size: 1.4rem;
+}
+
+/* Whole card is clickable via a stretched link, with one accessible name. */
+.recipe-card h2 a::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius);
+}
+
+.recipe-card p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.recipe-card .card-times {
+  margin-top: 0.75rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+/* ---------- Footer ---------- */
+.site-footer {
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--rule);
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+/* ---------- Responsive: stack nav above content on narrow screens ---------- */
+@media (max-width: 48rem) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    position: static;
+    height: auto;
+    padding: 1.25rem 1rem;
+  }
+
+  .site-title {
+    margin-bottom: 1rem;
+  }
+}
+
+/* ---------- Motion & forced colours ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@media (forced-colors: active) {
+  .nav-list a[aria-current="page"] {
+    border: 2px solid CanvasText;
+  }
+
+  :focus-visible {
+    outline: 3px solid Highlight;
+    box-shadow: none;
+  }
+}
+
+/* ---------- Print ---------- */
+@media print {
+  .sidebar,
+  .skip-link,
+  .site-footer {
+    display: none;
+  }
+
+  .layout {
+    display: block;
+  }
+
+  body {
+    background: #fff;
+    color: #000;
+  }
+
+  .recipe-times,
+  .recipe-card {
+    box-shadow: none;
+  }
+}
