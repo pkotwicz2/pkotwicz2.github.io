@@ -1,15 +1,7 @@
 <html lang="en"><head>
 <body>
-<h3>Head1</h3>
-<canvas width="120" height="120" onclick="ABCD()">
-  <h3>Header2</h3>
-  Some text
-</canvas>
-<script>
-  const canvas = document.querySelector("canvas");
-const ctx = canvas.getContext("2d");
-ctx.fillStyle = "green";
-// Add a rectangle at (10, 10) with size 100x100 pixels
-ctx.fillRect(10, 10, 100, 100);
-</script>
+<span id="label-search" aria-hidden="true">Search</span>
+<button type="button" aria-labelledby="label-search">
+  <svg aria-hidden="true" focusable="false">...</svg>
+</button>
 </body></html>
