@@ -1,4 +1,32 @@
-<html lang="en"><head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Traditional Canvas</title>
+</head>
 <body>
-Start <div role="time">12:00pm</div>
-</body></html>
+    <div>Starter</div>
+    <canvas id="BarCanvas" width="500" height="400" style="border: 1px solid #000;"></canvas>
+
+    <script>
+        const canvas = document.getElementById('BarCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Draw a background rectangle
+        ctx.fillStyle = '#f8fafc';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // Draw a shape
+        ctx.fillStyle = '#3b82f6';
+        ctx.beginPath();
+        ctx.arc(250, 200, 50, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Draw text
+        ctx.fillStyle = '#0f172a';
+        ctx.font = '24px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('Baz Graphic', 250, 290);
+    </script>
+</body>
+</html>
