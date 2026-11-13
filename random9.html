@@ -1,7 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
+<head>
+<style>
+canvas { border: 1px solid #888; }
+.hidden { display: none; }
+</style>
+</head>
 <body>
-<h3 id="header">Header1</h3>
-<input type="range" value="10" min="0" max="100" aria-labelledby="header">
+<button id="swap">Swap canvas</button>
+<div>
+<canvas id="canvas1" width="300" height="150" style="position:absolute;left:0px;"></canvas>
+<canvas id="canvas2" width="300" height="150" class="hidden" style="position:absolute;left:200px;"></canvas>
+</div>
+<script>
+        function draw(id, bg, label) {
+          const ctx = document.getElementById(id).getContext('2d');
+          ctx.fillStyle = bg;
+          ctx.fillRect(0, 0, 300, 150);
+          ctx.fillStyle = '#000';
+          ctx.font = 'bold 32px sans-serif';
+          ctx.fillText(label, 20, 85);
+        }
+        draw('canvas1', '#ffd6d6', 'Canvas One');
+        draw('canvas2', '#d6e8ff', 'Canvas Two');
+
+        document.getElementById('swap').addEventListener('click', () => {
+          document.getElementById('canvas1').classList.toggle('hidden');
+          document.getElementById('canvas2').classList.toggle('hidden');
+        });
+</script>
 </body>
 </html>
