@@ -1,52 +1,46 @@
     <!DOCTYPE html>
     <html lang="en">
     <head>
+    <meta charset="utf-8">
+    <title>Show/Hide Canvas</title>
     <style>
-    canvas { border: 1px solid #888; }
-    .hidden { display: none; }
+      canvas { border: 1px solid #888; display: block; margin-top: 8px; }
+      .hidden { display: none; }
     </style>
     </head>
     <body>
-    <button id="swap">Swap canvas</button>
-    <div id="container">
-    <canvas id="canvas1" width="300" height="150" style="position:absolute;left:0px;" tabindex="0"></canvas>
-    </div>
+      <button id="toggle" aria-controls="canvas" aria-expanded="true">Hide canvas</button>
+      <canvas id="canvas" width="300" height="150"></canvas>
+
     <script>
-            function draw(canvas, bg, label) {
-              const ctx = canvas.getContext('2d');
-              ctx.fillStyle = bg;
-              ctx.fillRect(0, 0, 300, 150);
-              ctx.fillStyle = '#000';
-              ctx.font = 'bold 32px sans-serif';
-              ctx.fillText(label, 20, 85);
-            }
+      const canvas = document.getElementById('canvas');
+      const button = document.getElementById('toggle');
+      const ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+      let letterIndex = 0;
 
-            function createCanvas2() {
-              const canvas = document.createElement('canvas');
-              canvas.id = 'canvas2';
-              canvas.width = 300;
-              canvas.height = 150;
-              canvas.tabIndex = 0;
-              canvas.style.position = 'absolute';
-              canvas.style.left = '200px';
-              document.getElementById('container').replaceChildren();
-              document.getElementById('container').appendChild(canvas);
-              draw(canvas, '#d6e8ff', 'Canvas Two');
-              return canvas;
-            }
+      function draw() {
+        const ctx = canvas.getContext('2d');
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = '#ffd6d6';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = '#000';
+        ctx.font = 'bold 64px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(ALPHABET[letterIndex], canvas.width / 2, canvas.height / 2);
+      }
 
-            const canvas1 = document.getElementById('canvas1');
-            draw(canvas1, '#ffd6d6', 'Canvas One');
+      draw();
 
-            document.getElementById('swap').addEventListener('click', () => {
-              canvas1.classList.toggle('hidden');
-              let canvas2 = document.getElementById('canvas2');
+      button.addEventListener('click', () => {
+        // Advance to the next letter, wrapping from Z back to A.
+        letterIndex = (letterIndex + 1) % ALPHABET.length;
+        draw();
 
-              if (!canvas2) {
-                // First time canvas1 is hidden: create canvas2 on the fly.
-                canvas2 = createCanvas2();
-              }
-            });
+        const hidden = canvas.classList.toggle('hidden');
+        button.textContent = hidden ? 'Show canvas' : 'Hide canvas';
+        button.setAttribute('aria-expanded', String(!hidden));
+      });
     </script>
     </body>
     </html>
