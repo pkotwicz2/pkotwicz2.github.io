@@ -29,6 +29,7 @@
               canvas.tabIndex = 0;
               canvas.style.position = 'absolute';
               canvas.style.left = '200px';
+              document.getElementById('container').replaceChildren();
               document.getElementById('container').appendChild(canvas);
               draw(canvas, '#d6e8ff', 'Canvas Two');
               return canvas;
@@ -39,14 +40,11 @@
 
             document.getElementById('swap').addEventListener('click', () => {
               canvas1.classList.toggle('hidden');
-              const canvas1Hidden = canvas1.classList.contains('hidden');
               let canvas2 = document.getElementById('canvas2');
 
-              if (canvas1Hidden && !canvas2) {
+              if (!canvas2) {
                 // First time canvas1 is hidden: create canvas2 on the fly.
                 canvas2 = createCanvas2();
-              } else if (canvas2) {
-                canvas2.classList.toggle('hidden', !canvas1Hidden);
               }
             });
     </script>
