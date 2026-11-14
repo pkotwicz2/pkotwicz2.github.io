@@ -1,33 +1,54 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<style>
-canvas { border: 1px solid #888; }
-.hidden { display: none; }
-</style>
-</head>
-<body>
-<button id="swap">Swap canvas</button>
-<div>
-<canvas id="canvas1" width="300" height="150" style="position:absolute;left:0px;" tabindex="0"></canvas>
-<canvas id="canvas2" width="300" height="150" class="hidden" style="position:absolute;left:200px;" tabindex="0"></canvas>
-</div>
-<script>
-        function draw(id, bg, label) {
-          const ctx = document.getElementById(id).getContext('2d');
-          ctx.fillStyle = bg;
-          ctx.fillRect(0, 0, 300, 150);
-          ctx.fillStyle = '#000';
-          ctx.font = 'bold 32px sans-serif';
-          ctx.fillText(label, 20, 85);
-        }
-        draw('canvas1', '#ffd6d6', 'Canvas One');
-        draw('canvas2', '#d6e8ff', 'Canvas Two');
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+    <style>
+    canvas { border: 1px solid #888; }
+    .hidden { display: none; }
+    </style>
+    </head>
+    <body>
+    <button id="swap">Swap canvas</button>
+    <div id="container">
+    <canvas id="canvas1" width="300" height="150" style="position:absolute;left:0px;" tabindex="0"></canvas>
+    </div>
+    <script>
+            function draw(canvas, bg, label) {
+              const ctx = canvas.getContext('2d');
+              ctx.fillStyle = bg;
+              ctx.fillRect(0, 0, 300, 150);
+              ctx.fillStyle = '#000';
+              ctx.font = 'bold 32px sans-serif';
+              ctx.fillText(label, 20, 85);
+            }
 
-        document.getElementById('swap').addEventListener('click', () => {
-          document.getElementById('canvas1').classList.toggle('hidden');
-          document.getElementById('canvas2').classList.toggle('hidden');
-        });
-</script>
-</body>
-</html>
+            function createCanvas2() {
+              const canvas = document.createElement('canvas');
+              canvas.id = 'canvas2';
+              canvas.width = 300;
+              canvas.height = 150;
+              canvas.tabIndex = 0;
+              canvas.style.position = 'absolute';
+              canvas.style.left = '200px';
+              document.getElementById('container').appendChild(canvas);
+              draw(canvas, '#d6e8ff', 'Canvas Two');
+              return canvas;
+            }
+
+            const canvas1 = document.getElementById('canvas1');
+            draw(canvas1, '#ffd6d6', 'Canvas One');
+
+            document.getElementById('swap').addEventListener('click', () => {
+              canvas1.classList.toggle('hidden');
+              const canvas1Hidden = canvas1.classList.contains('hidden');
+              let canvas2 = document.getElementById('canvas2');
+
+              if (canvas1Hidden && !canvas2) {
+                // First time canvas1 is hidden: create canvas2 on the fly.
+                canvas2 = createCanvas2();
+              } else if (canvas2) {
+                canvas2.classList.toggle('hidden', !canvas1Hidden);
+              }
+            });
+    </script>
+    </body>
+    </html>
