@@ -1,150 +1,288 @@
 <html lang="en"><head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Minimal repro: border lines drawn to canvas (0,0) — live mode</title>
+<title>MathML Screen Reader Corner Cases (TalkBack)</title>
 <style>
-  body { font-family: sans-serif; margin: 20px; }
-  #status { padding: 10px; border: 2px solid #999; margin-bottom: 12px; font-weight: bold; }
-  #status.bad  { border-color: #d1006b; color: #d1006b; background: #fdf0f6; }
-  #status.good { border-color: #0a7d6a; color: #0a7d6a; background: #eef7f5; }
-  canvas { border: 1px solid #333; background: #c4886a; cursor: crosshair; touch-action: none; }
-  #log { font-family: monospace; font-size: 12px; white-space: pre; background: #111; color: #ddd;
-         padding: 8px; height: 160px; overflow: auto; margin-top: 12px; }
+  body { font-family: system-ui, sans-serif; max-width: 52rem; margin: 1rem auto; padding: 0 1rem; line-height: 1.5; }
+  section { border: 1px solid #ccc; border-radius: 8px; padding: .75rem 1rem; margin: 1rem 0; }
+  h2 { font-size: 1.1rem; margin: .2rem 0 .5rem; }
+  .eq { font-size: 1.6rem; padding: .5rem; background: #f7f7f7; border-radius: 6px; overflow-x: auto; }
+  .why, .expect { font-size: .9rem; margin: .4rem 0; }
+  .expect { color: #234; }
+  code { background: #eee; padding: 0 .2rem; border-radius: 3px; }
 </style>
 </head>
 <body>
-<h2>Minimal repro: border lines drawn to canvas (0,0)</h2>
-<p>Press <b>Start marking</b>, then click 3 or more points on the canvas. The border line is drawn
-  to the coordinate held in hidden divs that <b>only mousemove</b> updates. If no mousemove reaches
-  the canvas before the clicks, the divs stay empty (<code>""</code>). Canvas converts <code>""</code> to 0,
-  so the line runs to the top-left corner.</p>
+<h1>MathML corner cases for TalkBack</h1>
+<p>Each section contains one equation designed to stress a specific part of the
+MathML → Android accessibility tree → TalkBack speech pipeline.
+Navigate with linear swipe, by-character / by-word granularity, and
+"explore by touch". Compare speech with the <em>Expected</em> note.</p>
 
-<div id="status" class="good">Not reproduced: 4 segments drawn correctly (124 mousemove events reached the canvas).</div>
-<button id="start">Start marking</button>
-<span id="counts">  points: 5  mousemoves: 124  segments: 4  segments to (0,0): 0</span>
-<br><br>
-<canvas id="canvas" width="500" height="400"></canvas>
-
-<!-- hidden state divs, same as wm.js / Profile.do -->
-<div id="oldposx" hidden="">90</div>
-<div id="oldposy" hidden="">171</div>
-<div id="posx" hidden="">474</div>
-<div id="posy" hidden="">169</div>
-
-<div id="log">Marking started. UA: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36
-maxTouchPoints=10  pointer:fine=true  hover:hover=true
-click 1 at canvas(98,126)  isTrusted=true  #posx=98
-segment (98,126) -&gt; (277,202)
-click 2 at canvas(277,202)  isTrusted=true  #posx=277
-segment (277,202) -&gt; (312,283)
-click 3 at canvas(312,283)  isTrusted=true  #posx=312
-segment (312,283) -&gt; (174,297)
-click 4 at canvas(174,297)  isTrusted=true  #posx=174
-segment (174,297) -&gt; (90,171)
-click 5 at canvas(90,171)  isTrusted=true  #posx=90
+<!-- 1 -->
+<section id="eq1">
+<h2>1. Deeply nested continued fraction</h2>
+<div class="eq">
+<math display="block">
+  <mi>x</mi><mo>=</mo>
+  <mn>1</mn><mo>+</mo>
+  <mfrac>
+    <mn>1</mn>
+    <mrow><mn>2</mn><mo>+</mo>
+      <mfrac><mn>1</mn>
+        <mrow><mn>3</mn><mo>+</mo>
+          <mfrac><mn>1</mn>
+            <mrow><mn>4</mn><mo>+</mo>
+              <mfrac><mn>1</mn>
+                <mrow><mn>5</mn><mo>+</mo><mo>⋱</mo></mrow>
+              </mfrac>
+            </mrow>
+          </mfrac>
+        </mrow>
+      </mfrac>
+    </mrow>
+  </mfrac>
+</math>
 </div>
+<p class="why">Why: recursion depth, fraction start/end disambiguation, and the
+diagonal ellipsis (U+22F1) which many speech tables lack.</p>
+<p class="expect">Expected: clear nesting boundaries ("fraction 1 over 2 plus fraction… end fraction"), no dropped levels, "down right diagonal ellipsis" (not silence or "unknown").</p>
+</section>
 
-<script>
-var canvas = document.getElementById('canvas');
-var ctx = canvas.getContext('2d');
-var $ = function (id) { return document.getElementById(id); };
+<!-- 2 -->
+<section id="eq2">
+<h2>2. Invisible operators</h2>
+<div class="eq">
+<math display="block">
+  <mi>f</mi><mo>⁡</mo><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow>
+  <mo>=</mo>
+  <mn>2</mn><mo>⁢</mo><mi>x</mi>
+  <mo>+</mo>
+  <msub><mi>a</mi><mrow><mi>i</mi><mo>⁣</mo><mi>j</mi></mrow></msub>
+  <mo>+</mo>
+  <mn>3</mn><mo>⁤</mo><mfrac><mn>1</mn><mn>2</mn></mfrac>
+</math>
+</div>
+<p class="why">Why: U+2061 FUNCTION APPLICATION, U+2062 INVISIBLE TIMES,
+U+2063 INVISIBLE SEPARATOR and U+2064 INVISIBLE PLUS have zero width.
+Implementations may read their Unicode names, ignore them, or create empty focusable nodes.</p>
+<p class="expect">Expected: "f of x equals 2 x plus a sub i comma j plus 3 and one half" — no "function application", no empty swipe stops.</p>
+</section>
 
-var marking = false;
-var clicks = 0, moves = 0, segments = 0, phantom = 0;
+<!-- 3 -->
+<section id="eq3">
+<h2>3. Prescripts with mmultiscripts and &lt;none/&gt;</h2>
+<div class="eq">
+<math display="block">
+  <mmultiscripts>
+    <mi>U</mi>
+    <none></none><mn>4+</mn>
+    <mprescripts></mprescripts>
+    <mn>92</mn><mn>238</mn>
+  </mmultiscripts>
+  <mo>,</mo>
+  <mspace width="1em"></mspace>
+  <mmultiscripts>
+    <mi>R</mi>
+    <mi>i</mi><none></none>
+    <none></none><mi>j</mi>
+    <mi>k</mi><none></none>
+    <mprescripts></mprescripts>
+    <none></none><mi>μ</mi>
+  </mmultiscripts>
+</math>
+</div>
+<p class="why">Why: pre-sub/superscripts, <code>&lt;none/&gt;</code> placeholders,
+and interleaved tensor indices. Order of reading is often wrong, or
+<code>none</code> is announced.</p>
+<p class="expect">Expected: "U, pre-subscript 92, pre-superscript 238, superscript 4 plus"; tensor indices in correct positions; never "none".</p>
+</section>
 
-function getXY(e) {
-  var r = canvas.getBoundingClientRect();
-  return {
-    x: Math.round((e.clientX - r.left) * canvas.width / r.width),
-    y: Math.round((e.clientY - r.top) * canvas.height / r.height)
-  };
-}
+<!-- 4 -->
+<section id="eq4">
+<h2>4. Matrix with empty cells, spans and stretchy bars</h2>
+<div class="eq">
+<math display="block">
+  <mrow>
+    <mo>|</mo>
+    <mtable>
+      <mtr><mtd><mi>a</mi></mtd><mtd></mtd><mtd><mi>c</mi></mtd></mtr>
+      <mtr><mtd columnspan="2"><mi>d</mi><mo>+</mo><mi>e</mi></mtd><mtd><mi>f</mi></mtd></mtr>
+      <mtr><mtd><mn>0</mn></mtd><mtd><mo>⋯</mo></mtd><mtd></mtd></mtr>
+    </mtable>
+    <mo>|</mo>
+  </mrow>
+  <mo>=</mo><mn>0</mn>
+</math>
+</div>
+<p class="why">Why: empty <code>&lt;mtd&gt;</code>, <code>columnspan</code>,
+ragged rows, and stretchy vertical bars (determinant vs absolute value).
+Tests table row/column counts exposed via CollectionInfo/CollectionItemInfo.</p>
+<p class="expect">Expected: "3 by 3 matrix" (or determinant), correct row/column indices, empty cells announced as "blank" rather than skipped or crashing navigation.</p>
+</section>
 
-function log(msg) {
-  var el = $('log');
-  el.textContent += msg + '\n';
-  el.scrollTop = el.scrollHeight;
-}
+<!-- 5 -->
+<section id="eq5">
+<h2>5. Ambiguous delimiters: half-open intervals and nested absolute values</h2>
+<div class="eq">
+<math display="block">
+  <mrow><mo>[</mo><mn>0</mn><mo separator="true">,</mo><mn>1</mn><mo>)</mo></mrow>
+  <mo>∩</mo>
+  <mrow><mo>]</mo><mo>−</mo><mn>1</mn><mo>,</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mo>]</mo></mrow>
+  <mo>,</mo><mspace width="1em"></mspace>
+  <mo>|</mo><mi>a</mi><mo>|</mo><mi>b</mi><mo>|</mo><mi>c</mi><mo>|</mo>
+</math>
+</div>
+<p class="why">Why: mismatched brackets, reversed ']' as opening fence (French
+notation), U+2212 MINUS vs hyphen, and <code>|a|b|c|</code> which is genuinely ambiguous (|a|·b·|c| or |a·|b|·c|).</p>
+<p class="expect">Expected: each delimiter spoken individually and literally; TalkBack must not "auto-pair" delimiters or say "dash" for the minus sign.</p>
+</section>
 
-function update() {
-  $('counts').textContent = '  points: ' + clicks + '  mousemoves: ' + moves +
-    '  segments: ' + segments + '  segments to (0,0): ' + phantom;
-  var s = $('status');
-  if (phantom > 0) {
-    s.className = 'bad';
-    s.textContent = 'DEFECT REPRODUCED: ' + phantom + ' of ' + segments +
-      ' segments were drawn to canvas (0,0) because #posx/#posy were empty.';
-  } else if (segments > 0) {
-    s.className = 'good';
-    s.textContent = 'Not reproduced: ' + segments + ' segments drawn correctly (' +
-      moves + ' mousemove events reached the canvas).';
-  } else if (marking) {
-    s.className = '';
-    s.textContent = 'Marking. Click points on the canvas (2 or more needed to draw a segment).';
-  }
-}
+<!-- 6 -->
+<section id="eq6">
+<h2>6. Accents vs. over/underscripts and large operators</h2>
+<div class="eq">
+<math display="block">
+  <munder>
+    <mo movablelimits="false">lim</mo>
+    <mrow><mi>n</mi><mo>→</mo><mi>∞</mi></mrow>
+  </munder>
+  <munderover>
+    <mo>∑</mo>
+    <mrow><mi>k</mi><mo>=</mo><mn>1</mn></mrow>
+    <mi>n</mi>
+  </munderover>
+  <mfrac><mn>1</mn><msup><mi>k</mi><mn>2</mn></msup></mfrac>
+  <mo>=</mo>
+  <mover accent="true"><mi>v</mi><mo>→</mo></mover>
+  <mo>⋅</mo>
+  <mover accent="true"><mi>x</mi><mo>^</mo></mover>
+  <mo>+</mo>
+  <mover><mrow><mi>a</mi><mo>+</mo><mi>b</mi></mrow><mo>¯</mo></mover>
+  <mo>+</mo>
+  <mover>
+    <mover><mrow><mi>x</mi><mo>+</mo><mo>⋯</mo><mo>+</mo><mi>x</mi></mrow><mo>⏞</mo></mover>
+    <mrow><mi>n</mi><mtext>&nbsp;times</mtext></mrow>
+  </mover>
+</math>
+</div>
+<p class="why">Why: <code>lim</code> as a multi-char <code>&lt;mo&gt;</code>,
+sum limits, <code>accent="true"</code> (should read "v vector", "x hat"), a bar
+over a group (conjugate/mean), and a nested overbrace with text annotation.</p>
+<p class="expect">Expected: "limit as n approaches infinity of sum from k equals 1 to n…", "v vector", "x hat", "a plus b bar", "overbrace … n times".</p>
+</section>
 
-// mousemove: the ONLY place #posx/#posy get written with real coordinates (wm.js line 497)
-canvas.addEventListener('mousemove', function (e) {
-  if (!marking) return;
-  var p = getXY(e);
-  $('posx').textContent = p.x;
-  $('posy').textContent = p.y;
-  moves++;
-  update();
-});
+<!-- 7 -->
+<section id="eq7">
+<h2>7. Unicode stress: math alphanumerics, primes, combining marks, astral plane</h2>
+<div class="eq">
+<math display="block">
+  <mi>𝔽</mi><mo>:</mo>
+  <msup><mi>ℝ</mi><mi>n</mi></msup>
+  <mo>→</mo>
+  <mi mathvariant="normal">ℂ</mi>
+  <mo>,</mo>
+  <msup><mi>f</mi><mo>″</mo></msup><mo>(</mo><mi>x</mi><mo>)</mo>
+  <mo>+</mo>
+  <msup><mi>g</mi><mo>'</mo></msup>
+  <mo>+</mo>
+  <mi>x̃</mi>
+  <mo>+</mo>
+  <mi>𝒜</mi><mi>𝒷</mi>
+  <mo>+</mo>
+  <mi>sin</mi><mi>x</mi>
+</math>
+</div>
+<p class="why">Why: surrogate pairs (𝔽 U+1D53D, 𝒜 U+1D49C) break naive
+UTF-16 character granularity; double prime U+2033 vs ASCII apostrophe;
+combining tilde U+0303; and <code>&lt;mi&gt;sin&lt;/mi&gt;</code> which should be
+read as a word, not "s i n".</p>
+<p class="expect">Expected: "double-struck F", "f double prime of x", "g prime", "x tilde", "script A script b"; character navigation must never split a surrogate pair (no "unknown"/replacement chars).</p>
+</section>
 
-// mousedown: draws a segment from #oldposx/#oldposy to #posx/#posy (wm.js line 505)
-canvas.addEventListener('mousedown', function (e) {
-  if (!marking || e.button !== 0) return;
-  var p = getXY(e);
+<!-- 8 -->
+<section id="eq8">
+<h2>8. Right-to-left math (Arabic notation)</h2>
+<div class="eq">
+<math display="block" dir="rtl" lang="ar">
+  <mi>د</mi><mo>⁡</mo><mrow><mo>(</mo><mi>س</mi><mo>)</mo></mrow>
+  <mo>=</mo>
+  <msup><mi>س</mi><mn>٢</mn></msup>
+  <mo>+</mo>
+  <mroot><mi>س</mi><mn>٣</mn></mroot>
+  <mo>−</mo>
+  <mfrac><mn>١</mn><mn>٤</mn></mfrac>
+</math>
+</div>
+<p class="why">Why: <code>dir="rtl"</code> mirrors layout; Arabic-Indic digits
+(١٢٣٤); a <code>lang</code> switch inside an English page. Tests
+reading order vs. visual order and TTS language switching.</p>
+<p class="expect">Expected: logical order (د of س equals س squared plus cube root of س minus one quarter), spoken with an Arabic voice if available; touch exploration geometry must match mirrored layout.</p>
+</section>
 
-  var posx = $('posx').textContent;      // "" if no mousemove has happened yet
-  var posy = $('posy').textContent;
-  var oldposx = $('oldposx').textContent;
-  var oldposy = $('oldposy').textContent;
+<!-- 9 -->
+<section id="eq9">
+<h2>9. Hidden / phantom / spacing content and ARIA overrides</h2>
+<div class="eq">
+<math display="block">
+  <mi>a</mi><mo>+</mo>
+  <mphantom><mi>b</mi><mo>+</mo></mphantom>
+  <mi>c</mi>
+  <mpadded width="0"><mo>≠</mo></mpadded>
+  <mspace width="2em"></mspace>
+  <mrow aria-hidden="true"><mo>(</mo><mtext>decorative</mtext><mo>)</mo></mrow>
+  <mi>d</mi>
+  <mo>=</mo>
+  <mrow aria-label="the Euler number e">
+    <mi>e</mi>
+  </mrow>
+  <mtext style="display:none">secret</mtext>
+  <mi></mi>
+  <mo></mo>
+</math>
+</div>
+<p class="why">Why: <code>&lt;mphantom&gt;</code> takes space but is invisible
+(should it be read?), zero-width <code>&lt;mpadded&gt;</code> with a visible
+glyph, <code>&lt;mspace&gt;</code>, <code>aria-hidden</code> and
+<code>aria-label</code> on MathML subtrees, <code>display:none</code>, and empty
+token elements.</p>
+<p class="expect">Expected: "a plus c not equal to d equals the Euler number e". Phantom, decorative, display:none and empty tokens must not be spoken nor create empty focus stops; zero-width ≠ must still be reachable by touch.</p>
+</section>
 
-  ctx.strokeStyle = '#000';
-  ctx.fillStyle = '#000';
-  ctx.lineWidth = 1;
-  ctx.beginPath();
-  ctx.moveTo(oldposx, oldposy);
-  if (oldposx !== '') {
-    ctx.lineTo(posx, posy);              // "" -> 0  => line to top-left corner
-    ctx.stroke();
-    segments++;
-    var bad = (posx === '' || posy === '');
-    if (bad) phantom++;
-    log('segment (' + oldposx + ',' + oldposy + ') -> (' +
-        (posx === '' ? '""' : posx) + ',' + (posy === '' ? '""' : posy) + ')' +
-        (bad ? '   <== drawn to (0,0)' : ''));
-  }
+<!-- 10 -->
+<section id="eq10">
+<h2>10. Interactive math: link inside math, focusable math, semantics/annotations</h2>
+<div class="eq">
+<p>Inline:
+<a href="#eq10">the identity
+<math alttext="e to the i pi plus 1 equals 0">
+  <semantics>
+    <mrow>
+      <msup><mi>e</mi><mrow><mi>i</mi><mo>⁢</mo><mi>π</mi></mrow></msup>
+      <mo>+</mo><mn>1</mn><mo>=</mo><mn>0</mn>
+    </mrow>
+    <annotation encoding="application/x-tex">e^{i\pi}+1=0</annotation>
+    <annotation-xml encoding="application/mathml-content+xml">
+      <apply><eq></eq><apply><plus></plus><apply><exp></exp><apply><times></times><imaginaryi></imaginaryi><pi></pi></apply></apply><cn>1</cn></apply><cn>0</cn></apply>
+    </annotation-xml>
+  </semantics>
+</math></a>
+and
+<math tabindex="0" role="img" aria-label="x squared">
+  <msup><mi>x</mi><mn>2</mn></msup>
+</math>
+inside a sentence, followed by
+<math><mrow><mi href="https://en.wikipedia.org/wiki/Pi">π</mi><mo>≈</mo><mn>3.14159</mn></mrow></math>.
+</p>
+</div>
+<p class="why">Why: math inside an <code>&lt;a&gt;</code>, legacy
+<code>alttext</code>, <code>&lt;semantics&gt;</code> with TeX and Content MathML
+annotations (must not be read), a focusable <code>tabindex</code> math with
+<code>role="img"</code> override, and the MathML <code>href</code> attribute on a
+token. Inline math must flow with surrounding text.</p>
+<p class="expect">Expected: link announced once with readable name (not raw TeX, not "e i pi 1 0 eq plus exp times"), double-tap activates; second math reads "x squared, image"; π is announced as a link if <code>href</code> is supported, and no navigation trap occurs.</p>
+</section>
 
-  $('oldposx').textContent = p.x;        // real click coordinate
-  $('oldposy').textContent = p.y;
-  $('posx').textContent = posx;          // stale value written back (keeps "" sticky)
-  $('posy').textContent = posy;
-
-  ctx.fillRect(p.x - 2, p.y - 2, 5, 5);  // marker at the real click position
-  clicks++;
-  log('click ' + clicks + ' at canvas(' + p.x + ',' + p.y + ')  isTrusted=' + e.isTrusted +
-      '  #posx=' + (posx === '' ? '""' : posx));
-  update();
-});
-
-$('start').addEventListener('click', function () {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ['oldposx', 'oldposy', 'posx', 'posy'].forEach(function (id) { $(id).textContent = ''; });
-  clicks = moves = segments = phantom = 0;
-  marking = true;
-  $('log').textContent = '';
-  log('Marking started. UA: ' + navigator.userAgent);
-  log('maxTouchPoints=' + navigator.maxTouchPoints +
-      '  pointer:fine=' + matchMedia('(pointer: fine)').matches +
-      '  hover:hover=' + matchMedia('(hover: hover)').matches);
-  update();
-});
-</script>
 
 
 </body></html>
