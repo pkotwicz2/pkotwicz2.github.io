@@ -1,23 +1,144 @@
-    <!DOCTYPE html>
-    <html lang="en">
-    <body style="font-size:20px">
-    <h3>Before</h3>
-    <div role="table" style="display:grid; grid-template-columns:repeat(3, auto); justify-content:start; gap:2px;">
-        <div role="row" style="display:contents">
-            <div role="cell" style="padding:1px">1</div>
-            <div role="cell" style="padding:1px">2</div>
-            <div role="cell" style="padding:1px">3</div>
-        </div>
-        <div role="row" style="display:contents">
-            <div role="cell" aria-colspan="2" style="grid-column:span 2; padding:1px">4</div>
-            <div role="cell" style="padding:1px">5</div>
-        </div>
-        <div role="row" style="display:contents">
-            <div role="cell" style="padding:1px">6</div>
-            <div role="cell" style="padding:1px">7</div>
-            <div role="cell" style="padding:1px">8</div>
-        </div>
-    </div>
-    <h3>After</h3>
-    </body>
-    </html>
+<html><head>
+  <meta charset="utf-8">
+  <title>Canvas tainted while hidden</title>
+  <style>
+    body { font-family: sans-serif; }
+    canvas { border: 1px solid #888; }
+    #log { white-space: pre; font-family: monospace; }
+  </style>
+</head>
+<body>
+  <!--
+    Repro for AXCanvasAnnotator (crrev.com/c/8791647): a canvas that gets
+    tainted while ignored keeps its cached OCR entry, because
+    AddCanvasAnnotationForNode() returns before the origin-clean check.
+
+    Hiding uses aria-hidden so the AXObject stays attached but ignored.
+    display:none could detach it, and then PruneStaleAnnotations() would erase
+    the entry and hide the bug.
+
+    Optional query parameter:
+      ?xorigin=<URL of a cross-origin image served without CORS headers>
+    Default: the same file served from b.com on the same port, as in
+    chrome/test/data/accessibility/canvas_cross_origin.html.
+  -->
+  <canvas id="c" width="400" height="120" aria-hidden="true"></canvas>
+
+  <div>
+    <button id="draw">1. Draw same-origin text (OCR)</button>
+    <button id="hide">2. Hide (aria-hidden)</button>
+    <button id="taint">3. Taint while hidden</button>
+    <button id="reclean">4. Re-clean (reset width)</button>
+    <button id="show">5. Show</button>
+    <button id="auto">Run all steps</button>
+  </div>
+  <div id="log">03:07:55.796  Ready. Cross-origin image: file://b.com:/ocr/just_one_letter.png
+03:08:10.112  Step 1: drew "PRETAINT" via drawImage. aria-hidden=unset, originClean=true
+03:08:11.447  Step 2: hidden. aria-hidden=true, originClean=true
+03:08:13.079  ERROR: failed to load file://b.com:/ocr/just_one_letter.png
+03:08:14.871  Step 4: reset width (bitmap cleared). aria-hidden=true, originClean=true
+</div>
+
+  <script>
+    const canvas = document.getElementById('c');
+    const ctx = canvas.getContext('2d');
+    const logEl = document.getElementById('log');
+
+    const params = new URLSearchParams(location.search);
+    const crossOriginUrl = params.get('xorigin') ||
+        `${location.protocol}//b.com:${location.port}/ocr/just_one_letter.png`;
+
+    function log(msg) {
+      logEl.textContent += `${new Date().toISOString().slice(11, 23)}  ${msg}\n`;
+    }
+
+    // toDataURL() throws SecurityError when the canvas is tainted.
+    function originClean() {
+      try { canvas.toDataURL(); return true; } catch (e) { return false; }
+    }
+
+    function state() {
+      return `aria-hidden=${canvas.getAttribute('aria-hidden') ?? 'unset'}, ` +
+             `originClean=${originClean()}`;
+    }
+
+    // Render text onto a scratch canvas and copy it over with drawImage() so
+    // the target canvas has no fillText() text runs and Blink requests OCR.
+    function drawSameOriginText() {
+      const scratch = document.createElement('canvas');
+      scratch.width = canvas.width;
+      scratch.height = canvas.height;
+      const sctx = scratch.getContext('2d');
+      sctx.fillStyle = 'white';
+      sctx.fillRect(0, 0, scratch.width, scratch.height);
+      sctx.fillStyle = 'black';
+      sctx.font = 'bold 48px sans-serif';
+      sctx.fillText('PRETAINT', 20, 80);
+      ctx.drawImage(scratch, 0, 0);
+      log(`Step 1: drew "PRETAINT" via drawImage. ${state()}`);
+    }
+
+    function hide() {
+      canvas.setAttribute('aria-hidden', 'true');
+      log(`Step 2: hidden. ${state()}`);
+    }
+
+    function loadImage(url) {
+      return new Promise((resolve, reject) => {
+        const img = new Image();  // No crossOrigin attribute, so it taints.
+        img.onload = () => resolve(img);
+        img.onerror = () => reject(new Error(`failed to load ${url}`));
+        img.src = url;
+      });
+    }
+
+    async function taint() {
+      const img = await loadImage(crossOriginUrl);
+      ctx.drawImage(img, 0, 0);
+      log(`Step 3: drew cross-origin image ${crossOriginUrl}. ${state()}`);
+    }
+
+    // Setting width resets a 2D canvas: the bitmap is cleared and Blink sets
+    // origin_clean_ = true (HTMLCanvasElement::Reshape).
+    function reclean() {
+      canvas.width = canvas.width;
+      log(`Step 4: reset width (bitmap cleared). ${state()}`);
+    }
+
+    function show() {
+      canvas.removeAttribute('aria-hidden');
+      log(`Step 5: shown. ${state()}  <-- inspect kCanvasAnnotation now; ` +
+          `"PRETAINT" here is the stale-text bug`);
+    }
+
+    const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+    // OCR is scheduled after a delay, so wait before hiding to let it finish.
+    async function runAll() {
+      drawSameOriginText();
+      await sleep(3000);
+      hide();
+      await sleep(500);
+      await taint();
+      await sleep(500);
+      reclean();
+      await sleep(500);
+      show();
+      document.title = 'done';
+    }
+
+    document.getElementById('draw').onclick = drawSameOriginText;
+    document.getElementById('hide').onclick = hide;
+    document.getElementById('taint').onclick = () =>
+        taint().catch((e) => log(`ERROR: ${e.message}`));
+    document.getElementById('reclean').onclick = reclean;
+    document.getElementById('show').onclick = show;
+    document.getElementById('auto').onclick = () =>
+        runAll().catch((e) => log(`ERROR: ${e.message}`));
+
+    window.runAll = runAll;  // For ExecJs() in browser tests.
+    log(`Ready. Cross-origin image: ${crossOriginUrl}`);
+  </script>
+
+
+</body></html>
